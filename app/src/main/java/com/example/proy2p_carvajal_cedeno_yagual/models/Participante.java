@@ -24,6 +24,6 @@ public class Participante extends Usuario implements Comparable<Participante> {
             return Integer.compare(o.puntajeAcumulado, this.puntajeAcumulado);
         }
         // Si empatan, alfabéticamente por username
-        return this.getUsername().compareToIgnoreCase(o.getUsername());
+        return this.getNombreUsuario().compareToIgnoreCase(o.getNombreUsuario());
     }
 }
