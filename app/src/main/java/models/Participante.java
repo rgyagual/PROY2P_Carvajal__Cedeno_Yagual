@@ -1,4 +1,4 @@
-package com.example.proy2p_carvajal_cedeno_yagual.models;
+package models;
 
 public class Participante extends Usuario implements Comparable<Participante> {
     private int puntajeAcumulado;
@@ -24,6 +24,6 @@ public class Participante extends Usuario implements Comparable<Participante> {
             return Integer.compare(o.puntajeAcumulado, this.puntajeAcumulado);
         }
         // Si empatan, alfabéticamente por username
-        return this.getUsername().compareToIgnoreCase(o.getUsername());
+        return this.getNombreUsuario().compareToIgnoreCase(o.getNombreUsuario());
     }
 }
