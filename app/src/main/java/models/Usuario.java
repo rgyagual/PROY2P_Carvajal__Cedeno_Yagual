@@ -1,4 +1,4 @@
-package com.example.proy2p_carvajal_cedeno_yagual.models;
+package models;
 
 public abstract class Usuario {
     protected String idUsuario;
