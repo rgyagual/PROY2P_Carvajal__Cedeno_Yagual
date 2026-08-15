@@ -2,12 +2,19 @@ package utils;
 
 import android.content.Context;
 
-import models.models.exceptions.CredencialesInvalidasException;
-import models.models.Usuario;
+import models.Administrador;
+import models.Participante;
+import models.Partido;
+import models.Pronostico;
+import models.Resultado;
+import models.TipoUsuario;
+import models.Usuario;
+import models.exceptions.CredencialesInvalidasException;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -20,8 +27,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-
 public class DataManager {
+
+    // 1. Inicialización de archivos base
     public static void inicializarArchivos(Context context) {
         String[] archivos = {"usuarios.txt", "participantes.txt", "administradores.txt", "partidos.txt", "resultados.txt"};
         for (String nombreArchivo : archivos) {
@@ -45,7 +53,8 @@ public class DataManager {
     public static Usuario autenticar(Context context, String username, String password) throws CredencialesInvalidasException {
         List<Usuario> usuarios = cargarUsuariosCompletos(context);
         for (Usuario u : usuarios) {
-            if (u.getUsername().equals(username) && u.getPassword().equals(password)) {
+            // Se usan los métodos getNombreUsuario() y getContrasena() de la clase Usuario
+            if (u.getNombreUsuario().equalsIgnoreCase(username) && u.getContrasena().equals(password)) {
                 return u;
             }
         }
@@ -244,7 +253,8 @@ public class DataManager {
         File file = new File(context.getFilesDir(), "participantes.txt");
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(file))) {
             for (Participante p : participantes) {
-                bw.write(p.getId() + "," + p.getPuntajeAcumulado() + "\n");
+                // Se usa getIdUsuario() heredado de Usuario
+                bw.write(p.getIdUsuario() + "," + p.getPuntajeAcumulado() + "\n");
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -254,21 +264,21 @@ public class DataManager {
     // 7. Reglas de cálculo de puntajes oficiales
     public static int calcularPuntos(int pGoles1, int pGoles2, int rGoles1, int rGoles2) {
         if (pGoles1 == rGoles1 && pGoles2 == rGoles2) {
-            return 3; // Marcador exacto
+            return 3; // Marcador exacto[cite: 1]
         }
         int difPronostico = pGoles1 - pGoles2;
         int difReal = rGoles1 - rGoles2;
 
         if (rGoles1 == rGoles2 && pGoles1 == pGoles2) {
-            return 2; // Acertó empate no exacto
+            return 2; // Acertó empate no exacto[cite: 1]
         }
 
         boolean mismoGanador = (difPronostico > 0 && difReal > 0) || (difPronostico < 0 && difReal < 0);
         if (mismoGanador) {
             if (difPronostico == difReal) {
-                return 2; // Acertó ganador y diferencia de goles
+                return 2; // Acertó ganador y diferencia de goles[cite: 1]
             }
-            return 1; // Solo acertó el ganador
+            return 1; // Solo acertó el ganador[cite: 1]
         }
         return 0;
     }
