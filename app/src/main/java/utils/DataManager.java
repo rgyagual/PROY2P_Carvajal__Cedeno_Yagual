@@ -1,9 +1,9 @@
-package com.example.proy2p_carvajal_cedeno_yagual.utils;
+package utils;
 
 import android.content.Context;
 
-import com.example.proy2p_carvajal_cedeno_yagual.exceptions.CredencialesInvalidasException;
-import com.example.proy2p_carvajal_cedeno_yagual.models.Usuario;
+import models.models.exceptions.CredencialesInvalidasException;
+import models.models.Usuario;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
