@@ -2,9 +2,145 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
+    android:id="@+id/login_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".LoginActivity">
 
+    <LinearLayout
+        android:id="@+id/loginLayout"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="1dp"
+        android:layout_marginTop="1dp"
+        android:layout_marginEnd="1dp"
+        android:layout_marginBottom="1dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/img_headLogin"
+            android:layout_width="match_parent"
+            android:layout_height="223dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="15dp"
+            app:srcCompat="@drawable/logoLogin" />
+
+        <TextView
+            android:id="@+id/txt_usuario"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginBottom="8dp"
+            android:text="Usuario"
+            android:textColor="#021785"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:id="@+id/iniciarSesionLayout"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/borde_card"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/img_iniciosesion"
+                android:layout_width="30dp"
+                android:layout_height="48dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="7dp"
+                android:scaleType="fitCenter"
+                app:srcCompat="@drawable/imgusu" />
+
+            <EditText
+                android:id="@+id/edt_nombreUsuario"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:backgroundTint="@android:color/transparent"
+                android:ems="10"
+                android:inputType="text"
+                android:text="Ingrese su usuario"
+                android:textAllCaps="false"
+                android:textColor="#BE6F6F6F" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/txt_contraseña"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginBottom="8dp"
+            android:text="Contraseña"
+            android:textColor="#021785"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/borde_card"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/img_contraseña"
+                android:layout_width="30dp"
+                android:layout_height="48dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="7dp"
+                android:layout_weight="0"
+                android:scaleType="fitCenter"
+                app:srcCompat="@drawable/SoccerFootball_34114" />
+
+            <EditText
+                android:id="@+id/edt_contraseña"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:backgroundTint="@android:color/transparent"
+                android:ems="10"
+                android:inputType="text"
+                android:text="Ingrese su contraseña"
+                android:textColor="#C96F6F6F" />
+
+            <ImageView
+                android:id="@+id/img_verContraseña"
+                android:layout_width="30dp"
+                android:layout_height="48dp"
+                android:layout_marginLeft="7dp"
+                android:layout_marginRight="5dp"
+                android:layout_weight="0"
+                android:scaleType="fitCenter"
+                app:srcCompat="@drawable/viewSecurit" />
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btn_iniciarSesion"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="20dp"
+            android:backgroundTint="#F3021785"
+            android:onClick="iniciarSesion"
+            android:text="INICIAR SESION" />
+
+        <ImageView
+            android:id="@+id/img_footer"
+            android:layout_width="match_parent"
+            android:layout_height="343dp"
+            android:layout_gravity="bottom|end"
+            app:srcCompat="@drawable/world_cup_transparent_png_clipart" />
+
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

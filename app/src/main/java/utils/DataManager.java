@@ -1,4 +1,4 @@
-package com.example.proy2p_carvajal_cedeno_yagual.utils;
+package utils;
 
 import android.content.Context;
 
