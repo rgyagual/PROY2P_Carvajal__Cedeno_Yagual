@@ -27,7 +27,7 @@
             android:layout_height="223dp"
             android:layout_marginTop="5dp"
             android:layout_marginBottom="15dp"
-            app:srcCompat="@drawable/logoLogin" />
+            app:srcCompat="@drawable/loglogin" />
 
         <TextView
             android:id="@+id/txt_usuario"
@@ -59,7 +59,7 @@
                 app:srcCompat="@drawable/imgusu" />
 
             <EditText
-                android:id="@+id/edt_nombreUsuario"
+                android:id="@+id/layout_tablaPosiciones"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -99,7 +99,7 @@
                 android:layout_marginRight="7dp"
                 android:layout_weight="0"
                 android:scaleType="fitCenter"
-                app:srcCompat="@drawable/SoccerFootball_34114" />
+                app:srcCompat="@drawable/soccerfootball" />
 
             <EditText
                 android:id="@+id/edt_contraseña"
