@@ -169,7 +169,6 @@
                     android:layout_height="20dp"
                     android:layout_marginTop="30dp"
                     android:layout_weight="1"
-                    android:
                     android:contentDescription="Pronósticos"
                     android:onClick="mostrarPronosticos"
                     app:srcCompat="@drawable/flecha" />

@@ -59,7 +59,7 @@
                 app:srcCompat="@drawable/imgusu" />
 
             <EditText
-                android:id="@+id/layout_tablaPosiciones"
+                android:id="@+id/edt_nombreUsuario"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
