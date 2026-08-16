@@ -1,11 +1,11 @@
-package utils;
+/**package utils;
 
 import android.content.Context;
 
 import models.Administrador;
 import models.Participante;
-import models.models.exceptions.CredencialesInvalidasException;
-import models.models.Usuario;
+import models.exceptions.CredencialesInvalidasException;
+import models.Usuario;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -275,4 +275,4 @@ public class DataManager {
         }
         return 0;
     }
-}
+}*/
