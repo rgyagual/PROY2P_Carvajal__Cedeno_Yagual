@@ -90,7 +90,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="80dp"
             android:orientation="horizontal">
 
             <ImageView
@@ -127,20 +127,24 @@
         </LinearLayout>
 
         <ScrollView
+            android:id="@+id/scv_tablaPosicion"
             android:layout_width="match_parent"
-            android:layout_height="250dp">
+            android:layout_height="330dp">
 
             <TableLayout
                 android:id="@+id/tb_tablaPosiciones"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"
+                android:background="#021D97" />
         </ScrollView>
 
         <Button
-            android:id="@+id/button"
+            android:id="@+id/btn_volver"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Button" />
+            android:background="#00232121"
+            android:text="Volver"
+            android:textColor="#00FFFFFF" />
 
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
