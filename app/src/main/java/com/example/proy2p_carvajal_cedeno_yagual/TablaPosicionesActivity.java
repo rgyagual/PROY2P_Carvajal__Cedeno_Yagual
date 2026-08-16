@@ -1,5 +1,6 @@
 package com.example.proy2p_carvajal_cedeno_yagual;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.widget.Button;
@@ -7,6 +8,7 @@ import android.widget.ScrollView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.view.View;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -26,6 +28,7 @@ public class TablaPosicionesActivity extends AppCompatActivity {
     ScrollView scrollView;
     TableLayout posicionesLayout;
     CardView cdVolver;
+    TextView txt_nombreParticipante;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,10 +37,18 @@ public class TablaPosicionesActivity extends AppCompatActivity {
         setContentView(R.layout.activity_tabla_posiciones);
 
         posicionesLayout = findViewById(R.id.tb_tablaPosiciones);
+        posicionesLayout.removeAllViews();
         cdVolver = findViewById(R.id.cd_volver);
+        txt_nombreParticipante = findViewById(R.id.txt_nombreParticipante);
+        txt_nombreParticipante.setText(getNombreParticipante());
 
         mostrarPosiciones(obtenerPosiciones(), posicionesLayout);
 
+    }
+    public String getNombreParticipante(){
+        Intent intent = getIntent();
+        String nombreCompletos = intent.getStringExtra("nombreCompleto");
+        return nombreCompletos;
     }
 
     public ArrayList<Participante> obtenerPosiciones() {
@@ -52,6 +63,7 @@ public class TablaPosicionesActivity extends AppCompatActivity {
     }
     private void mostrarPosiciones(ArrayList<Participante> p, TableLayout tabla){
 
+        tabla.removeAllViews();
         TableRow fila = new TableRow(this);
         fila.setBackgroundColor(Color.parseColor("#102060"));
         TextView txt_pos = new TextView(this);
@@ -98,6 +110,10 @@ public class TablaPosicionesActivity extends AppCompatActivity {
             tabla.addView(fila_usuarios);
         }
 
+    }
+
+    public void volver(View view){
+        finish();
     }
 
 }

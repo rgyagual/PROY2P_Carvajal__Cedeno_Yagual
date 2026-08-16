@@ -19,7 +19,6 @@ public class MenuParticipanteActivity extends AppCompatActivity {
     CardView cdPronosticos;
     CardView cdMisPronosticos;
     CardView cdSalir;
-
     TextView txtNombreParticipante;
 
     @Override
@@ -50,6 +49,8 @@ public class MenuParticipanteActivity extends AppCompatActivity {
                 MenuParticipanteActivity.this,
                 TablaPosicionesActivity.class
         );
+
+        intent.putExtra("nombreCompleto", getNombreParticipante());
         startActivity(intent);
     }
 

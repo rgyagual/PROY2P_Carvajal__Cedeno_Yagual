@@ -30,7 +30,6 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_login);
-
         ManipularArchivos.iniciarArchivo(this);
 
         edt_nombreUsuario = findViewById(R.id.edt_nombreUsuario);
@@ -60,7 +59,6 @@ public class LoginActivity extends AppCompatActivity {
             Intent intent;
             if (usuario instanceof Participante) {
                 intent = new Intent(this, MenuParticipanteActivity.class);
-                startActivity(intent);
             } else {
                 intent = new Intent(this, MenuAdministradorActivity.class);
             }
@@ -69,6 +67,7 @@ public class LoginActivity extends AppCompatActivity {
             intent.putExtra("nombreCompleto", usuario.getNombreCompleto());
             //envía la información a al otra activity
             startActivity(intent);
+            finish();
 
         } catch (CredencialesInvalidasException e) {
             Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
