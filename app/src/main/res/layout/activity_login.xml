@@ -102,7 +102,7 @@
                 app:srcCompat="@drawable/SoccerFootball_34114" />
 
             <EditText
-                android:id="@+id/edt_contraseña"
+                android:id="@+id/edt_contrasena"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
