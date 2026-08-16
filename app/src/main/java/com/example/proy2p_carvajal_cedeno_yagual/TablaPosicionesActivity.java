@@ -32,8 +32,8 @@ public class TablaPosicionesActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_tabla_posiciones);
 
-        posicionesLayout.findViewById(R.id.tb_tablaPosiciones);
-        btnVolver.findViewById(R.id.btn_volver);
+        posicionesLayout = findViewById(R.id.tb_tablaPosiciones);
+        btnVolver = findViewById(R.id.btn_volver);
 
         mostrarPosiciones(obtenerPosiciones(), posicionesLayout);
 
