@@ -3,13 +3,14 @@ package models;
 public class Participante extends Usuario implements Comparable<Participante> {
     private int puntajeAcumulado;
 
-    public  Participante(String id, String username, String password, String nombreCompleto,
-                              int puntajeAcumulado) {
-        super(id,username,password,nombreCompleto,"Participante");
+    public  Participante(String idUsuario, String nombreUsuario, String contrasena, String nombreCompleto,
+                              TipoUsuario tipoUsuario, int puntajeAcumulado) {
+        super(idUsuario,nombreUsuario,contrasena,nombreCompleto,TipoUsuario.PARTICIPANTE);
         this.puntajeAcumulado =puntajeAcumulado;
     }
 
     public int getPuntajeAcumulado() {
+
         return puntajeAcumulado;
     }
 

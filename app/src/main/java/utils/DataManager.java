@@ -25,17 +25,17 @@ import models.Usuario.*;
 
 
 public class DataManager {
-    public static void inicializarArchivos(Context context) {
-        String[] archivos = {"usuarios.txt", "participantes.txt", "administradores.txt", "partidos.txt", "resultados.txt"};
-        for (String nombreArchivo : archivos) {
-            File file = new File(context.getFilesDir(), nombreArchivo);
-            if (!file.exists()) {
-                try (InputStream is = context.getAssets().open(nombreArchivo);
-                     FileOutputStream fos = new FileOutputStream(file)) {
+    public static final String[] ARCHIVOS = {"usuarios.txt", "participantes.txt", "administradores.txt", "partidos.txt", "resultados.txt"};
+    public static void iniciarArchivo(Context context) {
+        for (String nombreArchivo : ARCHIVOS) {
+            File archivoDestino = new File(context.getFilesDir(), nombreArchivo);
+            if (!archivoDestino.exists()) {
+                try (InputStream entrada = context.getAssets().open(nombreArchivo);
+                     FileOutputStream salida = new FileOutputStream(archivoDestino)) {
                     byte[] buffer = new byte[1024];
-                    int length;
-                    while ((length = is.read(buffer)) > 0) {
-                        fos.write(buffer, 0, length);
+                    int cantidad;
+                    while ((cantidad = entrada.read(buffer)) != -1) {
+                        salida.write(buffer, 0, cantidad);
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
