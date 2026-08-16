@@ -27,7 +27,7 @@
             android:layout_height="223dp"
             android:layout_marginTop="5dp"
             android:layout_marginBottom="15dp"
-            app:srcCompat="@drawable/logoLogin" />
+            app:srcCompat="@drawable/loglogin" />
 
         <TextView
             android:id="@+id/txt_usuario"
@@ -99,7 +99,7 @@
                 android:layout_marginRight="7dp"
                 android:layout_weight="0"
                 android:scaleType="fitCenter"
-                app:srcCompat="@drawable/SoccerFootball_34114" />
+                app:srcCompat="@drawable/soccerfootball" />
 
             <EditText
                 android:id="@+id/edt_contrasena"
@@ -120,7 +120,7 @@
                 android:layout_marginRight="5dp"
                 android:layout_weight="0"
                 android:scaleType="fitCenter"
-                app:srcCompat="@drawable/viewSecurit" />
+                app:srcCompat="@drawable/viewsecurit" />
 
         </LinearLayout>
 
