@@ -2,6 +2,8 @@ package utils;
 
 import android.content.Context;
 
+import models.Administrador;
+import models.Participante;
 import models.models.exceptions.CredencialesInvalidasException;
 import models.models.Usuario;
 
@@ -19,6 +21,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import models.Usuario.*;
 
 
 public class DataManager {
