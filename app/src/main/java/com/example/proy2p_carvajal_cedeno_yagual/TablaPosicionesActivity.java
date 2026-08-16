@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -24,7 +25,7 @@ public class TablaPosicionesActivity extends AppCompatActivity {
     TextView labelTitulo;
     ScrollView scrollView;
     TableLayout posicionesLayout;
-    Button btnVolver;
+    CardView cdVolver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +34,7 @@ public class TablaPosicionesActivity extends AppCompatActivity {
         setContentView(R.layout.activity_tabla_posiciones);
 
         posicionesLayout = findViewById(R.id.tb_tablaPosiciones);
-        btnVolver = findViewById(R.id.btn_volver);
+        cdVolver = findViewById(R.id.cd_volver);
 
         mostrarPosiciones(obtenerPosiciones(), posicionesLayout);
 
@@ -52,15 +53,19 @@ public class TablaPosicionesActivity extends AppCompatActivity {
     private void mostrarPosiciones(ArrayList<Participante> p, TableLayout tabla){
 
         TableRow fila = new TableRow(this);
+        fila.setBackgroundColor(Color.parseColor("#102060"));
         TextView txt_pos = new TextView(this);
         TextView txt_tablaparticipante = new TextView(this);
         TextView txt_puntos = new TextView(this);
 
         txt_pos.setText("Pos.");
         txt_pos.setTextColor(Color.WHITE);
+        txt_pos.setPadding(24,24,24,24);
         txt_tablaparticipante.setText("Participante");
         txt_tablaparticipante.setTextColor(Color.WHITE);
+        txt_pos.setPadding(24,24,24,24);
         txt_puntos.setText("Puntos");
+        txt_pos.setPadding(24,24,24,24);
         txt_puntos.setTextColor(Color.WHITE);
 
         fila.addView(txt_pos);
@@ -69,7 +74,7 @@ public class TablaPosicionesActivity extends AppCompatActivity {
         tabla.addView(fila);
 
         for(int i = 0; i<p.size();i++){
-
+            TableRow fila_usuarios = new TableRow(this);
             TextView txt_posicion = new TextView(this);
             TextView txt_nombreParticipante = new TextView(this);
             TextView txt_puntajeParticipante = new TextView(this);
@@ -80,11 +85,17 @@ public class TablaPosicionesActivity extends AppCompatActivity {
                     String.valueOf(
                             p.get(i).getPuntajeAcumulado()
                     ));
+            txt_posicion.setTextColor(Color.BLUE);
+            txt_nombreParticipante.setTextColor(Color.BLUE);
+            txt_puntajeParticipante.setTextColor(Color.BLUE);
+            txt_posicion.setPadding(20,20,20,16);
+            txt_nombreParticipante.setPadding(20,20,20,16);
+            txt_puntajeParticipante.setPadding(20,20,20,16);
 
-            fila.addView(txt_posicion);
-            fila.addView(txt_nombreParticipante);
-            fila.addView(txt_puntajeParticipante);
-            tabla.addView(fila);
+            fila_usuarios.addView(txt_posicion);
+            fila_usuarios.addView(txt_nombreParticipante);
+            fila_usuarios.addView(txt_puntajeParticipante);
+            tabla.addView(fila_usuarios);
         }
 
     }

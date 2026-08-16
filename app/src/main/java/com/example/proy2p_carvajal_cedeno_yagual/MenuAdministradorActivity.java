@@ -59,6 +59,6 @@ public class MenuAdministradorActivity extends AppCompatActivity {
     }
 */
     public void salir(View view){
-        finish();
+        finishAffinity();
     }
 }
