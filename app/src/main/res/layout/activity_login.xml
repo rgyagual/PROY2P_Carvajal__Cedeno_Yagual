@@ -27,7 +27,7 @@
             android:layout_width="match_parent"
             android:layout_height="223dp"
             android:layout_marginTop="5dp"
-            android:layout_marginBottom="15dp"
+            android:layout_marginBottom="50dp"
             app:srcCompat="@drawable/loglogin" />
 
         <TextView
@@ -142,10 +142,9 @@
             android:id="@+id/img_footer"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1"
+            android:layout_weight="0.2"
             android:adjustViewBounds="true"
-            android:paddingTop="10dp"
-            android:scaleType="fitXY"
+            android:scaleType="fitEnd"
             app:srcCompat="@drawable/world_cup_transparent_png_clipart" />
 
     </LinearLayout>
