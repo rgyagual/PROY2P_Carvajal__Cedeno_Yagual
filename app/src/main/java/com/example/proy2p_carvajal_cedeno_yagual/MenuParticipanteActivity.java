@@ -32,11 +32,11 @@ public class MenuParticipanteActivity extends AppCompatActivity {
         cdMisPronosticos.findViewById(R.id.cd_misPronosticos);
         cdSalir.findViewById(R.id.cd_salir);
         txtNombreParticipante.findViewById(R.id.txt_nombreParticipante);
-        txtNombreParticipante.setText(getNombreCompletos());
+        txtNombreParticipante.setText(getNombreParticipante());
 
     }
 
-    public String getNombreCompletos(){
+    public String getNombreParticipante(){
         Intent intent = getIntent();
         String nombreCompletos = intent.getStringExtra("nombreCompleto");
         return nombreCompletos;
