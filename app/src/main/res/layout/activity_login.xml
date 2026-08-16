@@ -5,6 +5,7 @@
     android:id="@+id/login_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_marginTop="20dp"
     tools:context=".LoginActivity">
 
     <LinearLayout
@@ -65,10 +66,11 @@
                 android:layout_weight="1"
                 android:backgroundTint="@android:color/transparent"
                 android:ems="10"
+                android:hint="Ingrese su usuario"
                 android:inputType="text"
-                android:text="Ingrese su usuario"
                 android:textAllCaps="false"
-                android:textColor="#BE6F6F6F" />
+                android:textColor="#000000"
+                android:textColorHint="#808080" />
 
         </LinearLayout>
 
@@ -108,9 +110,10 @@
                 android:layout_weight="1"
                 android:backgroundTint="@android:color/transparent"
                 android:ems="10"
+                android:hint="Ingrese su contraseña"
                 android:inputType="text"
-                android:text="Ingrese su contraseña"
-                android:textColor="#C96F6F6F" />
+                android:textColor="#000000"
+                android:textColorHint="#808080" />
 
             <ImageView
                 android:id="@+id/img_verContraseña"
@@ -138,8 +141,11 @@
         <ImageView
             android:id="@+id/img_footer"
             android:layout_width="match_parent"
-            android:layout_height="343dp"
+            android:layout_height="wrap_content"
             android:layout_gravity="bottom|end"
+            android:layout_marginTop="66dp"
+            android:adjustViewBounds="true"
+            android:scaleType="fitXY"
             app:srcCompat="@drawable/world_cup_transparent_png_clipart" />
 
     </LinearLayout>
