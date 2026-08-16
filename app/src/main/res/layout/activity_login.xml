@@ -102,7 +102,7 @@
                 app:srcCompat="@drawable/soccerfootball" />
 
             <EditText
-                android:id="@+id/edt_contraseña"
+                android:id="@+id/edt_contrasena"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -120,7 +120,7 @@
                 android:layout_marginRight="5dp"
                 android:layout_weight="0"
                 android:scaleType="fitCenter"
-                app:srcCompat="@drawable/viewSecurit" />
+                app:srcCompat="@drawable/viewsecurit" />
 
         </LinearLayout>
 

@@ -1,6 +1,7 @@
 package com.example.proy2p_carvajal_cedeno_yagual;
 
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,5 +21,17 @@ public class MenuAdministradorActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+    }
+
+    public void administrarPartidos(View view){
+
+    }
+
+    public void actualizarPuntajes(View view){
+
+    }
+
+    public void salir(View view){
+        finish();
     }
 }
