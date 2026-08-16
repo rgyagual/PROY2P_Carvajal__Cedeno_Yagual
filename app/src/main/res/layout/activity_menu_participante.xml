@@ -2,9 +2,285 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/edt_nombreUsuario"
+    android:id="@+id/menu_participante"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MenuParticipanteActivity">
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="#EDECEC"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="200dp">
+
+            <ImageView
+                android:id="@+id/imageView5"
+                android:layout_width="wrap_content"
+                android:layout_height="200dp"
+                android:layout_marginBottom="50dp"
+                android:scaleType="fitXY"
+                app:srcCompat="@drawable/bannerff" />
+
+            <ImageView
+                android:id="@+id/imageView6"
+                android:layout_width="120dp"
+                android:layout_height="100dp"
+                android:layout_marginLeft="290dp"
+                android:layout_marginTop="5dp"
+                app:srcCompat="@drawable/loglogin" />
+
+            <LinearLayout
+                android:layout_width="277dp"
+                android:layout_height="180dp"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/img_perfilPart"
+                    android:layout_width="110dp"
+                    android:layout_height="wrap_content"
+                    app:srcCompat="@drawable/user_icon_on_transparent_background_free_png" />
+
+                <LinearLayout
+                    android:id="@+id/BienvenidoLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="60dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/txt_bienvenido"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Bienvenido,"
+                        android:textColor="@color/white"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/txt_nombreParticipante"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="nombre P"
+                        android:textColor="#FFFFFF"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/txt_participante"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Participante"
+                        android:textColor="#4CAF50"
+                        android:textSize="12sp" />
+                </LinearLayout>
+            </LinearLayout>
+
+        </FrameLayout>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cd_tablaPosiciones"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="10dp"
+            android:onClick="mostrarTablaPosiciones"
+            app:cardCornerRadius="15dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/img_iconoTablaPosiciones"
+                    android:layout_width="93dp"
+                    android:layout_height="match_parent"
+                    android:scaleType="fitCenter"
+                    app:srcCompat="@drawable/copa" />
+
+                <TextView
+                    android:id="@+id/txt_tablaPosiciones"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="30dp"
+                    android:layout_weight="1"
+                    android:text="Tabla de Posiciones"
+                    android:textColor="#F3021785"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:id="@+id/img_tablaPosiciones"
+                    android:layout_width="10dp"
+                    android:layout_height="20dp"
+                    android:layout_marginTop="30dp"
+                    android:layout_weight="1"
+                    android:contentDescription="Tabla de Posiciones"
+                    app:srcCompat="@drawable/flecha" />
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cd_pronosticos"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="10dp"
+            android:onClick="mostrarPronosticos"
+            app:cardCornerRadius="15dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/_iconoPronosticos"
+                    android:layout_width="93dp"
+                    android:layout_height="match_parent"
+                    android:padding="10dp"
+                    android:scaleType="fitCenter"
+                    app:srcCompat="@drawable/actualizar4418" />
+
+                <TextView
+                    android:id="@+id/txt_pronosticos"
+                    android:layout_width="152dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="30dp"
+                    android:layout_weight="1"
+                    android:text="Pronósticos"
+                    android:textColor="#F3021785"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:id="@+id/img_pronosticos"
+                    android:layout_width="10dp"
+                    android:layout_height="20dp"
+                    android:layout_marginTop="30dp"
+                    android:layout_weight="1"
+                    android:contentDescription="Pronósticos"
+                    app:srcCompat="@drawable/flecha" />
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cd_misPronosticos"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="10dp"
+            android:onClick="mostrarMisPronosticos"
+            app:cardCornerRadius="15dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/img_iconoMisPronosticos"
+                    android:layout_width="93dp"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="15dp"
+                    android:scaleType="fitCenter"
+                    app:srcCompat="@drawable/clipboard" />
+
+                <TextView
+                    android:id="@+id/txt_misPronosticos"
+                    android:layout_width="145dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="30dp"
+                    android:layout_weight="1"
+                    android:text="Mis Pronósticos"
+                    android:textColor="#F3021785"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:id="@+id/img_misPronosticos"
+                    android:layout_width="10dp"
+                    android:layout_height="20dp"
+                    android:layout_marginTop="30dp"
+                    android:layout_weight="1"
+                    android:contentDescription="Mis Pronósticos"
+                    app:srcCompat="@drawable/flecha" />
+
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cd_salir"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="20dp"
+            android:onClick="salir"
+            app:cardCornerRadius="15dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/img_iconoSalir"
+                    android:layout_width="93dp"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="15dp"
+                    android:scaleType="fitCenter"
+                    app:srcCompat="@drawable/exit" />
+
+                <TextView
+                    android:id="@+id/txt_salir"
+                    android:layout_width="145dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="30dp"
+                    android:layout_weight="1"
+                    android:text="Salir"
+                    android:textColor="#F3021785"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:id="@+id/img_salir"
+                    android:layout_width="10dp"
+                    android:layout_height="20dp"
+                    android:layout_marginTop="30dp"
+                    android:layout_weight="1"
+                    android:contentDescription="Salir"
+                    app:srcCompat="@drawable/flecha" />
+
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <ImageView
+            android:id="@+id/imageView8"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="10dp"
+            android:scaleType="fitEnd"
+            app:srcCompat="@drawable/footer" />
+
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

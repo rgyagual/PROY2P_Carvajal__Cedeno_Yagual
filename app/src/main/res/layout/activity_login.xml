@@ -5,6 +5,7 @@
     android:id="@+id/login_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:paddingTop="20dp"
     tools:context=".LoginActivity">
 
     <LinearLayout
@@ -26,8 +27,8 @@
             android:layout_width="match_parent"
             android:layout_height="223dp"
             android:layout_marginTop="5dp"
-            android:layout_marginBottom="15dp"
-            app:srcCompat="@drawable/logoLogin" />
+            android:layout_marginBottom="50dp"
+            app:srcCompat="@drawable/loglogin" />
 
         <TextView
             android:id="@+id/txt_usuario"
@@ -61,14 +62,15 @@
             <EditText
                 android:id="@+id/edt_nombreUsuario"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:backgroundTint="@android:color/transparent"
                 android:ems="10"
+                android:hint="Ingrese su usuario"
                 android:inputType="text"
-                android:text="Ingrese su usuario"
                 android:textAllCaps="false"
-                android:textColor="#BE6F6F6F" />
+                android:textColor="#000000"
+                android:textColorHint="#808080" />
 
         </LinearLayout>
 
@@ -99,18 +101,19 @@
                 android:layout_marginRight="7dp"
                 android:layout_weight="0"
                 android:scaleType="fitCenter"
-                app:srcCompat="@drawable/SoccerFootball_34114" />
+                app:srcCompat="@drawable/soccerfootball" />
 
             <EditText
-                android:id="@+id/edt_contraseña"
+                android:id="@+id/edt_contrasena"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:backgroundTint="@android:color/transparent"
                 android:ems="10"
+                android:hint="Ingrese su contraseña"
                 android:inputType="text"
-                android:text="Ingrese su contraseña"
-                android:textColor="#C96F6F6F" />
+                android:textColor="#000000"
+                android:textColorHint="#808080" />
 
             <ImageView
                 android:id="@+id/img_verContraseña"
@@ -120,7 +123,7 @@
                 android:layout_marginRight="5dp"
                 android:layout_weight="0"
                 android:scaleType="fitCenter"
-                app:srcCompat="@drawable/viewSecurit" />
+                app:srcCompat="@drawable/viewsecurit" />
 
         </LinearLayout>
 
@@ -138,8 +141,10 @@
         <ImageView
             android:id="@+id/img_footer"
             android:layout_width="match_parent"
-            android:layout_height="343dp"
-            android:layout_gravity="bottom|end"
+            android:layout_height="0dp"
+            android:layout_weight="0.2"
+            android:adjustViewBounds="true"
+            android:scaleType="fitEnd"
             app:srcCompat="@drawable/world_cup_transparent_png_clipart" />
 
     </LinearLayout>

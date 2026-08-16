@@ -13,7 +13,17 @@ import models.Usuario;
 import models.exceptions.CredencialesInvalidasException;
 import utils.DataManager;
 
+import java.util.ArrayList;
+
+import models.ManipularArchivos;
+import models.Participante;
+import models.Usuario;
+import models.exceptions.CredencialesInvalidasException;
+
 public class LoginActivity extends AppCompatActivity {
+    private EditText edt_nombreUsuario;
+    private EditText edt_contrasena;
+    private Button btn_iniciarSesion;
 
     private EditText edtUsuario, edtContrasenia;
     private Button btnIniciarSesion;
@@ -64,4 +74,30 @@ public class LoginActivity extends AppCompatActivity {
             Toast.makeText(this, "Problemas técnicos. Estamos resolviendo.", Toast.LENGTH_SHORT).show();
         }
     }
+
+    public void iniciarSesion(View view) {
+        String nombreUsuario = edt_nombreUsuario.getText().toString();
+        String contrasena = edt_contrasena.getText().toString();
+
+        try {
+            Usuario usuario = validarCredenciales(nombreUsuario, contrasena);
+
+            Intent intent;
+            if (usuario instanceof Participante) {
+                intent = new Intent(this, MenuParticipanteActivity.class);
+            } else {
+                intent = new Intent(this, MenuAdministradorActivity.class);
+            }
+            //puExtra: pasar idUsuario y nombre de una activity a otra (putExtra("clave", valor))
+            intent.putExtra("idUsuario", usuario.getIdUsuario());
+            intent.putExtra("nombreCompleto", usuario.getNombreCompleto());
+            //envía la información a al otra activity
+            startActivity(intent);
+            finish();
+
+        } catch (CredencialesInvalidasException e) {
+            Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
+    }
+
 }

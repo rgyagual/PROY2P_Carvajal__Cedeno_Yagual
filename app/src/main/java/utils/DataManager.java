@@ -1,4 +1,4 @@
-package utils;
+/**package utils;
 
 import android.content.Context;
 
@@ -26,6 +26,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import models.Usuario.*;
 
 public class DataManager {
 
@@ -38,9 +39,9 @@ public class DataManager {
                 try (InputStream is = context.getAssets().open(nombreArchivo);
                      FileOutputStream fos = new FileOutputStream(file)) {
                     byte[] buffer = new byte[1024];
-                    int length;
-                    while ((length = is.read(buffer)) > 0) {
-                        fos.write(buffer, 0, length);
+                    int cantidad;
+                    while ((cantidad = entrada.read(buffer)) != -1) {
+                        salida.write(buffer, 0, cantidad);
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -282,4 +283,4 @@ public class DataManager {
         }
         return 0;
     }
-}
+}*/
