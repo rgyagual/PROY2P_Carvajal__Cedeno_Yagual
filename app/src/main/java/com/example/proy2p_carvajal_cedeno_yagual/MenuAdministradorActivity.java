@@ -24,10 +24,10 @@ public class MenuAdministradorActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_menu_administrador);
 
-        cdActualizarPuntajes.findViewById(R.id.cd_administrarP);
-        cdActualizarPuntajes.findViewById(R.id.cd_actualizar);
-        cdSalir.findViewById(R.id.cd_salir);
-        txtNombreAdministrador.findViewById(R.id.txt_nombreAdministrador);
+        cdActualizarPuntajes = findViewById(R.id.cd_administrarP);
+        cdActualizarPuntajes =findViewById(R.id.cd_actualizar);
+        cdSalir=findViewById(R.id.cd_salir);
+        txtNombreAdministrador=findViewById(R.id.txt_nombreAdministrador);
         txtNombreAdministrador.setText(getNombreAdministrador());
 
 

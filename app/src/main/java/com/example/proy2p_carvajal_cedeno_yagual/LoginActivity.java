@@ -64,6 +64,7 @@ public class LoginActivity extends AppCompatActivity {
             Intent intent;
             if (usuario instanceof Participante) {
                 intent = new Intent(this, MenuParticipanteActivity.class);
+                startActivity(intent);
             } else {
                 intent = new Intent(this, MenuAdministradorActivity.class);
             }

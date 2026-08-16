@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -27,11 +28,13 @@ public class MenuParticipanteActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_menu_participante);
 
-        cdTablaPosiciones.findViewById(R.id.cd_tablaPosiciones);
-        cdPronosticos.findViewById(R.id.cd_pronosticos);
-        cdMisPronosticos.findViewById(R.id.cd_misPronosticos);
-        cdSalir.findViewById(R.id.cd_salir);
-        txtNombreParticipante.findViewById(R.id.txt_nombreParticipante);
+        Toast.makeText(this,"Entre",Toast.LENGTH_LONG);
+
+        cdTablaPosiciones = findViewById(R.id.cd_tablaPosiciones);
+        cdPronosticos = findViewById(R.id.cd_pronosticos);
+        cdMisPronosticos = findViewById(R.id.cd_misPronosticos);
+        cdSalir = findViewById(R.id.cd_salir);
+        txtNombreParticipante = findViewById(R.id.txt_nombreParticipante);
         txtNombreParticipante.setText(getNombreParticipante());
 
     }
