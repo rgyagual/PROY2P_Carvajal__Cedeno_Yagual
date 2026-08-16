@@ -91,6 +91,7 @@
             android:layout_marginTop="15dp"
             android:layout_marginRight="20dp"
             android:layout_marginBottom="10dp"
+            android:onClick="mostrarTablaPosiciones"
             app:cardCornerRadius="15dp">
 
             <LinearLayout
@@ -123,7 +124,6 @@
                     android:layout_marginTop="30dp"
                     android:layout_weight="1"
                     android:contentDescription="Tabla de Posiciones"
-                    android:onClick="mostrarTablaPosiciones"
                     app:srcCompat="@drawable/flecha" />
             </LinearLayout>
 
@@ -137,6 +137,7 @@
             android:layout_marginTop="5dp"
             android:layout_marginRight="20dp"
             android:layout_marginBottom="10dp"
+            android:onClick="mostrarPronosticos"
             app:cardCornerRadius="15dp">
 
             <LinearLayout
@@ -170,7 +171,6 @@
                     android:layout_marginTop="30dp"
                     android:layout_weight="1"
                     android:contentDescription="Pronósticos"
-                    android:onClick="mostrarPronosticos"
                     app:srcCompat="@drawable/flecha" />
             </LinearLayout>
 
@@ -184,6 +184,7 @@
             android:layout_marginTop="5dp"
             android:layout_marginRight="20dp"
             android:layout_marginBottom="10dp"
+            android:onClick="mostrarMisPronosticos"
             app:cardCornerRadius="15dp">
 
             <LinearLayout
@@ -217,7 +218,6 @@
                     android:layout_marginTop="30dp"
                     android:layout_weight="1"
                     android:contentDescription="Mis Pronósticos"
-                    android:onClick="mostrarMisPronosticos"
                     app:srcCompat="@drawable/flecha" />
 
             </LinearLayout>
@@ -232,6 +232,7 @@
             android:layout_marginTop="10dp"
             android:layout_marginRight="20dp"
             android:layout_marginBottom="20dp"
+            android:onClick="salir"
             app:cardCornerRadius="15dp">
 
             <LinearLayout
@@ -257,6 +258,7 @@
                     android:textColor="#F3021785"
                     android:textSize="16sp"
                     android:textStyle="bold" />
+
                 <ImageView
                     android:id="@+id/img_salir"
                     android:layout_width="10dp"
@@ -264,7 +266,6 @@
                     android:layout_marginTop="30dp"
                     android:layout_weight="1"
                     android:contentDescription="Salir"
-                    android:onClick="salir"
                     app:srcCompat="@drawable/flecha" />
 
             </LinearLayout>

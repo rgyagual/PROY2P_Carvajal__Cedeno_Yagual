@@ -19,8 +19,8 @@ import java.util.Collections;
 
 import models.ManipularArchivos;
 import models.Participante;
-
 public class TablaPosicionesActivity extends AppCompatActivity {
+
     TextView labelTitulo;
     ScrollView scrollView;
     TableLayout posicionesLayout;
@@ -31,32 +31,24 @@ public class TablaPosicionesActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_tabla_posiciones);
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.edt_nombreUsuario), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
 
-            posicionesLayout.findViewById(R.id.tb_tablaPosiciones);
-            btnVolver.findViewById(R.id.btn_volver);
+        posicionesLayout.findViewById(R.id.tb_tablaPosiciones);
+        btnVolver.findViewById(R.id.btn_volver);
 
-            mostrarPosiciones(obtenerPosiciones(),posicionesLayout);
-            return insets;
-
-
-        });
+        mostrarPosiciones(obtenerPosiciones(), posicionesLayout);
 
     }
 
-    public ArrayList<Participante> obtenerPosiciones(){
+    public ArrayList<Participante> obtenerPosiciones() {
         ArrayList<Participante> p = new ArrayList<>();
-        ManipularArchivos.cargarUsuario(this).forEach(u->{
-            if(u instanceof Participante){
-                p.add((Participante)u);
+        ManipularArchivos.cargarUsuario(this).forEach(u -> {
+            if (u instanceof Participante) {
+                p.add((Participante) u);
             }
         });
         Collections.sort(p);
-    return p;
+        return p;
     }
-
     private void mostrarPosiciones(ArrayList<Participante> p, TableLayout tabla){
 
         TableRow fila = new TableRow(this);
@@ -87,7 +79,7 @@ public class TablaPosicionesActivity extends AppCompatActivity {
             txt_puntajeParticipante.setText(
                     String.valueOf(
                             p.get(i).getPuntajeAcumulado()
-            ));
+                    ));
 
             fila.addView(txt_posicion);
             fila.addView(txt_nombreParticipante);
@@ -96,4 +88,5 @@ public class TablaPosicionesActivity extends AppCompatActivity {
         }
 
     }
+
 }
