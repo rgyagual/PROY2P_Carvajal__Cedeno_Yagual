@@ -7,176 +7,186 @@
     android:layout_height="match_parent"
     tools:context=".TablaPosicionesActivity">
 
-    <LinearLayout
+    <!-- 1. BANNER SUPERIOR -->
+    <FrameLayout
+        android:id="@+id/bannerHeader"
         android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_height="200dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <FrameLayout
+        <ImageView
+            android:id="@+id/imageView5"
             android:layout_width="match_parent"
-            android:layout_height="200dp">
+            android:layout_height="200dp"
+            android:scaleType="fitXY"
+            app:srcCompat="@drawable/bannerff" />
 
-            <ImageView
-                android:id="@+id/imageView5"
-                android:layout_width="wrap_content"
-                android:layout_height="200dp"
-                android:scaleType="fitXY"
-                app:srcCompat="@drawable/bannerff" />
-
-            <ImageView
-                android:id="@+id/imageView6"
-                android:layout_width="120dp"
-                android:layout_height="100dp"
-                android:layout_marginLeft="290dp"
-                android:layout_marginTop="5dp"
-                app:srcCompat="@drawable/loglogin" />
-
-            <LinearLayout
-                android:layout_width="277dp"
-                android:layout_height="180dp"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:id="@+id/img_perfilAdmin"
-                    android:layout_width="110dp"
-                    android:layout_height="wrap_content"
-                    app:srcCompat="@drawable/user_icon_on_transparent_background_free_png" />
-
-                <LinearLayout
-                    android:id="@+id/BienvenidoLayout"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="60dp"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/txt_bienvenido"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Bienvenido,"
-                        android:textColor="@color/white"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:id="@+id/txt_nombreParticipante"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="nombre P"
-                        android:textColor="#FFFFFF"
-                        android:textSize="20sp"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:id="@+id/txt_participante"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Participante"
-                        android:textColor="#4CAF50"
-                        android:textSize="12sp" />
-                </LinearLayout>
-            </LinearLayout>
-
-            <TextView
-                android:id="@+id/textView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="TextView" />
-
-        </FrameLayout>
+        <ImageView
+            android:id="@+id/imageView6"
+            android:layout_width="120dp"
+            android:layout_height="100dp"
+            android:layout_gravity="end|top"
+            android:layout_marginEnd="8dp"
+            android:layout_marginTop="5dp"
+            app:srcCompat="@drawable/loglogin" />
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="80dp"
+            android:layout_width="277dp"
+            android:layout_height="180dp"
             android:orientation="horizontal">
 
             <ImageView
-                android:id="@+id/imageView"
-                android:layout_width="120dp"
-                android:layout_height="70dp"
-                android:layout_weight="1"
-                app:srcCompat="@drawable/copa" />
+                android:id="@+id/img_perfilAdmin"
+                android:layout_width="110dp"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/user_icon_on_transparent_background_free_png" />
 
             <LinearLayout
+                android:id="@+id/BienvenidoLayout"
                 android:layout_width="match_parent"
-                android:layout_height="70dp"
-                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:layout_marginTop="60dp"
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/textView2"
+                    android:id="@+id/txt_bienvenido"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:layout_weight="1"
-                    android:text="Tabla de posiciones"
+                    android:text="Bienvenido,"
+                    android:textColor="@color/white"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/txt_nombreParticipante"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="nombre P"
+                    android:textColor="#FFFFFF"
                     android:textSize="20sp"
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/textView3"
+                    android:id="@+id/txt_participante"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Asi van los participantes del mundial 2026" />
+                    android:text="Participante"
+                    android:textColor="#4CAF50"
+                    android:textSize="12sp" />
             </LinearLayout>
-
         </LinearLayout>
 
-        <ScrollView
-            android:id="@+id/scv_tablaPosicion"
-            android:layout_width="match_parent"
-            android:layout_height="330dp"
-            android:layout_marginBottom="120dp">
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="TextView"
+            android:visibility="gone" />
 
-            <TableLayout
-                android:id="@+id/tb_tablaPosiciones"
+    </FrameLayout>
+
+    <!-- 2. SECCIÓN TÍTULO Y COPA -->
+    <LinearLayout
+        android:id="@+id/headerTablaLayout"
+        android:layout_width="0dp"
+        android:layout_height="70dp"
+        android:layout_marginTop="8dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/bannerHeader">
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="80dp"
+            android:layout_height="match_parent"
+            app:srcCompat="@drawable/copa" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textView2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="12dp"
-                android:stretchColumns="1" />
-        </ScrollView>
+                android:text="Tabla de posiciones"
+                android:textSize="20sp"
+                android:textStyle="bold" />
 
-        <androidx.cardview.widget.CardView
-            android:id="@+id/cd_volver"
-            android:layout_width="150dp"
-            android:layout_height="40dp"
-            android:layout_marginLeft="120dp"
-            android:onClick="volver"
-            app:cardBackgroundColor="@android:color/transparent"
-            app:cardCornerRadius="5dp">
-
-            <LinearLayout
+            <TextView
+                android:id="@+id/textView3"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@drawable/borde_card_black"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:id="@+id/imageView2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginRight="1dp"
-                    android:padding="10dp"
-                    android:scaleType="fitXY"
-                    app:srcCompat="?attr/homeAsUpIndicator" />
-
-                <TextView
-                    android:id="@+id/textView4"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:padding="8dp"
-                    android:text="Volver"
-                    android:textColor="#000D5F"
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
-            </LinearLayout>
-
-        </androidx.cardview.widget.CardView>
+                android:layout_height="wrap_content"
+                android:text="Asi van los participantes del mundial 2026" />
+        </LinearLayout>
 
     </LinearLayout>
+
+    <!-- 3. TABLA DE POSICIONES (Ocupa el espacio intermedio) -->
+    <ScrollView
+        android:id="@+id/scv_tablaPosicion"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="12dp"
+        app:layout_constraintBottom_toTopOf="@+id/cd_volver"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/headerTablaLayout">
+
+        <TableLayout
+            android:id="@+id/tb_tablaPosiciones"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="12dp"
+            android:stretchColumns="1" />
+    </ScrollView>
+
+    <!-- 4. BOTÓN VOLVER (Fijo en el fondo inferior) -->
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cd_volver"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:onClick="volver"
+        app:cardBackgroundColor="@android:color/transparent"
+        app:cardCornerRadius="12dp"
+        app:cardElevation="0dp"
+        app:cardMaxElevation="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/borde_card_black"
+            android:gravity="center"
+            android:paddingHorizontal="24dp"
+            android:paddingVertical="8dp"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/imageView2"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginEnd="8dp"
+                app:srcCompat="?attr/homeAsUpIndicator" />
+
+            <TextView
+                android:id="@+id/textView4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Volver"
+                android:textColor="#000D5F"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
