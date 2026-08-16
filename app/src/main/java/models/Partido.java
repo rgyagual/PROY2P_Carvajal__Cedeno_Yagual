@@ -3,7 +3,7 @@ package models;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
-public class Partido {
+public class Partido implements Comparable {
     private String idPartido;
     private LocalDate fecha;
     private LocalTime hora;
