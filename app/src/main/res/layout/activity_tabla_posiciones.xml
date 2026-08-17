@@ -7,7 +7,6 @@
     android:layout_height="match_parent"
     tools:context=".TablaPosicionesActivity">
 
-    <!-- 1. BANNER SUPERIOR -->
     <FrameLayout
         android:id="@+id/bannerHeader"
         android:layout_width="0dp"
@@ -86,7 +85,6 @@
 
     </FrameLayout>
 
-    <!-- 2. SECCIÓN TÍTULO Y COPA -->
     <LinearLayout
         android:id="@+id/headerTablaLayout"
         android:layout_width="0dp"
@@ -126,7 +124,6 @@
 
     </LinearLayout>
 
-    <!-- 3. TABLA DE POSICIONES (Ocupa el espacio intermedio) -->
     <ScrollView
         android:id="@+id/scv_tablaPosicion"
         android:layout_width="0dp"
@@ -146,7 +143,6 @@
             android:stretchColumns="1" />
     </ScrollView>
 
-    <!-- 4. BOTÓN VOLVER (Fijo en el fondo inferior) -->
     <androidx.cardview.widget.CardView
         android:id="@+id/cd_volver"
         android:layout_width="wrap_content"
