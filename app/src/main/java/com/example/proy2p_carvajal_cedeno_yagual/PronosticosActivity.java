@@ -1,6 +1,7 @@
 package com.example.proy2p_carvajal_cedeno_yagual;
 
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -21,4 +22,8 @@ public class PronosticosActivity extends AppCompatActivity {
             return insets;
         });
     }
+    public void volver(View view){
+        finish();
+    }
+
 }
