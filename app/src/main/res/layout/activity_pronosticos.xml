@@ -16,48 +16,39 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <LinearLayout
+        <FrameLayout
             android:id="@+id/headerPronostico"
             android:layout_width="match_parent"
             android:layout_height="70dp"
-            android:background="#000D5F"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
+            android:background="#1B5E20"
             android:paddingHorizontal="16dp">
 
             <ImageView
                 android:id="@+id/img_logoHeader"
                 android:layout_width="100dp"
-                android:layout_height="45dp"
+                android:layout_height="55dp"
                 android:scaleType="fitCenter"
+                android:layout_gravity="start|center_vertical"
                 app:srcCompat="@drawable/loglogin" />
-
-            <View
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_weight="1" />
 
             <TextView
                 android:id="@+id/txt_tituloHeader"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Pronósticos"
-                android:textSize="24sp"
+                android:textSize="26sp"
                 android:textStyle="bold"
+                android:layout_gravity="center"
                 android:textColor="#FFFFFF" />
-
-            <View
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_weight="1" />
 
             <ImageView
                 android:id="@+id/img_perfilAdmin"
-                android:layout_width="35dp"
-                android:layout_height="35dp"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_gravity="end|center_vertical"
                 app:srcCompat="@drawable/user_icon_on_transparent_background_free_png" />
 
-        </LinearLayout>
+        </FrameLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -91,8 +82,7 @@
                     android:layout_width="16dp"
                     android:layout_height="16dp"
                     android:layout_marginEnd="6dp"
-                    app:srcCompat="@android:drawable/ic_dialog_info"
-                    app:tint="#666666" />
+                    app:srcCompat="@drawable/info" />
 
                 <TextView
                     android:id="@+id/txt_mensaje_fase"
@@ -120,7 +110,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="16dp"
+                android:layout_marginBottom="1dp"
+                android:layout_marginTop="12dp"
                 android:onClick="volver"
                 app:cardBackgroundColor="@android:color/transparent"
                 app:cardCornerRadius="12dp"
