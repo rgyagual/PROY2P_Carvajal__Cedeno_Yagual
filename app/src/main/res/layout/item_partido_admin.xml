@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@drawable/borde_card"
+    android:padding="12dp"
+    android:layout_marginBottom="12dp">
+
+    <!-- Encabezado: Estado e ID -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tvAdminEstado"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="ABIERTO"
+            android:textStyle="bold"
+            android:textSize="12sp"
+            android:textColor="#2E7D32" />
+
+        <TextView
+            android:id="@+id/tvAdminIdPartido"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ID: 1"
+            android:textSize="12sp"
+            android:textColor="#757575" />
+    </LinearLayout>
+
+    <!-- Fecha, Hora y Estadio -->
+    <TextView
+        android:id="@+id/tvAdminInfo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="11 Jun 2026 - 15:00 | Estadio Azteca"
+        android:textSize="12sp"
+        android:textColor="#616161"
+        android:layout_marginTop="4dp" />
+
+    <!-- Selecciones -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_marginVertical="8dp">
+
+        <TextView
+            android:id="@+id/tvAdminSeleccion1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="España"
+            android:textStyle="bold"
+            android:textSize="16sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="VS"
+            android:textStyle="bold"
+            android:textColor="#757575"
+            android:paddingHorizontal="8dp" />
+
+        <TextView
+            android:id="@+id/tvAdminSeleccion2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="Argentina"
+            android:textStyle="bold"
+            android:textSize="16sp" />
+    </LinearLayout>
+
+    <!-- Estado ABIERTO: Botón Cerrar -->
+    <Button
+        android:id="@+id/btnCerrarPronosticos"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Cerrar pronósticos"
+        android:backgroundTint="#2E7D32"
+        android:textColor="#FFFFFF"
+        android:visibility="gone" />
+
+    <!-- Estado CERRADO: Registro de resultados -->
+    <LinearLayout
+        android:id="@+id/layoutAdminCerrado"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/tvMsgCerrado"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Pronósticos cerrados. Registre el resultado al finalizar el partido."
+            android:textSize="12sp"
+            android:textColor="#E65100"
+            android:gravity="center"
+            android:layout_marginBottom="6dp" />
+
+        <Button
+            android:id="@+id/btnHabilitarRegistro"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Registrar resultado"
+            android:backgroundTint="#1976D2"
+            android:textColor="#FFFFFF" />
+
+        <LinearLayout
+            android:id="@+id/layoutCamposGoles"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_marginVertical="6dp"
+            android:visibility="gone">
+
+            <EditText
+                android:id="@+id/etGolesOficial1"
+                android:layout_width="60dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:inputType="number"
+                android:hint="0" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=" - "
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/etGolesOficial2"
+                android:layout_width="60dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:inputType="number"
+                android:hint="0" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btnGuardarResultado"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Guardar resultado"
+            android:backgroundTint="#2E7D32"
+            android:textColor="#FFFFFF"
+            android:visibility="gone" />
+    </LinearLayout>
+
+    <!-- Estado FINALIZADO -->
+    <LinearLayout
+        android:id="@+id/layoutAdminFinalizado"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/tvAdminResultadoFinal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Resultado Oficial: 0 - 0"
+            android:textStyle="bold"
+            android:textSize="15sp"
+            android:textColor="#0D1B2A" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Partido Finalizado"
+            android:textSize="12sp"
+            android:textColor="#757575"
+            android:layout_marginTop="2dp" />
+    </LinearLayout>
+
+</LinearLayout>

@@ -76,8 +76,8 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void iniciarSesion(View view) {
-        String nombreUsuario = edt_nombreUsuario.getText().toString();
-        String contrasena = edt_contrasena.getText().toString();
+        String nombreUsuario = edt_nombreUsuario.getText().toString().trim();
+        String contrasena = edt_contrasena.getText().toString().trim();
 
         try {
             Usuario usuario = validarCredenciales(nombreUsuario, contrasena);
