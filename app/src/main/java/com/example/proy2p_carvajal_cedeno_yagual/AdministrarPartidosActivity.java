@@ -1,6 +1,5 @@
 package com.example.proy2p_carvajal_cedeno_yagual;
 
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -43,9 +43,6 @@ public class AdministrarPartidosActivity extends AppCompatActivity {
 
     private ArrayList<Partido> listaPartidos;
     private Map<String, Fase> mapeoFasesPorPartido;
-    private Partido partidoSeleccionado;
-    private EditText etGoles1Ref;
-    private EditText etGoles2Ref;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -122,7 +119,7 @@ public class AdministrarPartidosActivity extends AppCompatActivity {
 
             TextView tvMsgInformativo = card.findViewById(R.id.tvMsgInformativo);
 
-            // Cargar datos informativos del partido
+            // Cargar metadatos
             tvId.setText("Id: " + p.getIdPartido());
             tvFecha.setText("📅 " + p.getFecha().toString());
             tvHora.setText("🕒 " + p.getHora().toString());
@@ -138,45 +135,48 @@ public class AdministrarPartidosActivity extends AppCompatActivity {
             cargarBandera(ivB1, p.getSeleccion1());
             cargarBandera(ivB2, p.getSeleccion2());
 
-            // Configurar vistas y eventos según el estado
+            // Configurar vistas y estilos según el estado
             if (p.getEstado() == Estado.ABIERTO) {
                 tvEstado.setText("ABIERTO");
-                tvEstado.setTextColor(Color.parseColor("#2E7D32"));
-                tvEstado.setBackgroundColor(Color.parseColor("#E8F5E9"));
+                tvEstado.setBackgroundResource(R.drawable.bg_badge_abierto);
+                tvEstado.setTextColor(ContextCompat.getColor(this, R.color.badge_abierto_text));
 
                 tvVsOMarcador.setText("VS");
                 btnCerrar.setVisibility(View.VISIBLE);
+                layoutCerrado.setVisibility(View.GONE);
+                layoutFinalizado.setVisibility(View.GONE);
+
                 btnCerrar.setOnClickListener(v -> cerrarPronosticos(p));
 
                 tvMsgInformativo.setText("ⓘ  Los participantes pueden registrar o modificar sus pronósticos.");
-                tvMsgInformativo.setTextColor(Color.parseColor("#2E7D32"));
-                tvMsgInformativo.setBackgroundColor(Color.parseColor("#E8F5E9"));
+                tvMsgInformativo.setBackgroundResource(R.drawable.bg_info_box);
+                tvMsgInformativo.setTextColor(ContextCompat.getColor(this, R.color.text_secondary));
 
             } else if (p.getEstado() == Estado.CERRADO) {
                 tvEstado.setText("CERRADO");
-                tvEstado.setTextColor(Color.parseColor("#E65100"));
-                tvEstado.setBackgroundColor(Color.parseColor("#FFF3E0"));
+                tvEstado.setBackgroundResource(R.drawable.bg_badge_cerrado);
+                tvEstado.setTextColor(ContextCompat.getColor(this, R.color.badge_cerrado_text));
 
                 tvVsOMarcador.setText("VS");
+                btnCerrar.setVisibility(View.GONE);
                 layoutCerrado.setVisibility(View.VISIBLE);
+                layoutFinalizado.setVisibility(View.GONE);
 
-                btnGuardar.setOnClickListener(v -> {
-                    registrarResultado(p);
-                    etGoles1Ref = etG1;
-                    etGoles2Ref = etG2;
-                    guardarResultado();
-                });
+                btnGuardar.setOnClickListener(v -> guardarResultado(p, etG1, etG2));
 
                 tvMsgInformativo.setText("ⓘ  Los pronósticos están cerrados. Registra el resultado oficial cuando el partido haya finalizado.");
-                tvMsgInformativo.setTextColor(Color.parseColor("#E65100"));
-                tvMsgInformativo.setBackgroundColor(Color.parseColor("#FFF3E0"));
+                tvMsgInformativo.setBackgroundResource(R.drawable.bg_info_box);
+                tvMsgInformativo.setTextColor(ContextCompat.getColor(this, R.color.text_secondary));
 
             } else if (p.getEstado() == Estado.FINALIZADO) {
                 tvEstado.setText("FINALIZADO");
-                tvEstado.setTextColor(Color.parseColor("#1565C0"));
-                tvEstado.setBackgroundColor(Color.parseColor("#E3F2FD"));
+                tvEstado.setBackgroundResource(R.drawable.bg_badge_finalizado);
+                tvEstado.setTextColor(ContextCompat.getColor(this, R.color.badge_final_text));
 
+                btnCerrar.setVisibility(View.GONE);
+                layoutCerrado.setVisibility(View.GONE);
                 layoutFinalizado.setVisibility(View.VISIBLE);
+
                 Resultado res = resultados.get(p.getIdPartido());
                 if (res != null) {
                     tvVsOMarcador.setText(res.getGolesSeleccion1() + " - " + res.getGolesSeleccion2());
@@ -185,8 +185,8 @@ public class AdministrarPartidosActivity extends AppCompatActivity {
                 }
 
                 tvMsgInformativo.setText("✓  Resultado registrado. El partido ha finalizado.");
-                tvMsgInformativo.setTextColor(Color.parseColor("#1565C0"));
-                tvMsgInformativo.setBackgroundColor(Color.parseColor("#E3F2FD"));
+                tvMsgInformativo.setBackgroundResource(R.drawable.bg_info_box);
+                tvMsgInformativo.setTextColor(ContextCompat.getColor(this, R.color.text_secondary));
             }
 
             layoutContenedorPartidos.addView(card);
@@ -206,7 +206,7 @@ public class AdministrarPartidosActivity extends AppCompatActivity {
         if (resId != 0) {
             iv.setImageResource(resId);
         } else {
-            iv.setImageResource(R.mipmap.ic_launcher_round);
+            iv.setImageResource(R.drawable.flag_placeholder);
         }
     }
 
@@ -217,18 +217,14 @@ public class AdministrarPartidosActivity extends AppCompatActivity {
         mostrarPartidos((Fase) spFase.getSelectedItem());
     }
 
-    public void registrarResultado(Partido partido) {
-        this.partidoSeleccionado = partido;
-    }
-
-    public void guardarResultado() {
-        if (partidoSeleccionado == null || etGoles1Ref == null || etGoles2Ref == null) {
+    public void guardarResultado(Partido partido, EditText etG1, EditText etG2) {
+        if (partido == null || etG1 == null || etG2 == null) {
             return;
         }
 
         try {
-            String s1 = etGoles1Ref.getText().toString().trim();
-            String s2 = etGoles2Ref.getText().toString().trim();
+            String s1 = etG1.getText().toString().trim();
+            String s2 = etG2.getText().toString().trim();
 
             if (s1.isEmpty() || s2.isEmpty()) {
                 throw new DatosIncompletosException("No se han ingresado todos los datos necesarios para registrar el resultado.");
@@ -245,11 +241,11 @@ public class AdministrarPartidosActivity extends AppCompatActivity {
                 throw new DatosIncompletosException("Los goles deben ser números enteros mayores o iguales a cero.");
             }
 
-            String idResultado = "RES_" + partidoSeleccionado.getIdPartido();
-            Resultado nuevoResultado = new Resultado(idResultado, partidoSeleccionado.getIdPartido(), g1, g2);
+            String idResultado = "RES_" + partido.getIdPartido();
+            Resultado nuevoResultado = new Resultado(idResultado, partido.getIdPartido(), g1, g2);
             guardarResultadoEnArchivo(nuevoResultado);
 
-            partidoSeleccionado.setEstado(Estado.FINALIZADO);
+            partido.setEstado(Estado.FINALIZADO);
             guardarPartidosLocalmente();
 
             Toast.makeText(this, "Resultado registrado correctamente.", Toast.LENGTH_SHORT).show();
