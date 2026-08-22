@@ -1,10 +1,10 @@
 package models;
 
 public enum Fase {
-    GRUPOS,
+    FASE_DE_GRUPOS,
     DIECISEISAVOS,
-    OCTAVOS,
-    CUARTOS,
+    OCTAVOS_DE_FINAL,
+    CUARTOS_DE_FINAL,
     SEMIFINALES,
     TERCER_LUGAR,
     FINAL
