@@ -1,0 +1,400 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="14dp"
+    app:cardCornerRadius="12dp"
+    app:cardElevation="1dp"
+    app:cardBackgroundColor="#FFFFFF">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="14dp">
+
+        <!-- 1. Encabezado: Badge de Estado e ID -->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp">
+
+            <TextView
+                android:id="@+id/tvAdminEstado"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:text="ABIERTO"
+                android:textStyle="bold"
+                android:textSize="10sp"
+                android:paddingHorizontal="8dp"
+                android:paddingVertical="3dp" />
+
+            <TextView
+                android:id="@+id/tvAdminIdPartido"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:text="Id: 101"
+                android:textSize="11sp"
+                android:textColor="#94A3B8" />
+        </RelativeLayout>
+
+        <!-- 2. Metadatos: Fecha | Hora | Estadio -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="12dp">
+
+            <TextView
+                android:id="@+id/tvAdminFecha"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="📅 12 jun 2026"
+                android:textSize="11sp"
+                android:textColor="#64748B" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="   |   "
+                android:textSize="11sp"
+                android:textColor="#CBD5E1" />
+
+            <TextView
+                android:id="@+id/tvAdminHora"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="🕒 16:00"
+                android:textSize="11sp"
+                android:textColor="#64748B" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="   |   "
+                android:textSize="11sp"
+                android:textColor="#CBD5E1" />
+
+            <TextView
+                android:id="@+id/tvAdminEstadio"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="🏟 Estadio Azteca"
+                android:textSize="11sp"
+                android:textColor="#64748B"
+                android:singleLine="true" />
+        </LinearLayout>
+
+        <!-- 3. Sección Central: Enfrentamiento y Panel de Control -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="12dp">
+
+            <!-- Lado Izquierdo: Selecciones y Banderas -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.2"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+                <!-- Selección 1 -->
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:gravity="center">
+
+                    <ImageView
+                        android:id="@+id/ivBandera1"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:src="@mipmap/ic_launcher_round" />
+
+                    <TextView
+                        android:id="@+id/tvAdminSeleccion1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Selección 1"
+                        android:textSize="11sp"
+                        android:textStyle="bold"
+                        android:textColor="#1E293B"
+                        android:layout_marginTop="4dp" />
+                </LinearLayout>
+
+                <!-- VS o Marcador Resumen -->
+                <TextView
+                    android:id="@+id/tvVsOMarcador"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="VS"
+                    android:textStyle="bold"
+                    android:textSize="13sp"
+                    android:textColor="#64748B"
+                    android:paddingHorizontal="4dp" />
+
+                <!-- Selección 2 -->
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:gravity="center">
+
+                    <ImageView
+                        android:id="@+id/ivBandera2"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:src="@mipmap/ic_launcher_round" />
+
+                    <TextView
+                        android:id="@+id/tvAdminSeleccion2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Selección 2"
+                        android:textSize="11sp"
+                        android:textStyle="bold"
+                        android:textColor="#1E293B"
+                        android:layout_marginTop="4dp" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- Lado Derecho: Controles según Estado -->
+            <FrameLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.1"
+                android:paddingStart="6dp">
+
+                <!-- Estado ABIERTO: Botón verde con candado -->
+                <Button
+                    android:id="@+id/btnCerrarPronosticos"
+                    android:layout_width="match_parent"
+                    android:layout_height="38dp"
+                    android:text="🔒 Cerrar pronósticos"
+                    android:textSize="10sp"
+                    android:textStyle="bold"
+                    android:backgroundTint="#2E7D32"
+                    android:textColor="#FFFFFF"
+                    android:insetTop="0dp"
+                    android:insetBottom="0dp"
+                    app:cornerRadius="6dp"
+                    android:visibility="gone" />
+
+                <!-- Estado CERRADO: Formulario de ingreso de goles -->
+                <LinearLayout
+                    android:id="@+id/layoutAdminCerrado"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Resultado oficial"
+                        android:textSize="10sp"
+                        android:textStyle="bold"
+                        android:textColor="#1E293B"
+                        android:layout_marginBottom="4dp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center">
+
+                        <!-- Input País 1 -->
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:gravity="center">
+
+                            <TextView
+                                android:id="@+id/lblGolesSel1"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Goles Sel 1"
+                                android:textSize="8sp"
+                                android:textColor="#64748B"
+                                android:layout_marginBottom="2dp" />
+
+                            <EditText
+                                android:id="@+id/etGolesOficial1"
+                                android:layout_width="38dp"
+                                android:layout_height="34dp"
+                                android:gravity="center"
+                                android:inputType="number"
+                                android:hint="0"
+                                android:textSize="13sp"
+                                android:textStyle="bold"
+                                android:background="@android:drawable/editbox_background_normal" />
+                        </LinearLayout>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text=" : "
+                            android:textStyle="bold"
+                            android:textSize="14sp"
+                            android:textColor="#64748B"
+                            android:layout_marginTop="8dp" />
+
+                        <!-- Input País 2 -->
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:gravity="center">
+
+                            <TextView
+                                android:id="@+id/lblGolesSel2"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Goles Sel 2"
+                                android:textSize="8sp"
+                                android:textColor="#64748B"
+                                android:layout_marginBottom="2dp" />
+
+                            <EditText
+                                android:id="@+id/etGolesOficial2"
+                                android:layout_width="38dp"
+                                android:layout_height="34dp"
+                                android:gravity="center"
+                                android:inputType="number"
+                                android:hint="0"
+                                android:textSize="13sp"
+                                android:textStyle="bold"
+                                android:background="@android:drawable/editbox_background_normal" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <Button
+                        android:id="@+id/btnGuardarResultado"
+                        android:layout_width="match_parent"
+                        android:layout_height="34dp"
+                        android:text="💾 Guardar resultado"
+                        android:textSize="9sp"
+                        android:textStyle="bold"
+                        android:backgroundTint="#2E7D32"
+                        android:textColor="#FFFFFF"
+                        android:insetTop="0dp"
+                        android:insetBottom="0dp"
+                        app:cornerRadius="6dp"
+                        android:layout_marginTop="6dp" />
+                </LinearLayout>
+
+                <!-- Estado FINALIZADO: Marcador final inmutable -->
+                <LinearLayout
+                    android:id="@+id/layoutAdminFinalizado"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Resultado oficial"
+                        android:textSize="10sp"
+                        android:textStyle="bold"
+                        android:textColor="#1E293B"
+                        android:layout_marginBottom="4dp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center">
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:gravity="center">
+
+                            <TextView
+                                android:id="@+id/lblFinGolesSel1"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Goles Sel 1"
+                                android:textSize="8sp"
+                                android:textColor="#64748B"
+                                android:layout_marginBottom="2dp" />
+
+                            <TextView
+                                android:id="@+id/tvGolesFin1"
+                                android:layout_width="38dp"
+                                android:layout_height="34dp"
+                                android:gravity="center"
+                                android:text="0"
+                                android:textSize="13sp"
+                                android:textStyle="bold"
+                                android:textColor="#1E293B"
+                                android:background="#F1F5F9" />
+                        </LinearLayout>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text=" : "
+                            android:textStyle="bold"
+                            android:textSize="14sp"
+                            android:textColor="#64748B"
+                            android:layout_marginTop="8dp" />
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:gravity="center">
+
+                            <TextView
+                                android:id="@+id/lblFinGolesSel2"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Goles Sel 2"
+                                android:textSize="8sp"
+                                android:textColor="#64748B"
+                                android:layout_marginBottom="2dp" />
+
+                            <TextView
+                                android:id="@+id/tvGolesFin2"
+                                android:layout_width="38dp"
+                                android:layout_height="34dp"
+                                android:gravity="center"
+                                android:text="0"
+                                android:textSize="13sp"
+                                android:textStyle="bold"
+                                android:textColor="#1E293B"
+                                android:background="#F1F5F9" />
+                        </LinearLayout>
+                    </LinearLayout>
+                </LinearLayout>
+            </FrameLayout>
+        </LinearLayout>
+
+        <!-- 4. Banner Informativo Inferior -->
+        <TextView
+            android:id="@+id/tvMsgInformativo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="ⓘ   Los participantes pueden registrar o modificar sus pronósticos."
+            android:textSize="11sp"
+            android:paddingHorizontal="10dp"
+            android:paddingVertical="8dp" />
+
+    </LinearLayout>
+</androidx.cardview.widget.CardView>
