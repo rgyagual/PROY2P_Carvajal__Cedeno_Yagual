@@ -1,5 +1,6 @@
 package com.example.proy2p_carvajal_cedeno_yagual;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -7,6 +8,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.Spinner;
@@ -37,8 +39,8 @@ public class AdministrarPartidosActivity extends AppCompatActivity {
 
     private Spinner spFase;
     private ScrollView scrollV;
-
     private LinearLayout layoutContenedorPartidos;
+
     private ArrayList<Partido> listaPartidos;
     private Map<String, Fase> mapeoFasesPorPartido;
     private Partido partidoSeleccionado;
@@ -94,54 +96,117 @@ public class AdministrarPartidosActivity extends AppCompatActivity {
 
             TextView tvEstado = card.findViewById(R.id.tvAdminEstado);
             TextView tvId = card.findViewById(R.id.tvAdminIdPartido);
-            TextView tvInfo = card.findViewById(R.id.tvAdminInfo);
+            TextView tvFecha = card.findViewById(R.id.tvAdminFecha);
+            TextView tvHora = card.findViewById(R.id.tvAdminHora);
+            TextView tvEstadio = card.findViewById(R.id.tvAdminEstadio);
+
             TextView tvEquipo1 = card.findViewById(R.id.tvAdminSeleccion1);
             TextView tvEquipo2 = card.findViewById(R.id.tvAdminSeleccion2);
+            ImageView ivB1 = card.findViewById(R.id.ivBandera1);
+            ImageView ivB2 = card.findViewById(R.id.ivBandera2);
+            TextView tvVsOMarcador = card.findViewById(R.id.tvVsOMarcador);
 
             Button btnCerrar = card.findViewById(R.id.btnCerrarPronosticos);
             LinearLayout layoutCerrado = card.findViewById(R.id.layoutAdminCerrado);
-            Button btnHabilitar = card.findViewById(R.id.btnHabilitarRegistro);
-            LinearLayout layoutGoles = card.findViewById(R.id.layoutCamposGoles);
+            TextView lblG1 = card.findViewById(R.id.lblGolesSel1);
+            TextView lblG2 = card.findViewById(R.id.lblGolesSel2);
             EditText etG1 = card.findViewById(R.id.etGolesOficial1);
             EditText etG2 = card.findViewById(R.id.etGolesOficial2);
             Button btnGuardar = card.findViewById(R.id.btnGuardarResultado);
 
             LinearLayout layoutFinalizado = card.findViewById(R.id.layoutAdminFinalizado);
-            TextView tvResFinal = card.findViewById(R.id.tvAdminResultadoFinal);
+            TextView lblFinG1 = card.findViewById(R.id.lblFinGolesSel1);
+            TextView lblFinG2 = card.findViewById(R.id.lblFinGolesSel2);
+            TextView tvGolesFin1 = card.findViewById(R.id.tvGolesFin1);
+            TextView tvGolesFin2 = card.findViewById(R.id.tvGolesFin2);
 
-            tvId.setText("ID: " + p.getIdPartido());
-            tvEstado.setText(p.getEstado().name());
-            tvInfo.setText(p.getFecha().toString() + " - " + p.getHora().toString() + " | " + p.getEstadio());
+            TextView tvMsgInformativo = card.findViewById(R.id.tvMsgInformativo);
+
+            // Cargar datos informativos del partido
+            tvId.setText("Id: " + p.getIdPartido());
+            tvFecha.setText("📅 " + p.getFecha().toString());
+            tvHora.setText("🕒 " + p.getHora().toString());
+            tvEstadio.setText("🏟 " + p.getEstadio());
             tvEquipo1.setText(p.getSeleccion1());
             tvEquipo2.setText(p.getSeleccion2());
 
+            if (lblG1 != null) lblG1.setText("Goles " + p.getSeleccion1());
+            if (lblG2 != null) lblG2.setText("Goles " + p.getSeleccion2());
+            if (lblFinG1 != null) lblFinG1.setText("Goles " + p.getSeleccion1());
+            if (lblFinG2 != null) lblFinG2.setText("Goles " + p.getSeleccion2());
+
+            cargarBandera(ivB1, p.getSeleccion1());
+            cargarBandera(ivB2, p.getSeleccion2());
+
+            // Configurar vistas y eventos según el estado
             if (p.getEstado() == Estado.ABIERTO) {
+                tvEstado.setText("ABIERTO");
+                tvEstado.setTextColor(Color.parseColor("#2E7D32"));
+                tvEstado.setBackgroundColor(Color.parseColor("#E8F5E9"));
+
+                tvVsOMarcador.setText("VS");
                 btnCerrar.setVisibility(View.VISIBLE);
                 btnCerrar.setOnClickListener(v -> cerrarPronosticos(p));
-            } else if (p.getEstado() == Estado.CERRADO) {
-                layoutCerrado.setVisibility(View.VISIBLE);
-                btnHabilitar.setOnClickListener(v -> {
-                    btnHabilitar.setVisibility(View.GONE);
-                    layoutGoles.setVisibility(View.VISIBLE);
-                    btnGuardar.setVisibility(View.VISIBLE);
 
+                tvMsgInformativo.setText("ⓘ  Los participantes pueden registrar o modificar sus pronósticos.");
+                tvMsgInformativo.setTextColor(Color.parseColor("#2E7D32"));
+                tvMsgInformativo.setBackgroundColor(Color.parseColor("#E8F5E9"));
+
+            } else if (p.getEstado() == Estado.CERRADO) {
+                tvEstado.setText("CERRADO");
+                tvEstado.setTextColor(Color.parseColor("#E65100"));
+                tvEstado.setBackgroundColor(Color.parseColor("#FFF3E0"));
+
+                tvVsOMarcador.setText("VS");
+                layoutCerrado.setVisibility(View.VISIBLE);
+
+                btnGuardar.setOnClickListener(v -> {
                     registrarResultado(p);
                     etGoles1Ref = etG1;
                     etGoles2Ref = etG2;
+                    guardarResultado();
                 });
 
-                btnGuardar.setOnClickListener(v -> guardarResultado());
+                tvMsgInformativo.setText("ⓘ  Los pronósticos están cerrados. Registra el resultado oficial cuando el partido haya finalizado.");
+                tvMsgInformativo.setTextColor(Color.parseColor("#E65100"));
+                tvMsgInformativo.setBackgroundColor(Color.parseColor("#FFF3E0"));
+
             } else if (p.getEstado() == Estado.FINALIZADO) {
+                tvEstado.setText("FINALIZADO");
+                tvEstado.setTextColor(Color.parseColor("#1565C0"));
+                tvEstado.setBackgroundColor(Color.parseColor("#E3F2FD"));
+
                 layoutFinalizado.setVisibility(View.VISIBLE);
-                Resultado resEncontrado = resultados.get(p.getIdPartido());
-                if (resEncontrado != null) {
-                    tvResFinal.setText("Resultado: " + resEncontrado.getGolesSeleccion1() + " - " + resEncontrado.getGolesSeleccion2());
-                } else {
-                    tvResFinal.setText("Partido Finalizado");
+                Resultado res = resultados.get(p.getIdPartido());
+                if (res != null) {
+                    tvVsOMarcador.setText(res.getGolesSeleccion1() + " - " + res.getGolesSeleccion2());
+                    tvGolesFin1.setText(String.valueOf(res.getGolesSeleccion1()));
+                    tvGolesFin2.setText(String.valueOf(res.getGolesSeleccion2()));
                 }
+
+                tvMsgInformativo.setText("✓  Resultado registrado. El partido ha finalizado.");
+                tvMsgInformativo.setTextColor(Color.parseColor("#1565C0"));
+                tvMsgInformativo.setBackgroundColor(Color.parseColor("#E3F2FD"));
             }
 
             layoutContenedorPartidos.addView(card);
+        }
+    }
+
+    private void cargarBandera(ImageView iv, String nombrePais) {
+        String recurso = nombrePais.toLowerCase()
+                .replace(" ", "_")
+                .replace("á", "a")
+                .replace("é", "e")
+                .replace("í", "i")
+                .replace("ó", "o")
+                .replace("ú", "u")
+                .replace("ñ", "n");
+        int resId = getResources().getIdentifier(recurso, "drawable", getPackageName());
+        if (resId != 0) {
+            iv.setImageResource(resId);
+        } else {
+            iv.setImageResource(R.mipmap.ic_launcher_round);
         }
     }
 
@@ -198,8 +263,9 @@ public class AdministrarPartidosActivity extends AppCompatActivity {
     private ArrayList<Partido> leerPartidosLocalmente() {
         ArrayList<Partido> lista = new ArrayList<>();
         File archivo = new File(getFilesDir(), "partidos.txt");
+
         if (!archivo.exists()) {
-            return lista;
+            copiarArchivoDesdeAssets("partidos.txt");
         }
 
         try (BufferedReader br = new BufferedReader(new FileReader(archivo))) {
@@ -237,6 +303,20 @@ public class AdministrarPartidosActivity extends AppCompatActivity {
             e.printStackTrace();
         }
         return lista;
+    }
+
+    private void copiarArchivoDesdeAssets(String nombreArchivo) {
+        File destino = new File(getFilesDir(), nombreArchivo);
+        try (java.io.InputStream in = getAssets().open(nombreArchivo);
+             java.io.OutputStream out = new java.io.FileOutputStream(destino)) {
+            byte[] buffer = new byte[1024];
+            int read;
+            while ((read = in.read(buffer)) != -1) {
+                out.write(buffer, 0, read);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private Map<String, Resultado> leerResultadosLocalmente() {
