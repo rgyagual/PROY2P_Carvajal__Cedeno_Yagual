@@ -2,16 +2,16 @@ package com.example.proy2p_carvajal_cedeno_yagual;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-
-import models.TipoUsuario;
-import models.Usuario;
-import models.exceptions.CredencialesInvalidasException;
-import utils.DataManager;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
 
 import java.util.ArrayList;
 
@@ -25,54 +25,28 @@ public class LoginActivity extends AppCompatActivity {
     private EditText edt_contrasena;
     private Button btn_iniciarSesion;
 
-    private EditText edtUsuario, edtContrasenia;
-    private Button btnIniciarSesion;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_login);
+        ManipularArchivos.iniciarArchivo(this);
 
-        // 1. Inicializar los archivos de texto desde assets si aún no existen
-        DataManager.inicializarArchivos(this);
-
-        // 2. Vincular vistas con los IDs del layout XML
-        edtUsuario = findViewById(R.id.edt_nombreUsuario);
-        edtContrasenia = findViewById(R.id.edt_contraseña);
-        btnIniciarSesion = findViewById(R.id.btn_iniciarSesion);
-
-        // 3. Listener del botón de inicio de sesión
-        btnIniciarSesion.setOnClickListener(v -> autenticarUsuario());
+        edt_nombreUsuario = findViewById(R.id.edt_nombreUsuario);
+        edt_contrasena = findViewById(R.id.edt_contrasena);
+        btn_iniciarSesion = findViewById(R.id.btn_iniciarSesion);
     }
+    private Usuario validarCredenciales(String nombreUsuario, String contrasena)
+            throws CredencialesInvalidasException {
 
-    private void autenticarUsuario() {
-        String username = edtUsuario.getText().toString().trim();
-        String password = edtContrasenia.getText().toString().trim();
+        ArrayList<Usuario> usuarios = ManipularArchivos.cargarUsuario(this);
 
-        try {
-            // Se valida directamente con el método autenticar de DataManager
-            Usuario usuarioLogueado = DataManager.autenticar(this, username, password);
-
-            // Redirigir según el tipo de usuario
-            if (usuarioLogueado.getTipoUsuario() == TipoUsuario.PARTICIPANTE) {
-                Intent intent = new Intent(LoginActivity.this, MenuParticipanteActivity.class);
-                intent.putExtra("usuario_actual", usuarioLogueado);
-                startActivity(intent);
-                finish();
-            } else if (usuarioLogueado.getTipoUsuario() == TipoUsuario.ADMINISTRADOR) {
-                Intent intent = new Intent(LoginActivity.this, MenuAdministradorActivity.class);
-                intent.putExtra("usuario_actual", usuarioLogueado);
-                startActivity(intent);
-                finish();
+        for (Usuario usuario : usuarios) {
+            if (usuario.getNombreUsuario().equals(nombreUsuario) && usuario.getContrasena().equals(contrasena)) {
+                return usuario;
             }
-
-        } catch (CredencialesInvalidasException e) {
-            // Mostrar Toast con el mensaje de la excepción personalizada
-            Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
-        } catch (Exception e) {
-            // Manejo de errores generales
-            Toast.makeText(this, "Problemas técnicos. Estamos resolviendo.", Toast.LENGTH_SHORT).show();
         }
+        throw new CredencialesInvalidasException("Usuario o contraseña incorrectos");
     }
 
     public void iniciarSesion(View view) {
