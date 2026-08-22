@@ -2,4 +2,22 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="header_navy">#0E1E40</color>
+    <color name="screen_bg">#F4F6F9</color>
+    <color name="card_bg">#FFFFFF</color>
+    <color name="text_primary">#1C2833</color>
+    <color name="text_secondary">#7F8C8D</color>
+    <color name="border_gray">#D5D8DC</color>
+
+    <!-- Badges de estado -->
+    <color name="badge_abierto_bg">#D5F5E3</color>
+    <color name="badge_abierto_text">#196F3D</color>
+    <color name="badge_cerrado_bg">#FCF3CF</color>
+    <color name="badge_cerrado_text">#B7950B</color>
+    <color name="badge_final_bg">#EAECEE</color>
+    <color name="badge_final_text">#5D6D7E</color>
+
+    <!-- Botones y cajas de nota -->
+    <color name="btn_green">#1E8449</color>
+    <color name="info_box_bg">#E8F8F5</color>
 </resources>
