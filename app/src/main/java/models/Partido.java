@@ -5,6 +5,7 @@ import java.time.LocalTime;
 
 public class Partido {
     private String idPartido;
+    private Fase fase;
     private LocalDate fecha;
     private LocalTime hora;
     private String estadio;
@@ -12,10 +13,11 @@ public class Partido {
     private String seleccion2;
     private Estado estado;
 
-    public Partido(String idPartido, LocalDate fecha, LocalTime hora,
+    public Partido(String idPartido, Fase fase,LocalDate fecha, LocalTime hora,
                    String estadio, String seleccion1, String seleccion2,
                    Estado estado) {
         this.idPartido = idPartido;
+        this.fase= fase;
         this.fecha = fecha;
         this.hora = hora;
         this.estadio = estadio;
@@ -30,6 +32,8 @@ public class Partido {
     public void setIdPartido(String idPartido) {
         this.idPartido = idPartido;
     }
+    public Fase getFase() { return fase; }
+    public void setFase(Fase fase) { this.fase = fase; }
     public LocalDate getFecha() {
         return fecha;
     }
