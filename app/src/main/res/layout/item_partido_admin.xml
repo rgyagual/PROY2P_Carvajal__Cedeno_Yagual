@@ -197,7 +197,22 @@
                     android:visibility="visible"
                     app:cornerRadius="6dp" />
 
-                <!-- Estado CERRADO: Formulario de ingreso de goles -->
+                <!-- Estado CERRADO - Paso 1: Botón para abrir el formulario -->
+                <Button
+                    android:id="@+id/btnRegistrarResultado"
+                    android:layout_width="match_parent"
+                    android:layout_height="38dp"
+                    android:backgroundTint="@color/btn_green"
+                    android:insetTop="0dp"
+                    android:insetBottom="0dp"
+                    android:text="⚽ Registrar resultado"
+                    android:textColor="#FFFFFF"
+                    android:textSize="9.5sp"
+                    android:textStyle="bold"
+                    android:visibility="gone"
+                    app:cornerRadius="6dp" />
+
+                <!-- Estado CERRADO - Paso 2: Formulario de ingreso de goles -->
                 <LinearLayout
                     android:id="@+id/layoutAdminCerrado"
                     android:layout_width="match_parent"
