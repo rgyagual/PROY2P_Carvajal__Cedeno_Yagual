@@ -297,7 +297,7 @@ public class AdministrarPartidosActivity extends AppCompatActivity {
                         mapeoFasesPorPartido.put(id, faseEnum);
                     } catch (IllegalArgumentException ignored) {}
 
-                    lista.add(new Partido(id, fecha, hora, estadio, sel1, sel2, estado));
+                    lista.add(new Partido(id,fecha, hora, estadio, sel1, sel2, estado));
                 }
             }
         } catch (IOException e) {
