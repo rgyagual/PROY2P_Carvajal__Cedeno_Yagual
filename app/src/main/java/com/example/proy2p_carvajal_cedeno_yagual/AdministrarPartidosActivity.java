@@ -54,7 +54,9 @@ public class AdministrarPartidosActivity extends AppCompatActivity {
         layoutContenedorPartidos = findViewById(R.id.layoutPartidosAdminContainer);
 
         Button btnVolver = findViewById(R.id.btnVolverAdminMenu);
-        btnVolver.setOnClickListener(v -> finish());
+        if (btnVolver != null) {
+            btnVolver.setOnClickListener(v -> finish());
+        }
 
         mapeoFasesPorPartido = new HashMap<>();
         listaPartidos = leerPartidosLocalmente();
@@ -104,6 +106,7 @@ public class AdministrarPartidosActivity extends AppCompatActivity {
             TextView tvVsOMarcador = card.findViewById(R.id.tvVsOMarcador);
 
             Button btnCerrar = card.findViewById(R.id.btnCerrarPronosticos);
+            Button btnRegistrarResultado = card.findViewById(R.id.btnRegistrarResultado);
             LinearLayout layoutCerrado = card.findViewById(R.id.layoutAdminCerrado);
             TextView lblG1 = card.findViewById(R.id.lblGolesSel1);
             TextView lblG2 = card.findViewById(R.id.lblGolesSel2);
@@ -120,12 +123,12 @@ public class AdministrarPartidosActivity extends AppCompatActivity {
             TextView tvMsgInformativo = card.findViewById(R.id.tvMsgInformativo);
 
             // Cargar metadatos
-            tvId.setText("Id: " + p.getIdPartido());
-            tvFecha.setText("📅 " + p.getFecha().toString());
-            tvHora.setText("🕒 " + p.getHora().toString());
-            tvEstadio.setText("🏟 " + p.getEstadio());
-            tvEquipo1.setText(p.getSeleccion1());
-            tvEquipo2.setText(p.getSeleccion2());
+            if (tvId != null) tvId.setText("Id: " + p.getIdPartido());
+            if (tvFecha != null) tvFecha.setText("📅 " + p.getFecha().toString());
+            if (tvHora != null) tvHora.setText("🕒 " + p.getHora().toString());
+            if (tvEstadio != null) tvEstadio.setText("🏟 " + p.getEstadio());
+            if (tvEquipo1 != null) tvEquipo1.setText(p.getSeleccion1());
+            if (tvEquipo2 != null) tvEquipo2.setText(p.getSeleccion2());
 
             if (lblG1 != null) lblG1.setText("Goles " + p.getSeleccion1());
             if (lblG2 != null) lblG2.setText("Goles " + p.getSeleccion2());
@@ -135,58 +138,87 @@ public class AdministrarPartidosActivity extends AppCompatActivity {
             cargarBandera(ivB1, p.getSeleccion1());
             cargarBandera(ivB2, p.getSeleccion2());
 
-            // Configurar vistas y estilos según el estado
+            // 1. ESTADO ABIERTO
             if (p.getEstado() == Estado.ABIERTO) {
-                tvEstado.setText("ABIERTO");
-                tvEstado.setBackgroundResource(R.drawable.bg_badge_abierto);
-                tvEstado.setTextColor(ContextCompat.getColor(this, R.color.badge_abierto_text));
+                if (tvEstado != null) {
+                    tvEstado.setText("ABIERTO");
+                    tvEstado.setBackgroundResource(R.drawable.bg_badge_abierto);
+                    tvEstado.setTextColor(ContextCompat.getColor(this, R.color.badge_abierto_text));
+                }
 
-                tvVsOMarcador.setText("VS");
-                btnCerrar.setVisibility(View.VISIBLE);
-                layoutCerrado.setVisibility(View.GONE);
-                layoutFinalizado.setVisibility(View.GONE);
+                if (tvVsOMarcador != null) tvVsOMarcador.setText("VS");
+                if (btnCerrar != null) {
+                    btnCerrar.setVisibility(View.VISIBLE);
+                    btnCerrar.setOnClickListener(v -> cerrarPronosticos(p));
+                }
+                if (btnRegistrarResultado != null) btnRegistrarResultado.setVisibility(View.GONE);
+                if (layoutCerrado != null) layoutCerrado.setVisibility(View.GONE);
+                if (layoutFinalizado != null) layoutFinalizado.setVisibility(View.GONE);
 
-                btnCerrar.setOnClickListener(v -> cerrarPronosticos(p));
+                if (tvMsgInformativo != null) {
+                    tvMsgInformativo.setText("ⓘ  Los participantes pueden registrar o modificar sus pronósticos.");
+                    tvMsgInformativo.setBackgroundResource(R.drawable.bg_info_box);
+                    tvMsgInformativo.setTextColor(ContextCompat.getColor(this, R.color.text_secondary));
+                }
 
-                tvMsgInformativo.setText("ⓘ  Los participantes pueden registrar o modificar sus pronósticos.");
-                tvMsgInformativo.setBackgroundResource(R.drawable.bg_info_box);
-                tvMsgInformativo.setTextColor(ContextCompat.getColor(this, R.color.text_secondary));
-
+                // 2. ESTADO CERRADO
             } else if (p.getEstado() == Estado.CERRADO) {
-                tvEstado.setText("CERRADO");
-                tvEstado.setBackgroundResource(R.drawable.bg_badge_cerrado);
-                tvEstado.setTextColor(ContextCompat.getColor(this, R.color.badge_cerrado_text));
+                if (tvEstado != null) {
+                    tvEstado.setText("CERRADO");
+                    tvEstado.setBackgroundResource(R.drawable.bg_badge_cerrado);
+                    tvEstado.setTextColor(ContextCompat.getColor(this, R.color.badge_cerrado_text));
+                }
 
-                tvVsOMarcador.setText("VS");
-                btnCerrar.setVisibility(View.GONE);
-                layoutCerrado.setVisibility(View.VISIBLE);
-                layoutFinalizado.setVisibility(View.GONE);
+                if (tvVsOMarcador != null) tvVsOMarcador.setText("VS");
+                if (btnCerrar != null) btnCerrar.setVisibility(View.GONE);
+                if (layoutFinalizado != null) layoutFinalizado.setVisibility(View.GONE);
 
-                btnGuardar.setOnClickListener(v -> guardarResultado(p, etG1, etG2));
+                // Formulario oculto hasta hacer clic en "Registrar resultado"
+                if (layoutCerrado != null) layoutCerrado.setVisibility(View.GONE);
 
-                tvMsgInformativo.setText("ⓘ  Los pronósticos están cerrados. Registra el resultado oficial cuando el partido haya finalizado.");
-                tvMsgInformativo.setBackgroundResource(R.drawable.bg_info_box);
-                tvMsgInformativo.setTextColor(ContextCompat.getColor(this, R.color.text_secondary));
+                if (btnRegistrarResultado != null) {
+                    btnRegistrarResultado.setVisibility(View.VISIBLE);
+                    btnRegistrarResultado.setOnClickListener(v -> {
+                        btnRegistrarResultado.setVisibility(View.GONE);
+                        if (layoutCerrado != null) layoutCerrado.setVisibility(View.VISIBLE);
+                    });
+                }
 
+                if (btnGuardar != null) {
+                    btnGuardar.setOnClickListener(v -> guardarResultado(p, etG1, etG2));
+                }
+
+                if (tvMsgInformativo != null) {
+                    tvMsgInformativo.setText("ⓘ  Los pronósticos están cerrados. Registra el resultado oficial cuando el partido haya finalizado.");
+                    tvMsgInformativo.setBackgroundResource(R.drawable.bg_info_box);
+                    tvMsgInformativo.setTextColor(ContextCompat.getColor(this, R.color.text_secondary));
+                }
+
+                // 3. ESTADO FINALIZADO
             } else if (p.getEstado() == Estado.FINALIZADO) {
-                tvEstado.setText("FINALIZADO");
-                tvEstado.setBackgroundResource(R.drawable.bg_badge_finalizado);
-                tvEstado.setTextColor(ContextCompat.getColor(this, R.color.badge_final_text));
+                if (tvEstado != null) {
+                    tvEstado.setText("FINALIZADO");
+                    tvEstado.setBackgroundResource(R.drawable.bg_badge_finalizado);
+                    tvEstado.setTextColor(ContextCompat.getColor(this, R.color.badge_final_text));
+                }
 
-                btnCerrar.setVisibility(View.GONE);
-                layoutCerrado.setVisibility(View.GONE);
-                layoutFinalizado.setVisibility(View.VISIBLE);
+                if (btnCerrar != null) btnCerrar.setVisibility(View.GONE);
+                if (btnRegistrarResultado != null) btnRegistrarResultado.setVisibility(View.GONE);
+                if (layoutCerrado != null) layoutCerrado.setVisibility(View.GONE);
+                if (layoutFinalizado != null) layoutFinalizado.setVisibility(View.VISIBLE);
 
                 Resultado res = resultados.get(p.getIdPartido());
                 if (res != null) {
-                    tvVsOMarcador.setText(res.getGolesSeleccion1() + " - " + res.getGolesSeleccion2());
-                    tvGolesFin1.setText(String.valueOf(res.getGolesSeleccion1()));
-                    tvGolesFin2.setText(String.valueOf(res.getGolesSeleccion2()));
+                    if (tvVsOMarcador != null) tvVsOMarcador.setText(res.getGolesSeleccion1() + " - " + res.getGolesSeleccion2());
+                    if (tvGolesFin1 != null) tvGolesFin1.setText(String.valueOf(res.getGolesSeleccion1()));
+                    if (tvGolesFin2 != null) tvGolesFin2.setText(String.valueOf(res.getGolesSeleccion2()));
                 }
 
-                tvMsgInformativo.setText("✓  Resultado registrado. El partido ha finalizado.");
-                tvMsgInformativo.setBackgroundResource(R.drawable.bg_info_box);
-                tvMsgInformativo.setTextColor(ContextCompat.getColor(this, R.color.text_secondary));
+                if (tvMsgInformativo != null) {
+                    tvMsgInformativo.setText("✓  Resultado registrado. El partido ha finalizado.");
+                    tvMsgInformativo.setBackgroundResource(R.drawable.bg_info_box);
+                    tvMsgInformativo.setTextColor(ContextCompat.getColor(this, R.color.text_secondary));
+                }
             }
 
             layoutContenedorPartidos.addView(card);
@@ -194,6 +226,7 @@ public class AdministrarPartidosActivity extends AppCompatActivity {
     }
 
     private void cargarBandera(ImageView iv, String nombrePais) {
+        if (iv == null || nombrePais == null) return;
         String recurso = nombrePais.toLowerCase()
                 .replace(" ", "_")
                 .replace("á", "a")
@@ -295,8 +328,8 @@ public class AdministrarPartidosActivity extends AppCompatActivity {
                     lista.add(new Partido(id, fecha, hora, estadio, sel1, sel2, estado));
                 }
             }
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
+            Toast.makeText(this, "Problemas técnicos. Estamos resolviendo.", Toast.LENGTH_SHORT).show();
         }
         return lista;
     }
@@ -344,7 +377,7 @@ public class AdministrarPartidosActivity extends AppCompatActivity {
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            Toast.makeText(this, "Problemas técnicos. Estamos resolviendo.", Toast.LENGTH_SHORT).show();
         }
         return mapa;
     }
@@ -362,7 +395,7 @@ public class AdministrarPartidosActivity extends AppCompatActivity {
                 bw.newLine();
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            Toast.makeText(this, "Error al actualizar partidos.txt", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -379,7 +412,7 @@ public class AdministrarPartidosActivity extends AppCompatActivity {
             bw.write(linea);
             bw.newLine();
         } catch (IOException e) {
-            e.printStackTrace();
+            Toast.makeText(this, "Error al escribir en resultados.txt", Toast.LENGTH_SHORT).show();
         }
     }
 }
