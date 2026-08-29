@@ -1,6 +1,9 @@
 package models;
 
 import android.content.Context;
+import android.widget.ImageView;
+
+import com.example.proy2p_carvajal_cedeno_yagual.R;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -224,5 +227,24 @@ public class ManipularArchivos {
             e.printStackTrace();
         }
         return paises;
+    }
+    public static void asignarBandera(Context context, Partido p, ImageView imageViewLocal, ImageView imageViewVisitante){
+        String nombrePaisLocal = p.getSeleccion1().toLowerCase().replace("ñ","n").replace(" ","");
+        int idImagenLocal = context.getResources().getIdentifier(nombrePaisLocal,"drawable",context.getPackageName());
+
+        String nombrePaisVisitante = p.getSeleccion2().toLowerCase().replace("ñ","n").replace(" ","");
+        int idImagenVisitante = context.getResources().getIdentifier(nombrePaisVisitante,"drawable",context.getPackageName());
+
+        if(idImagenLocal != 0){
+            imageViewLocal.setImageResource(idImagenLocal);
+        }else{
+            imageViewLocal.setImageResource(R.drawable.logwc26);
+        }
+        if(idImagenVisitante !=0){
+            imageViewVisitante.setImageResource(idImagenVisitante);
+        }else{
+            imageViewLocal.setImageResource(R.drawable.logwc26);
+        }
+
     }
 }
