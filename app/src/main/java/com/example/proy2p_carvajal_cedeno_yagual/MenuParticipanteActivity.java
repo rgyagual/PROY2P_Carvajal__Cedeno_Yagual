@@ -54,7 +54,6 @@ public class MenuParticipanteActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    /** Descomentar cuando esté la pantalla de Pronósticos
     public void mostrarPronosticos(View view){
 
         Intent intent = new Intent(
@@ -62,19 +61,15 @@ public class MenuParticipanteActivity extends AppCompatActivity {
                 PronosticosActivity.class
         );
         starActivity(intent);
-
     }
-     */
 
-    /** Descomentar cuando esté la pantalla de MisPronósticos
     public void mostrarMisPronosticos(View view){
         Intent intent = new Intent(
                 MenuParticipanteActivity.this,
-                PronosticosActivity.class,
+                PronosticosActivity.class
                 );
         startActivity(intent);
     }
-     */
 
     public void salir(View view){
         finishAffinity();
