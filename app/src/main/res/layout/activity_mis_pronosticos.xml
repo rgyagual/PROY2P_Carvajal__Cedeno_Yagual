@@ -104,6 +104,7 @@
             android:layout_height="50dp"
             android:background="#1E5095"
             android:gravity="left|center_vertical"
+            android:onClick="volver"
             android:orientation="horizontal"
             android:paddingStart="20dp">
 

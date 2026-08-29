@@ -247,6 +247,7 @@ public class AdministrarPartidosActivity extends AppCompatActivity {
 
             String idResultado = "RES_" + partidoSeleccionado.getIdPartido();
             Resultado nuevoResultado = new Resultado(idResultado, partidoSeleccionado.getIdPartido(), g1, g2);
+            partidoSeleccionado.setIdResultado(idResultado);
             guardarResultadoEnArchivo(nuevoResultado);
 
             partidoSeleccionado.setEstado(Estado.FINALIZADO);

@@ -12,6 +12,8 @@ public class Partido {
     private String seleccion1;
     private String seleccion2;
     private Estado estado;
+    private String idResultado;
+
 
     public Partido(String idPartido, Fase fase,LocalDate fecha, LocalTime hora,
                    String estadio, String seleccion1, String seleccion2,
@@ -76,4 +78,11 @@ public class Partido {
         this.estado = estado;
     }
 
+    public String getIdResultado() {
+        return idResultado;
+    }
+
+    public void setIdResultado(String resultado) {
+        this.idResultado = resultado;
+    }
 }

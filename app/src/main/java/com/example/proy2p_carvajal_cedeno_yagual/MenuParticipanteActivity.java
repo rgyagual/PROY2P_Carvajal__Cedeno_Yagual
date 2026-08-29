@@ -43,6 +43,12 @@ public class MenuParticipanteActivity extends AppCompatActivity {
         String nombreCompletos = intent.getStringExtra("nombreCompleto");
         return nombreCompletos;
     }
+
+    public String getIdUsuario(){
+        Intent intent = getIntent();
+        String idUsuario = intent.getStringExtra("idUsuario");
+        return idUsuario;
+    }
     public void mostrarTablaPosiciones(View view) {
 
         Intent intent = new Intent(
@@ -60,7 +66,7 @@ public class MenuParticipanteActivity extends AppCompatActivity {
                 MenuParticipanteActivity.this,
                 PronosticosActivity.class
         );
-        starActivity(intent);
+        startActivity(intent);
     }
 
     public void mostrarMisPronosticos(View view){
