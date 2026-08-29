@@ -140,7 +140,7 @@ public class MisPronosticosActivity extends AppCompatActivity {
         return null;
     }
     private Resultado obtenerResultado(String idResultado){
-        ArrayList<Resultado> resultados = ManipularArchivos.obtenerResultados(this);
+        ArrayList<Resultado> resultados = ManipularArchivos.cargarResultados(this);
         for(Resultado r : resultados){
             if(r.getIdResultado().equals(idResultado)){
                 return r;

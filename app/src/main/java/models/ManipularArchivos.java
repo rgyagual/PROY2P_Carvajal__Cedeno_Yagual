@@ -6,11 +6,13 @@ import android.widget.ImageView;
 import com.example.proy2p_carvajal_cedeno_yagual.R;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.ObjectInputStream;
@@ -132,6 +134,16 @@ public class ManipularArchivos {
         return listaUsuarios;
     }
 
+    public static void guardarParticipantes(Context context, List<Participante> participantes) {
+        File file = new File(context.getFilesDir(), "participantes.txt");
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(file))) {
+            for (Participante p : participantes) {
+                bw.write(p.getIdUsuario()+";"+p.getPuntajeAcumulado());
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
     public static ArrayList<Partido> cargarPartidos(Context context){
         ArrayList<Partido> listaPartidos = new ArrayList<>();
 
@@ -188,9 +200,30 @@ public class ManipularArchivos {
         }
         return lista;
     }
+    public static ArrayList<Pronostico> cargarPronosticosGeneral(Context context) {
+        ArrayList<Pronostico> pronosticosGeneral = new ArrayList<>();
+        String[] fases = {
+                "FASE_DE_GRUPOS",
+                "DIECISEISAVOS",
+                "OCTAVOS_DE_FINAL",
+                "CUARTOS_DE_FINAL",
+                "SEMIFINALES",
+                "TERCER_LUGAR",
+                "FINAL"
+        };
+        ArrayList<Usuario> usuarios = cargarUsuario(context);
+        for (Usuario u : usuarios) {
+            String idUsuario = u.getIdUsuario();
+            for (String f : fases) {
+                ArrayList<Pronostico> pronosticosPorUsuario = cargarPronosticos(context, idUsuario, Fase.valueOf(f));
+                pronosticosGeneral.addAll(pronosticosPorUsuario);
+            }
+        }
+        return pronosticosGeneral;
+    }
 
     public static void guardarPronostico(Context context, Pronostico pronostico, Fase fase){
-        String idUsuario=pronostico.getParticipante().getIdUsuario();
+        String idUsuario= pronostico.getParticipante().getIdUsuario();
         String nombreArchivo="pronostico_"+idUsuario+"_"+fase+".dat";
         File archivo=new File(context.getFilesDir(),nombreArchivo);
 
@@ -229,7 +262,7 @@ public class ManipularArchivos {
         return paises;
     }
 
-    public static ArrayList<Resultado> obtenerResultados(Context context){
+    public static ArrayList<Resultado> cargarResultados(Context context){
         ArrayList<Resultado> resultados = new ArrayList<>();
         String linea;
         File archivo=new File(context.getFilesDir(), "resultados.txt");
@@ -270,6 +303,10 @@ public class ManipularArchivos {
         }else{
             imageViewLocal.setImageResource(R.drawable.logwc26);
         }
+
+    }
+
+    public static void guardarParticipante(Context context){
 
     }
 }

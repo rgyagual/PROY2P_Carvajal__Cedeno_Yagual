@@ -41,4 +41,10 @@ public class Resultado {
         this.golesSeleccion2 = golesSeleccion2;
     }
 
+    public boolean ganoEquipoLocal(){
+        if(golesSeleccion1>golesSeleccion2){
+            return true;
+        }
+        return false;
+    }
 }
