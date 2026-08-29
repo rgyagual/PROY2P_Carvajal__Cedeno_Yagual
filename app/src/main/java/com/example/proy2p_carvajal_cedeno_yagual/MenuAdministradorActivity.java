@@ -38,17 +38,14 @@ public class MenuAdministradorActivity extends AppCompatActivity {
         String nombreCompletos = intent.getStringExtra("nombreCompleto");
         return nombreCompletos;
     }
-/**Descomentar cuando esté pantalla administrar Partidos
     public void administrarPartidos(View view){
         Intent intent = new Intent(
                 MenuAdministradorActivity.this,
                 AdministarPartidosActivity.class
         );
-        starActivity(intent);
+        startActivity(intent);
 
     }
-*/
-    /**Descomentar cuando esté la pantalla actualizar Puntajes
     public void actualizarPuntajes(View view){
         Intent intent = new Intent(
                 MenuAdministradorActivity.this,
@@ -57,7 +54,6 @@ public class MenuAdministradorActivity extends AppCompatActivity {
         startActivity(intent);
 
     }
-*/
     public void salir(View view){
         finishAffinity();
     }
