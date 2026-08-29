@@ -5,6 +5,7 @@ import android.content.Context;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
@@ -208,5 +209,20 @@ public class ManipularArchivos {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+    public static ArrayList<String> cargarPaisesParticipantes(Context context){
+        ArrayList<String> paises = new ArrayList<>();
+        File archivo=new File(context.getFilesDir(), "paises.txt");
+        if(!archivo.exists()){
+            return paises;
+        }
+        try(BufferedReader br=new BufferedReader(new FileReader(archivo))){
+
+        }catch (FileNotFoundException f){
+            f.printStackTrace();
+        }catch(IOException e){
+            e.printStackTrace();
+        }
+        return paises;
     }
 }
