@@ -294,6 +294,7 @@
                     android:layout_height="55dp"
                     android:background="@drawable/boton_verde"
                     android:gravity="center"
+                    android:onClick="actualizarPuntaje"
                     android:orientation="horizontal">
 
                     <ImageView
@@ -352,6 +353,7 @@
             android:layout_height="50dp"
             android:background="#1E5095"
             android:gravity="left|center_vertical"
+            android:onClick="volver"
             android:orientation="horizontal"
             android:paddingStart="20dp">
 

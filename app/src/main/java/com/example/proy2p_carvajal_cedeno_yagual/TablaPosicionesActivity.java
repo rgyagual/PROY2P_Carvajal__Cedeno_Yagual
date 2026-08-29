@@ -22,6 +22,7 @@ import java.util.Collections;
 
 import models.ManipularArchivos;
 import models.Participante;
+
 public class TablaPosicionesActivity extends AppCompatActivity {
 
     TextView labelTitulo;
@@ -45,7 +46,8 @@ public class TablaPosicionesActivity extends AppCompatActivity {
         mostrarPosiciones(obtenerPosiciones(), posicionesLayout);
 
     }
-    public String getNombreParticipante(){
+
+    public String getNombreParticipante() {
         Intent intent = getIntent();
         String nombreCompletos = intent.getStringExtra("nombreCompleto");
         return nombreCompletos;
@@ -61,7 +63,8 @@ public class TablaPosicionesActivity extends AppCompatActivity {
         Collections.sort(p);
         return p;
     }
-    private void mostrarPosiciones(ArrayList<Participante> p, TableLayout tabla){
+
+    private void mostrarPosiciones(ArrayList<Participante> p, TableLayout tabla) {
 
         tabla.removeAllViews();
         TableRow fila = new TableRow(this);
@@ -72,12 +75,12 @@ public class TablaPosicionesActivity extends AppCompatActivity {
 
         txt_pos.setText("Pos.");
         txt_pos.setTextColor(Color.WHITE);
-        txt_pos.setPadding(24,24,24,24);
+        txt_pos.setPadding(24, 24, 24, 24);
         txt_tablaparticipante.setText("Participante");
         txt_tablaparticipante.setTextColor(Color.WHITE);
-        txt_pos.setPadding(24,24,24,24);
+        txt_pos.setPadding(24, 24, 24, 24);
         txt_puntos.setText("Puntos");
-        txt_pos.setPadding(24,24,24,24);
+        txt_pos.setPadding(24, 24, 24, 24);
         txt_puntos.setTextColor(Color.WHITE);
 
         fila.addView(txt_pos);
@@ -85,13 +88,13 @@ public class TablaPosicionesActivity extends AppCompatActivity {
         fila.addView(txt_puntos);
         tabla.addView(fila);
 
-        for(int i = 0; i<p.size();i++){
+        for (int i = 0; i < p.size(); i++) {
             TableRow fila_usuarios = new TableRow(this);
             TextView txt_posicion = new TextView(this);
             TextView txt_nombreParticipante = new TextView(this);
             TextView txt_puntajeParticipante = new TextView(this);
 
-            txt_posicion.setText(String.valueOf(i+1));
+            txt_posicion.setText(String.valueOf(i + 1));
             txt_nombreParticipante.setText(p.get(i).getNombreCompleto());
             txt_puntajeParticipante.setText(
                     String.valueOf(
@@ -100,9 +103,9 @@ public class TablaPosicionesActivity extends AppCompatActivity {
             txt_posicion.setTextColor(Color.BLUE);
             txt_nombreParticipante.setTextColor(Color.BLUE);
             txt_puntajeParticipante.setTextColor(Color.BLUE);
-            txt_posicion.setPadding(20,20,20,16);
-            txt_nombreParticipante.setPadding(20,20,20,16);
-            txt_puntajeParticipante.setPadding(20,20,20,16);
+            txt_posicion.setPadding(20, 20, 20, 16);
+            txt_nombreParticipante.setPadding(20, 20, 20, 16);
+            txt_puntajeParticipante.setPadding(20, 20, 20, 16);
 
             fila_usuarios.addView(txt_posicion);
             fila_usuarios.addView(txt_nombreParticipante);
@@ -112,7 +115,7 @@ public class TablaPosicionesActivity extends AppCompatActivity {
 
     }
 
-    public void volver(View view){
+    public void volver(View view) {
         finish();
     }
 

@@ -25,28 +25,30 @@ public class MenuAdministradorActivity extends AppCompatActivity {
         setContentView(R.layout.activity_menu_administrador);
 
         cdActualizarPuntajes = findViewById(R.id.cd_administrarP);
-        cdActualizarPuntajes =findViewById(R.id.cd_actualizar);
-        cdSalir=findViewById(R.id.cd_salir);
-        txtNombreAdministrador=findViewById(R.id.txt_nombreAdministrador);
+        cdActualizarPuntajes = findViewById(R.id.cd_actualizar);
+        cdSalir = findViewById(R.id.cd_salir);
+        txtNombreAdministrador = findViewById(R.id.txt_nombreAdministrador);
         txtNombreAdministrador.setText(getNombreAdministrador());
 
 
-
     }
-    public String getNombreAdministrador(){
+
+    public String getNombreAdministrador() {
         Intent intent = getIntent();
         String nombreCompletos = intent.getStringExtra("nombreCompleto");
         return nombreCompletos;
     }
-    public void administrarPartidos(View view){
+
+    public void administrarPartidos(View view) {
         Intent intent = new Intent(
                 MenuAdministradorActivity.this,
-                AdministarPartidosActivity.class
+                AdministrarPartidosActivity.class
         );
         startActivity(intent);
 
     }
-    public void actualizarPuntajes(View view){
+
+    public void actualizarPuntajes(View view) {
         Intent intent = new Intent(
                 MenuAdministradorActivity.this,
                 ActualizarPuntajesActivity.class
@@ -54,7 +56,8 @@ public class MenuAdministradorActivity extends AppCompatActivity {
         startActivity(intent);
 
     }
-    public void salir(View view){
+
+    public void salir(View view) {
         finishAffinity();
     }
 }

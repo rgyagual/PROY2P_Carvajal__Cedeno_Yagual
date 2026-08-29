@@ -22,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
         pantallaPrincipal();
     }
 
-    public void pantallaPrincipal(){
+    public void pantallaPrincipal() {
         Intent intent = new Intent(
                 this,
                 LoginActivity.class

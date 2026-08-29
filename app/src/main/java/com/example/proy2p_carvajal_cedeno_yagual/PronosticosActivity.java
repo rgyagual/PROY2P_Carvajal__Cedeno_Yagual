@@ -51,20 +51,20 @@ public class PronosticosActivity extends AppCompatActivity {
             return insets;
         });
 
-        spFase=findViewById(R.id.spFase);
-        contenedorPartidos=findViewById(R.id.contenedorPartidos);
-        cdVolver=findViewById(R.id.cd_volver);
-        idUsuarioActual=getIntent().getStringExtra("idUsuario");
+        spFase = findViewById(R.id.spFase);
+        contenedorPartidos = findViewById(R.id.contenedorPartidos);
+        cdVolver = findViewById(R.id.cd_volver);
+        idUsuarioActual = getIntent().getStringExtra("idUsuario");
 
-        ArrayList<Usuario> listaUsuarios= ManipularArchivos.cargarUsuario(this);
-        for(Usuario u: listaUsuarios){
-            if(u.getIdUsuario().equals(idUsuarioActual)&&u instanceof Participante){
-                participanteActual=(Participante) u;
+        ArrayList<Usuario> listaUsuarios = ManipularArchivos.cargarUsuario(this);
+        for (Usuario u : listaUsuarios) {
+            if (u.getIdUsuario().equals(idUsuarioActual) && u instanceof Participante) {
+                participanteActual = (Participante) u;
             }
         }
 
-        listaPartidos=ManipularArchivos.cargarPartidos(this);
-        ArrayAdapter<Fase> adapter=new ArrayAdapter<>(
+        listaPartidos = ManipularArchivos.cargarPartidos(this);
+        ArrayAdapter<Fase> adapter = new ArrayAdapter<>(
                 this, android.R.layout.simple_spinner_item, Fase.values());
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spFase.setAdapter(adapter);
@@ -72,31 +72,32 @@ public class PronosticosActivity extends AppCompatActivity {
         spFase.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                Fase faseSeleccionada=(Fase) adapterView.getItemAtPosition(i);
+                Fase faseSeleccionada = (Fase) adapterView.getItemAtPosition(i);
                 mostrarPartidosPorFase(faseSeleccionada);
             }
+
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
             }
         });
-        cdVolver.setOnClickListener(v ->{
-            Intent intent=new Intent(PronosticosActivity.this, MenuParticipanteActivity.class);
-            intent.putExtra("idUsuario",idUsuarioActual);
+        cdVolver.setOnClickListener(v -> {
+            Intent intent = new Intent(PronosticosActivity.this, MenuParticipanteActivity.class);
+            intent.putExtra("idUsuario", idUsuarioActual);
             startActivity(intent);
             finish();
         });
     }
 
-    private void mostrarPartidosPorFase(Fase fase){
+    private void mostrarPartidosPorFase(Fase fase) {
         contenedorPartidos.removeAllViews();
-        LayoutInflater inflater= LayoutInflater.from(this);
-        ArrayList<Pronostico> misPronosticos=ManipularArchivos.cargarPronosticos(this,idUsuarioActual,fase);
-        for(Partido partido:listaPartidos){
-            if(partido.getFase()!=fase){
+        LayoutInflater inflater = LayoutInflater.from(this);
+        ArrayList<Pronostico> misPronosticos = ManipularArchivos.cargarPronosticos(this, idUsuarioActual, fase);
+        for (Partido partido : listaPartidos) {
+            if (partido.getFase() != fase) {
                 continue;
             }
-            View vistaPartido=inflater.inflate(R.layout.plantilla_tarjetapartido,contenedorPartidos,false);
-            TextView txtFase=vistaPartido.findViewById(R.id.txt_fase);
+            View vistaPartido = inflater.inflate(R.layout.plantilla_tarjetapartido, contenedorPartidos, false);
+            TextView txtFase = vistaPartido.findViewById(R.id.txt_fase);
             TextView txtEstado = vistaPartido.findViewById(R.id.txt_estado);
             TextView txtFecha = vistaPartido.findViewById(R.id.txt_fecha);
             TextView txtHora = vistaPartido.findViewById(R.id.txt_hora);
@@ -119,73 +120,73 @@ public class PronosticosActivity extends AppCompatActivity {
             txtNombreLocal.setText(partido.getSeleccion1());
             txtNombreVisitante.setText(partido.getSeleccion2());
 
-            Pronostico pronosticoExistente=null;
-            for(Pronostico p: misPronosticos){
-                if(p.getIdPartido().equals(partido.getIdPartido())){
-                    pronosticoExistente=p;
+            Pronostico pronosticoExistente = null;
+            for (Pronostico p : misPronosticos) {
+                if (p.getIdPartido().equals(partido.getIdPartido())) {
+                    pronosticoExistente = p;
                 }
             }
-            if(pronosticoExistente!= null){
+            if (pronosticoExistente != null) {
                 edtGolesLocal.setText(String.valueOf(pronosticoExistente.getGolesSel1()));
                 edtGolesVisitante.setText(String.valueOf(pronosticoExistente.getGolesSel2()));
             }
 
-            boolean abierto=partido.getEstado()== Estado.ABIERTO;
+            boolean abierto = partido.getEstado() == Estado.ABIERTO;
             edtGolesLocal.setEnabled(abierto);
             edtGolesVisitante.setEnabled(abierto);
             btnGuardar.setEnabled(abierto);
 
-            if(abierto){
+            if (abierto) {
                 txtMensaje.setText("Puedes modificar o registrar tu pronóstico.");
-            }else{
+            } else {
                 txtMensaje.setText("Los pronósticos para este partido están cerrados.");
             }
 
-            if(partido.getEstado()==Estado.FINALIZADO && pronosticoExistente!=null){
+            if (partido.getEstado() == Estado.FINALIZADO && pronosticoExistente != null) {
                 lyResultadoFinal.setVisibility(View.VISIBLE);
-                txtPuntosObtenidos.setText(pronosticoExistente.getPuntosObtenidos()+"pts");
-            }else{
+                txtPuntosObtenidos.setText(pronosticoExistente.getPuntosObtenidos() + "pts");
+            } else {
                 lyResultadoFinal.setVisibility(View.GONE);
             }
 
-            Partido partidoFinal=partido;
+            Partido partidoFinal = partido;
             btnGuardar.setOnClickListener(v ->
-                    guardarPronostico(partidoFinal,fase,edtGolesLocal,edtGolesVisitante));
+                    guardarPronostico(partidoFinal, fase, edtGolesLocal, edtGolesVisitante));
             contenedorPartidos.addView(vistaPartido);
         }
     }
 
     private void guardarPronostico(Partido partido, Fase fase, EditText edtGolesLocal,
-                                   EditText edtGolesVisitante){
-        try{
-            if(partido.getEstado()!=Estado.ABIERTO){
+                                   EditText edtGolesVisitante) {
+        try {
+            if (partido.getEstado() != Estado.ABIERTO) {
                 throw new PronosticoFueraDeTiempoException(
                         "El periodo para registrar pronósticos de este partido ya ha finalizado.");
             }
-            String txt_GolesLocal=edtGolesLocal.getText().toString().trim();
-            String txt_GolesVisitante=edtGolesVisitante.getText().toString().trim();
+            String txt_GolesLocal = edtGolesLocal.getText().toString().trim();
+            String txt_GolesVisitante = edtGolesVisitante.getText().toString().trim();
 
-            if(txt_GolesLocal.isEmpty() || txt_GolesVisitante.isEmpty()){
+            if (txt_GolesLocal.isEmpty() || txt_GolesVisitante.isEmpty()) {
                 throw new DatosIncompletosException(
                         "No se han ingresado todos los datos necesarios para registrar el pronóstico.");
             }
-            int golesLocal=Integer.parseInt(txt_GolesLocal);
-            int golesVisitante=Integer.parseInt(txt_GolesVisitante);
-            if(golesLocal<0 || golesVisitante<0){
+            int golesLocal = Integer.parseInt(txt_GolesLocal);
+            int golesVisitante = Integer.parseInt(txt_GolesVisitante);
+            if (golesLocal < 0 || golesVisitante < 0) {
                 throw new DatosIncompletosException(
                         "Los goles deben ser números enteros mayores o iguales a cero");
             }
-            String idPronostico="PR"+idUsuarioActual+"_"+partido.getIdPartido();
-            Pronostico pronostico= new Pronostico(idPronostico,participanteActual,
-                    partido.getIdPartido(), golesLocal,golesVisitante,0);
-            ManipularArchivos.guardarPronostico(this,pronostico,fase);
-            Toast.makeText(this,"Pronóstico guardado correctamente", Toast.LENGTH_SHORT).show();
-        }catch(DatosIncompletosException e){
-            Toast.makeText(this,e.getMessage(), Toast.LENGTH_SHORT).show();
-        }catch(PronosticoFueraDeTiempoException e){
+            String idPronostico = "PR" + idUsuarioActual + "_" + partido.getIdPartido();
+            Pronostico pronostico = new Pronostico(idPronostico, participanteActual,
+                    partido.getIdPartido(), golesLocal, golesVisitante, 0);
+            ManipularArchivos.guardarPronostico(this, pronostico, fase);
+            Toast.makeText(this, "Pronóstico guardado correctamente", Toast.LENGTH_SHORT).show();
+        } catch (DatosIncompletosException e) {
             Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
-        }catch (NumberFormatException e){
-            Toast.makeText(this,"Ingresa números válidos para los goles.",Toast.LENGTH_SHORT).show();
+        } catch (PronosticoFueraDeTiempoException e) {
+            Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
+        } catch (NumberFormatException e) {
+            Toast.makeText(this, "Ingresa números válidos para los goles.", Toast.LENGTH_SHORT).show();
         }
     }
 }

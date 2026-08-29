@@ -43,7 +43,7 @@ public class ActualizarPuntajesActivity extends AppCompatActivity {
 
     }
 
-    public void actualizarPuntajes(View view) {
+    public void actualizarPuntaje(View view) {
         actualizarPuntaje();
         acumularPuntajeParticipante();
         Toast.makeText(this, "Los puntajes se actualizaron correctamente", LENGTH_SHORT);

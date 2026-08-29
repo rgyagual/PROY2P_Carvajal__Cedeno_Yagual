@@ -101,26 +101,26 @@ public class MisPronosticosActivity extends AppCompatActivity {
             txtEstadio.setText(partido.getEstadio());
             txtNombreLocal.setText(partido.getSeleccion1());
             txtNombreVisitante.setText(partido.getSeleccion2());
-            ManipularArchivos.asignarBandera(this,partido,imgBanderaLocal,imgBanderaVisitante);
+            ManipularArchivos.asignarBandera(this, partido, imgBanderaLocal, imgBanderaVisitante);
             txtPronosticoLocal.setText(pronostico.getGolesSel1());
             txtPronosticoVisitante.setText(pronostico.getGolesSel2());
             txtPuntosObtenidos.setText(pronostico.getPuntosObtenidos());
 
-            if(partido.getEstado() == Estado.FINALIZADO){
+            if (partido.getEstado() == Estado.FINALIZADO) {
                 Resultado resultado = obtenerResultado(partido.getIdResultado());
-                txtResultadoOficial.setText(resultado.getGolesSeleccion1()+" - "+resultado.getGolesSeleccion2());
-                if(pronostico.getPuntosObtenidos() > 0){
-                    txtMensaje.setText("✓  ¡¡Acertaste el Ganador!! Obtuviste "+pronostico.getPuntosObtenidos()+" puntos");
-                }else if(pronostico.getPuntosObtenidos() == 0){
+                txtResultadoOficial.setText(resultado.getGolesSeleccion1() + " - " + resultado.getGolesSeleccion2());
+                if (pronostico.getPuntosObtenidos() > 0) {
+                    txtMensaje.setText("✓  ¡¡Acertaste el Ganador!! Obtuviste " + pronostico.getPuntosObtenidos() + " puntos");
+                } else if (pronostico.getPuntosObtenidos() == 0) {
                     txtMensaje.setText("No has acertado :(");
-                }else{
+                } else {
                     txtMensaje.setText("Ha ocurrido un error, comunicate con Servicio al Cliente");
                 }
 
-            }else if(partido.getEstado() == Estado.CERRADO ){
+            } else if (partido.getEstado() == Estado.CERRADO) {
                 lyResultadoFinal.setVisibility(INVISIBLE);
-                txtMensaje.setText("🔒 Los pronósticos para este partido están cerrados" );
-            }else if (partido.getEstado() == Estado.ABIERTO){
+                txtMensaje.setText("🔒 Los pronósticos para este partido están cerrados");
+            } else if (partido.getEstado() == Estado.ABIERTO) {
                 lyResultadoFinal.setVisibility(INVISIBLE);
                 txtMensaje.setText("🖌️ Puedes modificar tu pronóstico mientras el partido esté abierto");
             }
@@ -139,10 +139,11 @@ public class MisPronosticosActivity extends AppCompatActivity {
         }
         return null;
     }
-    private Resultado obtenerResultado(String idResultado){
+
+    private Resultado obtenerResultado(String idResultado) {
         ArrayList<Resultado> resultados = ManipularArchivos.cargarResultados(this);
-        for(Resultado r : resultados){
-            if(r.getIdResultado().equals(idResultado)){
+        for (Resultado r : resultados) {
+            if (r.getIdResultado().equals(idResultado)) {
                 return r;
             }
         }
@@ -150,7 +151,7 @@ public class MisPronosticosActivity extends AppCompatActivity {
 
     }
 
-    public void volver(View view){
+    public void volver(View view) {
         finish();
     }
 

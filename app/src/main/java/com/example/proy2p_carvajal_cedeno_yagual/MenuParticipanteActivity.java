@@ -27,7 +27,7 @@ public class MenuParticipanteActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_menu_participante);
 
-        Toast.makeText(this,"Entre",Toast.LENGTH_LONG);
+        Toast.makeText(this, "Entre", Toast.LENGTH_LONG);
 
         cdTablaPosiciones = findViewById(R.id.cd_tablaPosiciones);
         cdPronosticos = findViewById(R.id.cd_pronosticos);
@@ -38,17 +38,18 @@ public class MenuParticipanteActivity extends AppCompatActivity {
 
     }
 
-    public String getNombreParticipante(){
+    public String getNombreParticipante() {
         Intent intent = getIntent();
         String nombreCompletos = intent.getStringExtra("nombreCompleto");
         return nombreCompletos;
     }
 
-    public String getIdUsuario(){
+    public String getIdUsuario() {
         Intent intent = getIntent();
         String idUsuario = intent.getStringExtra("idUsuario");
         return idUsuario;
     }
+
     public void mostrarTablaPosiciones(View view) {
 
         Intent intent = new Intent(
@@ -60,7 +61,7 @@ public class MenuParticipanteActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void mostrarPronosticos(View view){
+    public void mostrarPronosticos(View view) {
 
         Intent intent = new Intent(
                 MenuParticipanteActivity.this,
@@ -69,15 +70,15 @@ public class MenuParticipanteActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void mostrarMisPronosticos(View view){
+    public void mostrarMisPronosticos(View view) {
         Intent intent = new Intent(
                 MenuParticipanteActivity.this,
                 PronosticosActivity.class
-                );
+        );
         startActivity(intent);
     }
 
-    public void salir(View view){
+    public void salir(View view) {
         finishAffinity();
     }
 }

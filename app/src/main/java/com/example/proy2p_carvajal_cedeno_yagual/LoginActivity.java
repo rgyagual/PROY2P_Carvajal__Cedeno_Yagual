@@ -36,6 +36,7 @@ public class LoginActivity extends AppCompatActivity {
         edt_contrasena = findViewById(R.id.edt_contrasena);
         btn_iniciarSesion = findViewById(R.id.btn_iniciarSesion);
     }
+
     private Usuario validarCredenciales(String nombreUsuario, String contrasena)
             throws CredencialesInvalidasException {
 

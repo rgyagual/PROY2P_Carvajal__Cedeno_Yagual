@@ -77,7 +77,8 @@ public class AdministrarPartidosActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> parent) {}
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
         });
     }
 
@@ -295,9 +296,10 @@ public class AdministrarPartidosActivity extends AppCompatActivity {
                     try {
                         Fase faseEnum = Fase.valueOf(faseStr);
                         mapeoFasesPorPartido.put(id, faseEnum);
-                    } catch (IllegalArgumentException ignored) {}
+                    } catch (IllegalArgumentException ignored) {
+                    }
 
-                    lista.add(new Partido(id,fecha, hora, estadio, sel1, sel2, estado));
+                    lista.add(new Partido(id, fecha, hora, estadio, sel1, sel2, estado));
                 }
             }
         } catch (IOException e) {
