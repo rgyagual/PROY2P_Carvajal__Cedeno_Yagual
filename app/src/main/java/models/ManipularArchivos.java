@@ -228,6 +228,31 @@ public class ManipularArchivos {
         }
         return paises;
     }
+
+    public static ArrayList<Resultado> obtenerResultados(Context context){
+        ArrayList<Resultado> resultados = new ArrayList<>();
+        String linea;
+        File archivo=new File(context.getFilesDir(), "resultados.txt");
+        if(!archivo.exists()){
+            return resultados;
+        }
+        try(BufferedReader br=new BufferedReader(new FileReader(archivo))){
+            while((linea = br.readLine()) != null) {
+                String[] datosResultado = linea.split(";");
+                String idResultado = datosResultado[0];
+                String idPartido = datosResultado[1];
+                int golesSeleccion1 = Integer.parseInt(datosResultado[2]);
+                int golesSeleccion2 = Integer.parseInt(datosResultado[3]);
+
+                resultados.add(new Resultado(idResultado, idPartido, golesSeleccion1, golesSeleccion2));
+            }
+            }catch (FileNotFoundException f){
+            f.printStackTrace();
+            }catch (IOException e){
+            e.printStackTrace();
+            }
+        return resultados;
+    }
     public static void asignarBandera(Context context, Partido p, ImageView imageViewLocal, ImageView imageViewVisitante){
         String nombrePaisLocal = p.getSeleccion1().toLowerCase().replace("ñ","n").replace(" ","");
         int idImagenLocal = context.getResources().getIdentifier(nombrePaisLocal,"drawable",context.getPackageName());
