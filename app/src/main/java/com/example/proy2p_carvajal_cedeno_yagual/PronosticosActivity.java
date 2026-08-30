@@ -8,6 +8,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -28,6 +29,7 @@ import models.ManipularArchivos;
 import models.Participante;
 import models.Partido;
 import models.Pronostico;
+import models.Resultado;
 import models.Usuario;
 import models.exceptions.DatosIncompletosException;
 import models.exceptions.PronosticoFueraDeTiempoException;
@@ -104,6 +106,8 @@ public class PronosticosActivity extends AppCompatActivity {
             TextView txtEstadio = vistaPartido.findViewById(R.id.txt_estadio);
             TextView txtNombreLocal = vistaPartido.findViewById(R.id.txt_nombreLocal);
             TextView txtNombreVisitante = vistaPartido.findViewById(R.id.txt_nombreVisitante);
+            ImageView imgBanderaLocal = vistaPartido.findViewById(R.id.img_banderaLocal);
+            ImageView imgBanderaVisitante = vistaPartido.findViewById(R.id.img_banderaVisitante);
             EditText edtGolesLocal = vistaPartido.findViewById(R.id.edt_golesPronosticoLocal);
             EditText edtGolesVisitante = vistaPartido.findViewById(R.id.edt_golesPronosticoVisitante);
             Button btnGuardar = vistaPartido.findViewById(R.id.btn_guardarPronostico);
@@ -120,6 +124,8 @@ public class PronosticosActivity extends AppCompatActivity {
             txtNombreLocal.setText(partido.getSeleccion1());
             txtNombreVisitante.setText(partido.getSeleccion2());
 
+            ManipularArchivos.asignarBandera(this,partido,imgBanderaLocal,imgBanderaVisitante);
+
             Pronostico pronosticoExistente = null;
             for (Pronostico p : misPronosticos) {
                 if (p.getIdPartido().equals(partido.getIdPartido())) {
@@ -135,31 +141,40 @@ public class PronosticosActivity extends AppCompatActivity {
             edtGolesLocal.setEnabled(abierto);
             edtGolesVisitante.setEnabled(abierto);
             btnGuardar.setEnabled(abierto);
+            btnGuardar.setVisibility(View.VISIBLE);
 
-            if (abierto) {
-                txtMensaje.setText("Puedes modificar o registrar tu pronóstico.");
-            } else {
-                txtMensaje.setText("Los pronósticos para este partido están cerrados.");
-            }
-
-            if (partido.getEstado() == Estado.FINALIZADO && pronosticoExistente != null) {
-                lyResultadoFinal.setVisibility(View.VISIBLE);
-                txtPuntosObtenidos.setText(pronosticoExistente.getPuntosObtenidos() + "pts");
-            } else {
+            if(partido.getEstado()==Estado.FINALIZADO){
+                Resultado resultado= obtenerResultadoPorPartido(partido.getIdPartido());
+                if(resultado != null && pronosticoExistente != null){
+                    lyResultadoFinal.setVisibility(View.VISIBLE);
+                    txtResultadoOficial.setText(resultado.getGolesSeleccion1()+" - "+resultado.getGolesSeleccion2());
+                    txtPuntosObtenidos.setText(pronosticoExistente.getPuntosObtenidos()+" puntos");
+                    txtMensaje.setVisibility(View.VISIBLE);
+                    txtMensaje.setText("🏆 ¡Partido finalizado! Ya conoces tus puntos.");
+                }else{
+                    lyResultadoFinal.setVisibility(View.GONE);
+                    txtMensaje.setVisibility(View.VISIBLE);
+                    txtMensaje.setText("Partido finalizado. Resultado pendiente de actualizar.");
+                }
+            }else if(partido.getEstado()==Estado.CERRADO){
+                lyResultadoFinal.setVisibility((View.GONE));
+                txtMensaje.setVisibility(View.VISIBLE);
+                txtMensaje.setText("🔒 Los pronósticos para este partido están cerrados.");
+            }else{
                 lyResultadoFinal.setVisibility(View.GONE);
+                txtMensaje.setVisibility(View.GONE);
             }
 
-            Partido partidoFinal = partido;
-            btnGuardar.setOnClickListener(v ->
-                    guardarPronostico(partidoFinal, fase, edtGolesLocal, edtGolesVisitante));
+            Partido partidoFinal=partido;
+            btnGuardar.setOnClickListener(v -> guardarPronostico(partidoFinal,fase,edtGolesLocal,edtGolesVisitante));
             contenedorPartidos.addView(vistaPartido);
         }
     }
 
     private void guardarPronostico(Partido partido, Fase fase, EditText edtGolesLocal,
                                    EditText edtGolesVisitante) {
-        try {
-            if (partido.getEstado() != Estado.ABIERTO) {
+        try{
+            if (partido.getEstado() != Estado.ABIERTO){
                 throw new PronosticoFueraDeTiempoException(
                         "El periodo para registrar pronósticos de este partido ya ha finalizado.");
             }
@@ -188,5 +203,15 @@ public class PronosticosActivity extends AppCompatActivity {
         } catch (NumberFormatException e) {
             Toast.makeText(this, "Ingresa números válidos para los goles.", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    private Resultado obtenerResultadoPorPartido(String idPartido){
+        ArrayList<Resultado> resultados = ManipularArchivos.cargarResultados(this);
+        for (Resultado r : resultados) {
+            if (r.getIdPartido().equals(idPartido)) {
+                return r;
+            }
+        }
+        return null;
     }
 }
