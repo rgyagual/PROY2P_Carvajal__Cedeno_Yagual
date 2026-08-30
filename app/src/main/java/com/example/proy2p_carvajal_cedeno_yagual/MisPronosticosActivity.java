@@ -30,21 +30,49 @@ import models.Partido;
 import models.Pronostico;
 import models.Resultado;
 
+/**
+ * Administra la interfaz y la lógica para visualizar los pronósticos
+ * registrados por el usuario.
+ * Muestra el detalle de cada partido, las predicciones realizadas,
+ * los resultados oficiales y los puntos obtenidos en cada fase.
+ *
+ * @author Yagual-Cedeño-Carvajal
+ */
 public class MisPronosticosActivity extends AppCompatActivity {
 
+    // =======================================
+    // ATRIBUTOS
+    // =======================================
+
+    /** Contenedor dinámico donde se cargarán las tarjetas de pronósticos */
     LinearLayout contenedorPronosticos;
+    /** Botón para regresar a la pantalla anterior */
     LinearLayout btnVolver;
+    /** Lista para almacenar los pronósticos del usuario */
     ArrayList<Pronostico> misPronosticos = new ArrayList<>();
+    /** Identificador único del usuario actual */
     String idUsuario;
 
+    /** Lista para almacenar todos los partidos registrados */
     ArrayList<Partido> partidos = new ArrayList<>();
 
+    // =======================================
+    // MÉTODOS
+    // =======================================
+
+    /**
+     * Inicializa la actividad, carga la lista de partidos y recupera
+     * los pronósticos del usuario en todas las fases
+     *
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_mis_pronosticos);
 
+        // Enlace de vistas y carga inicial de partidos
         contenedorPronosticos = findViewById(R.id.contenedor_pronosticos);
         btnVolver = findViewById(R.id.btnVolver);
         partidos = ManipularArchivos.cargarPartidos(this);
@@ -58,6 +86,7 @@ public class MisPronosticosActivity extends AppCompatActivity {
                 "FINAL"
         };
 
+        // Obtención del ID del usuario y carga de sus pronósticos por cada fase
         idUsuario = getIntent().getStringExtra("idUsuario");
         for (String fase : fases) {
             ArrayList<Pronostico> pronosticos = ManipularArchivos.cargarPronosticos(this, idUsuario, Fase.valueOf(fase));
@@ -69,7 +98,12 @@ public class MisPronosticosActivity extends AppCompatActivity {
         mostrarPronosticos();
     }
 
+    /**
+     * Genera dinámicamente las tarjetas de pronósticos en pantalla
+     * mostrando el detalle del partido, pronósticos y resultados oficiales.
+     */
     private void mostrarPronosticos() {
+        // Limpieza del contenedor e inflado dinámico de las tarjetas de pronósticos
         contenedorPronosticos.removeAllViews();
         LayoutInflater inflater = LayoutInflater.from(this);
         for (Pronostico pronostico : misPronosticos) {
@@ -91,7 +125,7 @@ public class MisPronosticosActivity extends AppCompatActivity {
             ImageView imgBanderaLocal = tarjetaPronosticos.findViewById(R.id.img_banderaLocal);
             ImageView imgBanderaVisitante = tarjetaPronosticos.findViewById(R.id.img_banderaVisitante);
 
-
+            // Búsqueda de datos del partido e inyección de la información en la tarjeta
             Partido partido = obtenerPartido(pronostico.getIdPartido());
 
             txtFase.setText(String.valueOf(partido.getFase()).toString());
@@ -106,6 +140,7 @@ public class MisPronosticosActivity extends AppCompatActivity {
             txtPronosticoVisitante.setText(pronostico.getGolesSel2());
             txtPuntosObtenidos.setText(pronostico.getPuntosObtenidos());
 
+            // Validación del estado del partido para mostrar resultados y mensajes
             if (partido.getEstado() == Estado.FINALIZADO) {
                 Resultado resultado = obtenerResultado(partido.getIdResultado());
                 txtResultadoOficial.setText(resultado.getGolesSeleccion1() + " - " + resultado.getGolesSeleccion2());
@@ -125,13 +160,21 @@ public class MisPronosticosActivity extends AppCompatActivity {
                 txtMensaje.setText("🖌️ Puedes modificar tu pronóstico mientras el partido esté abierto");
             }
 
+            // Agregado de la tarjeta al contenedor principal
             contenedorPronosticos.addView(tarjetaPronosticos);
 
         }
     }
 
+    /**
+     * Busca y devuelve un partido específico según su identificador
+     *
+     * @param idPartido Identificador único del partido
+     * @return partido encontrado o null si no existe
+     */
     private Partido obtenerPartido(String idPartido) {
 
+        // Recorrido de la lista para encontrar coincidencia de ID
         for (Partido p : partidos) {
             if (p.getIdPartido().equals(idPartido)) {
                 return p;
@@ -140,8 +183,15 @@ public class MisPronosticosActivity extends AppCompatActivity {
         return null;
     }
 
+    /**
+     * Busca y devuelve el resultado oficial de un partido según su identificador
+     *
+     * @param idResultado Identificador único del resultado
+     * @return resultado encontrado o null si no existe
+     */
     private Resultado obtenerResultado(String idResultado) {
         ArrayList<Resultado> resultados = ManipularArchivos.cargarResultados(this);
+        // Búsqueda de coincidencia con la lista de resultados guardados
         for (Resultado r : resultados) {
             if (r.getIdResultado().equals(idResultado)) {
                 return r;
@@ -151,6 +201,11 @@ public class MisPronosticosActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Cierra la pantalla actual y regresa a la anterior
+     *
+     * @param view Vista que genera el evento
+     */
     public void volver(View view) {
         finish();
     }
