@@ -287,10 +287,16 @@ public class ManipularArchivos {
         return resultados;
     }
     public static void asignarBandera(Context context, Partido p, ImageView imageViewLocal, ImageView imageViewVisitante){
-        String nombrePaisLocal = p.getSeleccion1().toLowerCase().replace("ñ","n").replace(" ","");
+        String nombrePaisLocal = p.getSeleccion1().toLowerCase().replace("ñ","n")
+                .replace(" ","").replace("á","a")
+                .replace("é","e").replace("í","i")
+                .replace("ó","o").replace("ú","u");
         int idImagenLocal = context.getResources().getIdentifier(nombrePaisLocal,"drawable",context.getPackageName());
 
-        String nombrePaisVisitante = p.getSeleccion2().toLowerCase().replace("ñ","n").replace(" ","");
+        String nombrePaisVisitante = p.getSeleccion2().toLowerCase().replace("ñ","n").
+                replace(" ","").replace("á","a")
+                .replace("é","e").replace("í","i")
+                .replace("ó","o").replace("ú","u");
         int idImagenVisitante = context.getResources().getIdentifier(nombrePaisVisitante,"drawable",context.getPackageName());
 
         if(idImagenLocal != 0){
@@ -301,7 +307,7 @@ public class ManipularArchivos {
         if(idImagenVisitante !=0){
             imageViewVisitante.setImageResource(idImagenVisitante);
         }else{
-            imageViewLocal.setImageResource(R.drawable.logwc26);
+            imageViewVisitante.setImageResource(R.drawable.logwc26);
         }
 
     }
