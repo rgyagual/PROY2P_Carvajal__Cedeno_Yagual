@@ -11,48 +11,52 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:orientation="vertical"
+        android:background="#F5F5F5"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <FrameLayout
-            android:id="@+id/headerPronostico"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="70dp"
-            android:background="#1B5E20"
-            android:paddingHorizontal="16dp">
+            android:layout_height="60dp"
+            android:background="#1E5095"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingStart="12dp"
+            android:paddingEnd="12dp">
 
             <ImageView
                 android:id="@+id/img_logoHeader"
-                android:layout_width="100dp"
-                android:layout_height="55dp"
-                android:scaleType="fitCenter"
-                android:layout_gravity="start|center_vertical"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:contentDescription="Logo"
                 app:srcCompat="@drawable/loglogin" />
 
             <TextView
                 android:id="@+id/txt_tituloHeader"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
                 android:text="Pronósticos"
-                android:textSize="26sp"
-                android:textStyle="bold"
-                android:layout_gravity="center"
-                android:textColor="#FFFFFF" />
+                android:textColor="#FFFFFF"
+                android:textSize="16sp"
+                android:textStyle="bold" />
 
             <ImageView
                 android:id="@+id/img_perfilAdmin"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_gravity="end|center_vertical"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:contentDescription="Foto de perfil"
                 app:srcCompat="@drawable/user_icon_on_transparent_background_free_png" />
 
-        </FrameLayout>
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
             android:orientation="vertical"
             android:padding="16dp">
 
@@ -73,29 +77,33 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
+                android:layout_marginBottom="12dp"
+                android:background="@drawable/fondo_informacion"
                 android:gravity="center_vertical"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:id="@+id/img_info"
-                    android:layout_width="16dp"
-                    android:layout_height="16dp"
-                    android:layout_marginEnd="6dp"
-                    app:srcCompat="@drawable/info" />
+                android:orientation="horizontal"
+                android:padding="12dp">
 
                 <TextView
-                    android:id="@+id/txt_mensaje_fase"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="ⓘ"
+                    android:textColor="#666666"
+                    android:textSize="20sp" />
+
+                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Selecciona una fase para ver los partidos y registrar tus pronósticos."
                     android:textColor="#666666"
-                    android:textSize="13sp" />
+                    android:layout_marginStart="10dp"
+                    android:textSize="11sp" />
+
             </LinearLayout>
 
             <ScrollView
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
+                android:fillViewport="true"
                 android:layout_weight="1">
 
                 <LinearLayout
@@ -105,44 +113,45 @@
                     android:orientation="vertical" />
             </ScrollView>
 
-            <androidx.cardview.widget.CardView
-                android:id="@+id/cd_volver"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="12dp"
-                android:layout_marginBottom="1dp"
-                app:cardBackgroundColor="@android:color/transparent"
-                app:cardCornerRadius="12dp"
-                app:cardElevation="0dp"
-                app:cardMaxElevation="0dp">
+        </LinearLayout>
 
-                <LinearLayout
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cd_volver"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            app:cardBackgroundColor="#1E5095"
+            app:cardCornerRadius="0dp"
+            app:cardElevation="0dp"
+            app:cardMaxElevation="0dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="start|center_vertical"
+                android:orientation="horizontal"
+                android:paddingStart="20dp">
+
+                <ImageView
+                    android:id="@+id/imgVolver"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:contentDescription="Volver"
+                    app:srcCompat="@drawable/backicon" />
+
+                <TextView
+                    android:id="@+id/txtVolver"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/borde_card_black"
-                    android:gravity="center"
-                    android:orientation="horizontal"
-                    android:paddingHorizontal="24dp"
-                    android:paddingVertical="8dp">
+                    android:layout_marginStart="10dp"
+                    android:text="Volver al menú principal"
+                    android:textColor="#FFFFFF"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
 
-                    <ImageView
-                        android:id="@+id/imageView2"
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:layout_marginEnd="8dp"
-                        app:srcCompat="?attr/homeAsUpIndicator" />
+            </LinearLayout>
 
-                    <TextView
-                        android:id="@+id/textView4"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Volver al menú principal"
-                        android:textColor="#000D5F"
-                        android:textSize="16sp"
-                        android:textStyle="bold" />
-                </LinearLayout>
-            </androidx.cardview.widget.CardView>
-        </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
     </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
