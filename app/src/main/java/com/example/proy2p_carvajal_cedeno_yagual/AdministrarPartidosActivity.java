@@ -293,10 +293,10 @@ public class AdministrarPartidosActivity extends AppCompatActivity {
 
                     try {
                         Fase faseEnum = Fase.valueOf(faseStr);
+                        lista.add(new Partido(id, faseEnum, fecha, hora, estadio, sel1, sel2, estado));
                         mapeoFasesPorPartido.put(id, faseEnum);
                     } catch (IllegalArgumentException ignored) {}
 
-                    lista.add(new Partido(id, fecha, hora, estadio, sel1, sel2, estado));
                 }
             }
         } catch (IOException e) {
