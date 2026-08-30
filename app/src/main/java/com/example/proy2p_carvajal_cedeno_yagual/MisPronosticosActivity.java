@@ -136,12 +136,13 @@ public class MisPronosticosActivity extends AppCompatActivity {
             txtNombreLocal.setText(partido.getSeleccion1());
             txtNombreVisitante.setText(partido.getSeleccion2());
             ManipularArchivos.asignarBandera(this, partido, imgBanderaLocal, imgBanderaVisitante);
-            txtPronosticoLocal.setText(pronostico.getGolesSel1());
-            txtPronosticoVisitante.setText(pronostico.getGolesSel2());
-            txtPuntosObtenidos.setText(pronostico.getPuntosObtenidos());
+            txtPronosticoLocal.setText(String.valueOf(pronostico.getGolesSel1()));
+            txtPronosticoVisitante.setText(String.valueOf(pronostico.getGolesSel2()));
+            txtPuntosObtenidos.setText(String.valueOf(pronostico.getPuntosObtenidos()));
 
             // Validación del estado del partido para mostrar resultados y mensajes
             if (partido.getEstado() == Estado.FINALIZADO) {
+
                 Resultado resultado = obtenerResultado(partido.getIdResultado());
                 txtResultadoOficial.setText(resultado.getGolesSeleccion1() + " - " + resultado.getGolesSeleccion2());
                 if (pronostico.getPuntosObtenidos() > 0) {
