@@ -124,6 +124,7 @@ public class MenuParticipanteActivity extends AppCompatActivity {
                 MenuParticipanteActivity.this,
                 PronosticosActivity.class
         );
+        intent.putExtra("idUsuario", getIdUsuario());
         startActivity(intent);
     }
 
@@ -135,8 +136,9 @@ public class MenuParticipanteActivity extends AppCompatActivity {
     public void mostrarMisPronosticos(View view) {
         Intent intent = new Intent(
                 MenuParticipanteActivity.this,
-                PronosticosActivity.class
+                MisPronosticosActivity.class
         );
+        intent.putExtra("idUsuario", getIdUsuario());
         startActivity(intent);
     }
 

@@ -204,7 +204,7 @@ public class ManipularArchivos {
         ArrayList<Pronostico> pronosticosGeneral = new ArrayList<>();
         String[] fases = {
                 "FASE_DE_GRUPOS",
-                "DIECISEISAVOS",
+                "DIECISEISAVOS_DE_FINAL",
                 "OCTAVOS_DE_FINAL",
                 "CUARTOS_DE_FINAL",
                 "SEMIFINALES",
