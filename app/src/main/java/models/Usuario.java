@@ -1,5 +1,7 @@
 package models;
 
+import java.io.Serializable;
+
 /**
  * Representa la abstracción base para todos los usuarios del sistema.
  * Define los atributos y métodos generales para la gestión de credenciales,
@@ -7,7 +9,7 @@ package models;
  *
  * @author Yagual-Cedeño-Carvajal
  */
-public abstract class Usuario {
+public abstract class Usuario implements Serializable {
 
     // =======================================
     // ATRIBUTOS
