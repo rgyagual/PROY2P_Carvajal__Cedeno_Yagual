@@ -264,26 +264,34 @@ public class ManipularArchivos {
 
     public static ArrayList<Resultado> cargarResultados(Context context){
         ArrayList<Resultado> resultados = new ArrayList<>();
-        String linea;
         File archivo=new File(context.getFilesDir(), "resultados.txt");
         if(!archivo.exists()){
             return resultados;
         }
         try(BufferedReader br=new BufferedReader(new FileReader(archivo))){
+            String linea;
+            boolean primeraLinea=true;
             while((linea = br.readLine()) != null) {
+                if (primeraLinea) {
+                    primeraLinea = false;
+                    continue;
+                }
+                if (linea.isEmpty()) {
+                    continue;
+                }
                 String[] datosResultado = linea.split(";");
-                String idResultado = datosResultado[0];
-                String idPartido = datosResultado[1];
-                int golesSeleccion1 = Integer.parseInt(datosResultado[2]);
-                int golesSeleccion2 = Integer.parseInt(datosResultado[3]);
+                if (datosResultado.length >= 4){
+                    String idResultado = datosResultado[0];
+                    String idPartido = datosResultado[1];
+                    int golesSeleccion1 = Integer.parseInt(datosResultado[2]);
+                    int golesSeleccion2 = Integer.parseInt(datosResultado[3]);
+                    resultados.add(new Resultado(idResultado, idPartido, golesSeleccion1, golesSeleccion2));
+                }
 
-                resultados.add(new Resultado(idResultado, idPartido, golesSeleccion1, golesSeleccion2));
             }
-            }catch (FileNotFoundException f){
-            f.printStackTrace();
-            }catch (IOException e){
+        }catch (IOException e){
             e.printStackTrace();
-            }
+        }
         return resultados;
     }
     public static void asignarBandera(Context context, Partido p, ImageView imageViewLocal, ImageView imageViewVisitante){
@@ -310,6 +318,39 @@ public class ManipularArchivos {
             imageViewVisitante.setImageResource(R.drawable.logwc26);
         }
 
+    }
+
+    public static void guardarPartidos(Context context, ArrayList<Partido> listaPartidos){
+        File archivo = new File(context.getFilesDir(), "partidos.txt");
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(archivo, false))) {
+            bw.write("idPartido;fase;fecha;horaUTC;estadio;seleccion1;seleccion2;estado");
+            bw.newLine();
+            for (Partido p : listaPartidos) {
+                String linea = p.getIdPartido()+";"+p.getFase()+";"+p.getFecha()+";"+p.getHora()+";"
+                        +p.getEstadio()+";"+p.getSeleccion1()+";"+p.getSeleccion2()+";"+p.getEstado();
+                bw.write(linea);
+                bw.newLine();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void guardarResultado(Context context, Resultado resultado){
+        File archivo = new File(context.getFilesDir(), "resultados.txt");
+        boolean escribirEncabezado = !archivo.exists();
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(archivo, true))) {
+            if (escribirEncabezado) {
+                bw.write("idResultado;idPartido;golesSeleccion1;golesSeleccion2");
+                bw.newLine();
+            }
+            String linea = resultado.getIdResultado()+";"+resultado.getIdPartido()+";"
+                    +resultado.getGolesSeleccion1()+";"+resultado.getGolesSeleccion2();
+            bw.write(linea);
+            bw.newLine();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public static void guardarParticipante(Context context){
