@@ -127,7 +127,9 @@ public class MisPronosticosActivity extends AppCompatActivity {
 
             // Búsqueda de datos del partido e inyección de la información en la tarjeta
             Partido partido = obtenerPartido(pronostico.getIdPartido());
-
+            if (partido == null) {
+                continue;
+            }
             txtFase.setText(String.valueOf(partido.getFase()).toString());
             txtEstado.setText(partido.getEstado().toString());
             txtFecha.setText(partido.getFecha().toString());
@@ -142,9 +144,12 @@ public class MisPronosticosActivity extends AppCompatActivity {
 
             // Validación del estado del partido para mostrar resultados y mensajes
             if (partido.getEstado() == Estado.FINALIZADO) {
-
                 Resultado resultado = obtenerResultado(partido.getIdResultado());
-                txtResultadoOficial.setText(resultado.getGolesSeleccion1() + " - " + resultado.getGolesSeleccion2());
+                if (resultado != null) {
+                    txtResultadoOficial.setText(resultado.getGolesSeleccion1() + " - " + resultado.getGolesSeleccion2());
+                } else {
+                    txtResultadoOficial.setText("N/D");
+                }
                 if (pronostico.getPuntosObtenidos() > 0) {
                     txtMensaje.setText("✓  ¡¡Acertaste el Ganador!! Obtuviste " + pronostico.getPuntosObtenidos() + " puntos");
                 } else if (pronostico.getPuntosObtenidos() == 0) {
@@ -152,7 +157,6 @@ public class MisPronosticosActivity extends AppCompatActivity {
                 } else {
                     txtMensaje.setText("Ha ocurrido un error, comunicate con Servicio al Cliente");
                 }
-
             } else if (partido.getEstado() == Estado.CERRADO) {
                 lyResultadoFinal.setVisibility(INVISIBLE);
                 txtMensaje.setText("🔒 Los pronósticos para este partido están cerrados");
@@ -187,14 +191,15 @@ public class MisPronosticosActivity extends AppCompatActivity {
     /**
      * Busca y devuelve el resultado oficial de un partido según su identificador
      *
-     * @param idResultado Identificador único del resultado
+     * @param idPartido Identificador único del partido
      * @return resultado encontrado o null si no existe
      */
-    private Resultado obtenerResultado(String idResultado) {
+    private Resultado obtenerResultado(String idPartido) {
+        if (idPartido == null) return null;
         ArrayList<Resultado> resultados = ManipularArchivos.cargarResultados(this);
         // Búsqueda de coincidencia con la lista de resultados guardados
         for (Resultado r : resultados) {
-            if (r.getIdResultado().equals(idResultado)) {
+            if (r.getIdPartido() != null && r.getIdPartido().trim().equalsIgnoreCase(idPartido.trim())) {
                 return r;
             }
         }

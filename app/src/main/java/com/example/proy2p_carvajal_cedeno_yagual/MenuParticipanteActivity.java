@@ -124,6 +124,7 @@ public class MenuParticipanteActivity extends AppCompatActivity {
                 MenuParticipanteActivity.this,
                 PronosticosActivity.class
         );
+        intent.putExtra("idUsuario", getIdUsuario());
         startActivity(intent);
     }
 
@@ -137,6 +138,7 @@ public class MenuParticipanteActivity extends AppCompatActivity {
                 MenuParticipanteActivity.this,
                 MisPronosticosActivity.class
         );
+        intent.putExtra("idUsuario", getIdUsuario());
         startActivity(intent);
     }
 

@@ -171,7 +171,7 @@ public class ManipularArchivos {
                     String estadio = datos[4];
                     String seleccion1 = datos[5];
                     String seleccion2 = datos[6];
-                    Estado estado = Estado.valueOf(datos[7].toUpperCase());
+                    Estado estado = Estado.valueOf(datos[7]);
 
                     listaPartidos.add(new Partido(idPartido, fase, fecha, hora,
                             estadio, seleccion1, seleccion2, estado));
@@ -204,7 +204,7 @@ public class ManipularArchivos {
         ArrayList<Pronostico> pronosticosGeneral = new ArrayList<>();
         String[] fases = {
                 "FASE_DE_GRUPOS",
-                "DIECISEISAVOS",
+                "DIECISEISAVOS_DE_FINAL",
                 "OCTAVOS_DE_FINAL",
                 "CUARTOS_DE_FINAL",
                 "SEMIFINALES",
@@ -264,33 +264,47 @@ public class ManipularArchivos {
 
     public static ArrayList<Resultado> cargarResultados(Context context){
         ArrayList<Resultado> resultados = new ArrayList<>();
-        String linea;
         File archivo=new File(context.getFilesDir(), "resultados.txt");
         if(!archivo.exists()){
             return resultados;
         }
         try(BufferedReader br=new BufferedReader(new FileReader(archivo))){
+            String linea;
+            boolean primeraLinea=true;
             while((linea = br.readLine()) != null) {
+                if (primeraLinea) {
+                    primeraLinea = false;
+                    continue;
+                }
+                if (linea.isEmpty()) {
+                    continue;
+                }
                 String[] datosResultado = linea.split(";");
-                String idResultado = datosResultado[0];
-                String idPartido = datosResultado[1];
-                int golesSeleccion1 = Integer.parseInt(datosResultado[2]);
-                int golesSeleccion2 = Integer.parseInt(datosResultado[3]);
+                if (datosResultado.length >= 4){
+                    String idResultado = datosResultado[0];
+                    String idPartido = datosResultado[1];
+                    int golesSeleccion1 = Integer.parseInt(datosResultado[2]);
+                    int golesSeleccion2 = Integer.parseInt(datosResultado[3]);
+                    resultados.add(new Resultado(idResultado, idPartido, golesSeleccion1, golesSeleccion2));
+                }
 
-                resultados.add(new Resultado(idResultado, idPartido, golesSeleccion1, golesSeleccion2));
             }
-            }catch (FileNotFoundException f){
-            f.printStackTrace();
-            }catch (IOException e){
+        }catch (IOException e){
             e.printStackTrace();
-            }
+        }
         return resultados;
     }
     public static void asignarBandera(Context context, Partido p, ImageView imageViewLocal, ImageView imageViewVisitante){
-        String nombrePaisLocal = p.getSeleccion1().toLowerCase().replace("ñ","n").replace(" ","");
+        String nombrePaisLocal = p.getSeleccion1().toLowerCase().replace("ñ","n")
+                .replace(" ","").replace("á","a")
+                .replace("é","e").replace("í","i")
+                .replace("ó","o").replace("ú","u");
         int idImagenLocal = context.getResources().getIdentifier(nombrePaisLocal,"drawable",context.getPackageName());
 
-        String nombrePaisVisitante = p.getSeleccion2().toLowerCase().replace("ñ","n").replace(" ","");
+        String nombrePaisVisitante = p.getSeleccion2().toLowerCase().replace("ñ","n").
+                replace(" ","").replace("á","a")
+                .replace("é","e").replace("í","i")
+                .replace("ó","o").replace("ú","u");
         int idImagenVisitante = context.getResources().getIdentifier(nombrePaisVisitante,"drawable",context.getPackageName());
 
         if(idImagenLocal != 0){
@@ -301,8 +315,45 @@ public class ManipularArchivos {
         if(idImagenVisitante !=0){
             imageViewVisitante.setImageResource(idImagenVisitante);
         }else{
-            imageViewLocal.setImageResource(R.drawable.logwc26);
+            imageViewVisitante.setImageResource(R.drawable.logwc26);
         }
+
+    }
+
+    public static void guardarPartidos(Context context, ArrayList<Partido> listaPartidos){
+        File archivo = new File(context.getFilesDir(), "partidos.txt");
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(archivo, false))) {
+            bw.write("idPartido;fase;fecha;horaUTC;estadio;seleccion1;seleccion2;estado");
+            bw.newLine();
+            for (Partido p : listaPartidos) {
+                String linea = p.getIdPartido()+";"+p.getFase()+";"+p.getFecha()+";"+p.getHora()+";"
+                        +p.getEstadio()+";"+p.getSeleccion1()+";"+p.getSeleccion2()+";"+p.getEstado();
+                bw.write(linea);
+                bw.newLine();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void guardarResultado(Context context, Resultado resultado){
+        File archivo = new File(context.getFilesDir(), "resultados.txt");
+        boolean escribirEncabezado = !archivo.exists();
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(archivo, true))) {
+            if (escribirEncabezado) {
+                bw.write("idResultado;idPartido;golesSeleccion1;golesSeleccion2");
+                bw.newLine();
+            }
+            String linea = resultado.getIdResultado()+";"+resultado.getIdPartido()+";"
+                    +resultado.getGolesSeleccion1()+";"+resultado.getGolesSeleccion2();
+            bw.write(linea);
+            bw.newLine();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void guardarParticipante(Context context){
 
     }
 }
