@@ -44,17 +44,32 @@ public class MisPronosticosActivity extends AppCompatActivity {
     // ATRIBUTOS
     // =======================================
 
-    /** Contenedor dinámico donde se cargarán las tarjetas de pronósticos */
+    /**
+     * Contenedor dinámico donde se cargarán las tarjetas de pronósticos
+     */
     LinearLayout contenedorPronosticos;
-    /** Botón para regresar a la pantalla anterior */
+    /**
+     * Botón para regresar a la pantalla anterior
+     */
     LinearLayout btnVolver;
-    /** Lista para almacenar los pronósticos del usuario */
+    /**
+     * Lista para almacenar los pronósticos del usuario
+     */
     ArrayList<Pronostico> misPronosticos = new ArrayList<>();
-    /** Identificador único del usuario actual */
+    /**
+     * Identificador único del usuario actual
+     */
     String idUsuario;
 
-    /** Lista para almacenar todos los partidos registrados */
+    /**
+     * Lista para almacenar todos los partidos registrados
+     */
     ArrayList<Partido> partidos = new ArrayList<>();
+
+    /**
+     * Lista de Resultados
+     */
+    ArrayList<Resultado> resultados;
 
     // =======================================
     // MÉTODOS
@@ -76,6 +91,7 @@ public class MisPronosticosActivity extends AppCompatActivity {
         contenedorPronosticos = findViewById(R.id.contenedor_pronosticos);
         btnVolver = findViewById(R.id.btnVolver);
         partidos = ManipularArchivos.cargarPartidos(this);
+        resultados = ManipularArchivos.cargarResultados(this);
         String[] fases = {
                 "FASE_DE_GRUPOS",
                 "DIECISEISAVOS_DE_FINAL",
@@ -144,11 +160,11 @@ public class MisPronosticosActivity extends AppCompatActivity {
 
             // Validación del estado del partido para mostrar resultados y mensajes
             if (partido.getEstado() == Estado.FINALIZADO) {
-                Resultado resultado = obtenerResultado(partido.getIdResultado());
+                Resultado resultado = obtenerResultado(partido.getIdPartido());
                 if (resultado != null) {
                     txtResultadoOficial.setText(resultado.getGolesSeleccion1() + " - " + resultado.getGolesSeleccion2());
                 } else {
-                    txtResultadoOficial.setText("N/D");
+                    txtResultadoOficial.setText("PENDIENTE");
                 }
                 if (pronostico.getPuntosObtenidos() > 0) {
                     txtMensaje.setText("✓  ¡¡Acertaste el Ganador!! Obtuviste " + pronostico.getPuntosObtenidos() + " puntos");
@@ -195,16 +211,16 @@ public class MisPronosticosActivity extends AppCompatActivity {
      * @return resultado encontrado o null si no existe
      */
     private Resultado obtenerResultado(String idPartido) {
-        if (idPartido == null) return null;
-        ArrayList<Resultado> resultados = ManipularArchivos.cargarResultados(this);
-        // Búsqueda de coincidencia con la lista de resultados guardados
+        if (idPartido == null) {
+            return null;
+        }
+        String idBuscado = idPartido.trim();
         for (Resultado r : resultados) {
-            if (r.getIdPartido() != null && r.getIdPartido().trim().equalsIgnoreCase(idPartido.trim())) {
-                return r;
+            if (r.getIdPartido() != null && r.getIdPartido().trim().equals(idBuscado)) {
+                return r; // Retorna en la primera coincidencia
             }
         }
         return null;
-
     }
 
     /**

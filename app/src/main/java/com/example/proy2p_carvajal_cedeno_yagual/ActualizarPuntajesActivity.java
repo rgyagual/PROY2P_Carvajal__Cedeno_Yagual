@@ -2,6 +2,7 @@ package com.example.proy2p_carvajal_cedeno_yagual;
 
 import static android.widget.Toast.LENGTH_SHORT;
 import static models.ManipularArchivos.cargarUsuario;
+
 import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
@@ -52,6 +53,11 @@ public class ActualizarPuntajesActivity extends AppCompatActivity {
      * Lista de partidos cargados en el sistema
      */
     ArrayList<Partido> partidos = new ArrayList<>();
+    /**
+     * Lista de usuarios del Sitema
+     */
+    ArrayList<Usuario> usuarios = new ArrayList<>();
+
 
     // =======================================
     // MÉTODOS
@@ -73,6 +79,7 @@ public class ActualizarPuntajesActivity extends AppCompatActivity {
         btnVolver = findViewById(R.id.btnVolver);
         pronosticosTotales = ManipularArchivos.cargarPronosticosGeneral(this);
         partidos = ManipularArchivos.cargarPartidos(this);
+        usuarios = ManipularArchivos.cargarUsuario(this);
 
     }
 
@@ -82,9 +89,9 @@ public class ActualizarPuntajesActivity extends AppCompatActivity {
      * @param view Vista que genera el evento
      */
     public void actualizarPuntaje(View view) {
-        actualizarPuntaje();
+        actualizar();
         acumularPuntajeParticipante();
-        Toast.makeText(this, "Los puntajes se actualizaron correctamente", LENGTH_SHORT);
+        Toast.makeText(this, "Los puntajes se actualizaron correctamente", LENGTH_SHORT).show();
     }
 
     /**
@@ -116,7 +123,7 @@ public class ActualizarPuntajesActivity extends AppCompatActivity {
      * Compara los pronósticos con los resultados reales de los partidos
      * y asigna los puntos correspondientes
      */
-    private void actualizarPuntaje() {
+    private void actualizar() {
         ArrayList<Partido> partidos = obtenerPartidosFinalizados();
         ArrayList<Resultado> resultados = ManipularArchivos.cargarResultados(this);
 
@@ -128,34 +135,36 @@ public class ActualizarPuntajesActivity extends AppCompatActivity {
                         if (resultado.getIdPartido().equals(partido.getIdPartido())) {
                             int golesLocal = resultado.getGolesSeleccion1();
                             int golesVisitante = resultado.getGolesSeleccion2();
-                            int diferenciaGoles = resultado.getGolesSeleccion1() - resultado.getGolesSeleccion2();
+                            int diferenciaGoles = golesLocal - golesVisitante;
+
+                            int difPronostico = pronostico.getGolesSel1() - pronostico.getGolesSel2();
 
                             // Asignación de puntos según el acierto del pronóstico
                             if ((pronostico.getGolesSel1() == golesLocal) && (pronostico.getGolesSel2() == golesVisitante)) {
                                 pronostico.setPuntosObtenidos(3);
-
-                            } else if ((pronostico.getGolesSel1() > pronostico.getGolesSel2() && resultado.ganoEquipoLocal())
-                                    && ((pronostico.getGolesSel1() - pronostico.getGolesSel2()) == diferenciaGoles)) {
-                                pronostico.setPuntosObtenidos(2);
                             } else if ((pronostico.getGolesSel1() == pronostico.getGolesSel2()) && (golesLocal == golesVisitante)) {
                                 pronostico.setPuntosObtenidos(2);
-                            } else if (((pronostico.getGolesSel1() > pronostico.getGolesSel2() && resultado.ganoEquipoLocal()))) {
+                            } else if (((diferenciaGoles > 0 && difPronostico > 0) || (diferenciaGoles < 0 && difPronostico < 0))
+                                    && (difPronostico == diferenciaGoles)) {
+                                pronostico.setPuntosObtenidos(2);
+                            } else if ((diferenciaGoles > 0 && difPronostico > 0) || (diferenciaGoles < 0 && difPronostico < 0)) {
                                 pronostico.setPuntosObtenidos(1);
                             } else {
                                 pronostico.setPuntosObtenidos(0);
                             }
-
+                            // Guardado del pronóstico actualizado
+                            ManipularArchivos.guardarPronostico(this, pronostico, partido.getFase());
+                            break;
                         }
                     }
                 }
             }
-
         }
     }
 
     /**
      * Suma y acumula los puntos obtenidos por cada participante en todas las fases
-     *y guarda el registro
+     * y guarda el registro
      */
     public void acumularPuntajeParticipante() {
         String[] fases = {
@@ -167,7 +176,7 @@ public class ActualizarPuntajesActivity extends AppCompatActivity {
                 "TERCER_LUGAR",
                 "FINAL"
         };
-        ArrayList<Usuario> usuarios = new ArrayList<>();
+
         ArrayList<Participante> participantes = new ArrayList<>();
         // Cálculo del puntaje acumulado por participante
         for (Usuario u : usuarios) {
@@ -181,16 +190,17 @@ public class ActualizarPuntajesActivity extends AppCompatActivity {
                         misPronosticos.addAll(pronosticos);
                     }
                     int puntajeObtenido = 0;
+
                     for (Pronostico p : misPronosticos) {
-                        if (p.getPuntosObtenidos() >= 0) {
+                        if (p.getPuntosObtenidos() > 0) {
                             puntajeObtenido += p.getPuntosObtenidos();
                         }
                     }
                     participante.setPuntajeAcumulado(puntajeObtenido);
-                    participantes.add(participante);
+
 
                 }
-
+                participantes.add(participante);
             }
 
         }

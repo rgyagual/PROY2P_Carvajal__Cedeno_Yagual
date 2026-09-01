@@ -13,13 +13,21 @@ public class Resultado {
     // ATRIBUTOS
     // =======================================
 
-    /** Identificador único del resultado */
+    /**
+     * Identificador único del resultado
+     */
     private String idResultado;
-    /** Identificador único del partido al que pertenece el resultado */
+    /**
+     * Identificador único del partido al que pertenece el resultado
+     */
     private String idPartido;
-    /** Cantidad de goles anotados por la selección local (Selección 1) */
+    /**
+     * Cantidad de goles anotados por la selección local (Selección 1)
+     */
     private int golesSeleccion1;
-    /** Cantidad de goles anotados por la selección visitante (Selección 2) */
+    /**
+     * Cantidad de goles anotados por la selección visitante (Selección 2)
+     */
     private int golesSeleccion2;
 
     // =======================================
@@ -117,16 +125,4 @@ public class Resultado {
         this.golesSeleccion2 = golesSeleccion2;
     }
 
-    // =======================================
-    // MÉTODOS
-    // =======================================
-
-    /**
-     * Determina si la selección local obtuvo la victoria en el partido.
-     *
-     * @return true si la selección 1 anotó más goles que la selección 2; false en caso contrario
-     */
-    public boolean ganoEquipoLocal() {
-        return golesSeleccion1 > golesSeleccion2;
-    }
 }
