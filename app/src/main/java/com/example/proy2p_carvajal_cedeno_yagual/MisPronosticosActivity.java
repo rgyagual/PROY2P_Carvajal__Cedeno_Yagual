@@ -191,14 +191,15 @@ public class MisPronosticosActivity extends AppCompatActivity {
     /**
      * Busca y devuelve el resultado oficial de un partido según su identificador
      *
-     * @param idResultado Identificador único del resultado
+     * @param idPartido Identificador único del partido
      * @return resultado encontrado o null si no existe
      */
-    private Resultado obtenerResultado(String idResultado) {
+    private Resultado obtenerResultado(String idPartido) {
+        if (idPartido == null) return null;
         ArrayList<Resultado> resultados = ManipularArchivos.cargarResultados(this);
         // Búsqueda de coincidencia con la lista de resultados guardados
         for (Resultado r : resultados) {
-            if (r.getIdResultado().equals(idResultado)) {
+            if (r.getIdPartido() != null && r.getIdPartido().trim().equalsIgnoreCase(idPartido.trim())) {
                 return r;
             }
         }
