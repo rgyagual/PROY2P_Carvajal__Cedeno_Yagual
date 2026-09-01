@@ -77,7 +77,8 @@ public class AdministrarPartidosActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> parent) {}
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
         });
     }
 
@@ -247,6 +248,7 @@ public class AdministrarPartidosActivity extends AppCompatActivity {
 
             String idResultado = "RES_" + partidoSeleccionado.getIdPartido();
             Resultado nuevoResultado = new Resultado(idResultado, partidoSeleccionado.getIdPartido(), g1, g2);
+            partidoSeleccionado.setIdResultado(idResultado);
             guardarResultadoEnArchivo(nuevoResultado);
 
             partidoSeleccionado.setEstado(Estado.FINALIZADO);
@@ -293,10 +295,11 @@ public class AdministrarPartidosActivity extends AppCompatActivity {
 
                     try {
                         Fase faseEnum = Fase.valueOf(faseStr);
-                        lista.add(new Partido(id, faseEnum, fecha, hora, estadio, sel1, sel2, estado));
                         mapeoFasesPorPartido.put(id, faseEnum);
-                    } catch (IllegalArgumentException ignored) {}
+                    } catch (IllegalArgumentException ignored) {
+                    }
 
+                    lista.add(new Partido(id, fecha, hora, estadio, sel1, sel2, estado));
                 }
             }
         } catch (IOException e) {
