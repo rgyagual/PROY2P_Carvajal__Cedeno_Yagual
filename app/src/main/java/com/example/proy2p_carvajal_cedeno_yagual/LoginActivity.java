@@ -2,16 +2,16 @@ package com.example.proy2p_carvajal_cedeno_yagual;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-
-import models.TipoUsuario;
-import models.Usuario;
-import models.exceptions.CredencialesInvalidasException;
-import utils.DataManager;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
 
 import java.util.ArrayList;
 
@@ -20,82 +20,111 @@ import models.Participante;
 import models.Usuario;
 import models.exceptions.CredencialesInvalidasException;
 
+/**
+ * Administra el inicio de sesión de los usuarios en la aplicación.
+ * Permite validar las credenciales ingresadas y redirigir al menú
+ * correspondiente según el rol del usuario.
+ *
+ * @author Yagual-Cedeño-Carvajal
+ */
 public class LoginActivity extends AppCompatActivity {
+
+    // =======================================
+    // ATRIBUTOS
+    // =======================================
+
+    /**
+     * Campo de texto para ingresar el nombre de usuario
+     */
     private EditText edt_nombreUsuario;
+    /**
+     * Campo de texto para ingresar la contraseña
+     */
     private EditText edt_contrasena;
+    /**
+     * Botón para ejecutar el inicio de sesión
+     */
     private Button btn_iniciarSesion;
 
-    private EditText edtUsuario, edtContrasenia;
-    private Button btnIniciarSesion;
+    // =======================================
+    // MÉTODOS
+    // =======================================
 
+    /**
+     * Inicializar la actividad, habilitar la vista y preparar los archivos
+     *
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_login);
+        ManipularArchivos.iniciarArchivo(this);
 
-        // 1. Inicializar los archivos de texto desde assets si aún no existen
-        DataManager.inicializarArchivos(this);
-
-        // 2. Vincular vistas con los IDs del layout XML
-        edtUsuario = findViewById(R.id.edt_nombreUsuario);
-        edtContrasenia = findViewById(R.id.edt_contraseña);
-        btnIniciarSesion = findViewById(R.id.btn_iniciarSesion);
-
-        // 3. Listener del botón de inicio de sesión
-        btnIniciarSesion.setOnClickListener(v -> autenticarUsuario());
+        // Enlace de los componentes gráficos con el diseño
+        edt_nombreUsuario = findViewById(R.id.edt_nombreUsuario);
+        edt_contrasena = findViewById(R.id.edt_contrasena);
+        btn_iniciarSesion = findViewById(R.id.btn_iniciarSesion);
     }
 
-    private void autenticarUsuario() {
-        String username = edtUsuario.getText().toString().trim();
-        String password = edtContrasenia.getText().toString().trim();
+    /**
+     * Validar que el usuario y la contraseña existan en el sistema
+     *
+     * @param nombreUsuario Nombre del usuario ingresado
+     * @param contrasena    Contraseña del usuario ingresada
+     * @return usuario registrado encontrado
+     * @throws CredencialesInvalidasException Excepción lanzada cuando las credenciales son incorrectas
+     */
+    private Usuario validarCredenciales(String nombreUsuario, String contrasena)
+            throws CredencialesInvalidasException {
 
-        try {
-            // Se valida directamente con el método autenticar de DataManager
-            Usuario usuarioLogueado = DataManager.autenticar(this, username, password);
+        ArrayList<Usuario> usuarios = ManipularArchivos.cargarUsuario(this);
 
-            // Redirigir según el tipo de usuario
-            if (usuarioLogueado.getTipoUsuario() == TipoUsuario.PARTICIPANTE) {
-                Intent intent = new Intent(LoginActivity.this, MenuParticipanteActivity.class);
-                intent.putExtra("usuario_actual", usuarioLogueado);
-                startActivity(intent);
-                finish();
-            } else if (usuarioLogueado.getTipoUsuario() == TipoUsuario.ADMINISTRADOR) {
-                Intent intent = new Intent(LoginActivity.this, MenuAdministradorActivity.class);
-                intent.putExtra("usuario_actual", usuarioLogueado);
-                startActivity(intent);
-                finish();
+        // Búsqueda de coincidencia de usuario y contraseña
+        for (Usuario usuario : usuarios) {
+            if (usuario.getNombreUsuario().equals(nombreUsuario) && usuario.getContrasena().equals(contrasena)) {
+                return usuario;
             }
-
-        } catch (CredencialesInvalidasException e) {
-            // Mostrar Toast con el mensaje de la excepción personalizada
-            Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
-        } catch (Exception e) {
-            // Manejo de errores generales
-            Toast.makeText(this, "Problemas técnicos. Estamos resolviendo.", Toast.LENGTH_SHORT).show();
         }
+        throw new CredencialesInvalidasException("Usuario o contraseña incorrectos");
     }
 
+    /**
+     * Manejar el proceso de inicio de sesión y redirigir a la pantalla correspondiente
+     *
+     * @param view Vista que genera el evento
+     */
     public void iniciarSesion(View view) {
+
+        // Obtención de nombre de usuario y contraseña ingresados
         String nombreUsuario = edt_nombreUsuario.getText().toString().trim();
         String contrasena = edt_contrasena.getText().toString().trim();
 
+        // Validación de credenciales e inicio de sesión
         try {
             Usuario usuario = validarCredenciales(nombreUsuario, contrasena);
 
             Intent intent;
+            // Verificación del rol para mostrar la pantalla correspondiente
+
             if (usuario instanceof Participante) {
                 intent = new Intent(this, MenuParticipanteActivity.class);
             } else {
                 intent = new Intent(this, MenuAdministradorActivity.class);
             }
-            //puExtra: pasar idUsuario y nombre de una activity a otra (putExtra("clave", valor))
+            // Envío de idUsuario y nombre completo hacia la siguiente actividad
+
             intent.putExtra("idUsuario", usuario.getIdUsuario());
             intent.putExtra("nombreCompleto", usuario.getNombreCompleto());
-            //envía la información a al otra activity
+
+            // Apertura de la nueva pantalla y cierre de la actual
+
             startActivity(intent);
             finish();
 
         } catch (CredencialesInvalidasException e) {
+            // Notificación en pantalla cuando las credenciales son incorrectas
             Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
         }
     }
