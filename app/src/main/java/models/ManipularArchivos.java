@@ -9,7 +9,6 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -21,11 +20,35 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
+/**
+ * Clase utilitaria encargada de la persistencia de datos y manipulación de archivos
+ * del sistema (tanto texto plano `.txt` como binarios `.dat`), además de operaciones
+ * de recursos visuales como la asignación de banderas.
+ *
+ * @author Yagual-Cedeño-Carvajal
+ */
 public class ManipularArchivos {
+
+    // =======================================
+    // CONSTANTES
+    // =======================================
+
+    /**
+     * Arreglo con los nombres de los archivos base en formato plano
+     */
     public static final String[] ARCHIVOS = {"usuarios.txt", "participantes.txt", "administradores.txt", "partidos.txt", "resultados.txt"};
 
+    // =======================================
+    // MÉTODOS ESTÁTICOS
+    // =======================================
+
+    /**
+     * Copia los archivos base almacenados en los assets de la aplicación al almacenamiento
+     * interno del dispositivo si aún no existen.
+     *
+     * @param context Contexto de la aplicación
+     */
     public static void iniciarArchivo(Context context) {
         for (String nombreArchivo : ARCHIVOS) {
             File archivoDestino = new File(context.getFilesDir(), nombreArchivo);
@@ -44,6 +67,14 @@ public class ManipularArchivos {
         }
     }
 
+    /**
+     * Lee y construye la lista de usuarios del sistema desde `usuarios.txt`,
+     * discriminando entre Participantes y Administradores y cargando su información
+     * complementaria desde `participantes.txt` o `administradores.txt`.
+     *
+     * @param context Contexto de la aplicación
+     * @return Lista de objetos Usuario que pueden ser instancias de Participante o Administrador
+     */
     public static ArrayList<Usuario> cargarUsuario(Context context) {
         ArrayList<Usuario> listaUsuarios = new ArrayList<>();
 
@@ -56,7 +87,7 @@ public class ManipularArchivos {
             String linea;
             boolean primeralinea = true;
             while ((linea = br.readLine()) != null) {
-                //saltar el encabezado
+                // saltar el encabezado
                 if (primeralinea) {
                     primeralinea = false;
                     continue;
@@ -99,7 +130,7 @@ public class ManipularArchivos {
                         }
                         listaUsuarios.add(new Participante(idUsuario, nombreUsuario, contrasena, nombreCompleto, TipoUsuario.PARTICIPANTE, puntaje));
                     } else if (tipoUsuario.equalsIgnoreCase("ADMINISTRADOR")) {
-                        //BUSCAR CARGO PARTICIPANTE
+                        // BUSCAR CARGO PARTICIPANTE
                         String cargo = "";
                         File archivoadmi = new File(context.getFilesDir(), "administradores.txt");
 
@@ -135,6 +166,13 @@ public class ManipularArchivos {
         return listaUsuarios;
     }
 
+    /**
+     * Reescribe el archivo `participantes.txt` actualizando los puntajes acumulados
+     * de todos los participantes.
+     *
+     * @param context       Contexto de la aplicación
+     * @param participantes Lista de participantes a guardar
+     */
     public static void guardarParticipantes(Context context, List<Participante> participantes) {
         File file = new File(context.getFilesDir(), "participantes.txt");
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(file))) {
@@ -151,6 +189,12 @@ public class ManipularArchivos {
         }
     }
 
+    /**
+     * Carga todos los partidos registrados desde el archivo `partidos.txt`.
+     *
+     * @param context Contexto de la aplicación
+     * @return Lista de objetos {@link Partido}
+     */
     public static ArrayList<Partido> cargarPartidos(Context context) {
         ArrayList<Partido> listaPartidos = new ArrayList<>();
 
@@ -190,6 +234,15 @@ public class ManipularArchivos {
         return listaPartidos;
     }
 
+    /**
+     * Carga la lista de pronósticos en formato serializado para un usuario y fase específicos.
+     *
+     * @param context   Contexto de la aplicación
+     * @param idUsuario Identificador del usuario participante
+     * @param fase      Fase del torneo solicitada
+     * @return Lista de Pronostico del participante en la fase indicada
+     */
+
     public static ArrayList<Pronostico> cargarPronosticos(Context context, String idUsuario, Fase fase) {
         ArrayList<Pronostico> lista = new ArrayList<>();
         String nombreArchivo = "pronostico_" + idUsuario + "_" + fase + ".dat";
@@ -208,6 +261,12 @@ public class ManipularArchivos {
         return lista;
     }
 
+    /**
+     * Recorre todos los usuarios y fases del torneo para recopilar todos los pronósticos guardados.
+     *
+     * @param context Contexto de la aplicación
+     * @return Lista general con todos los pronósticos registrados en el sistema
+     */
     public static ArrayList<Pronostico> cargarPronosticosGeneral(Context context) {
         ArrayList<Pronostico> pronosticosGeneral = new ArrayList<>();
         String[] fases = {
@@ -230,6 +289,13 @@ public class ManipularArchivos {
         return pronosticosGeneral;
     }
 
+    /**
+     * Guarda o actualiza un pronóstico en su respectivo archivo serializado.
+     *
+     * @param context    Contexto de la aplicación
+     * @param pronostico Objeto Pronostico a guardar o actualizar
+     * @param fase       Fase del torneo asociada al pronóstico
+     */
     public static void guardarPronostico(Context context, Pronostico pronostico, Fase fase) {
         String idUsuario = pronostico.getParticipante().getIdUsuario();
         String nombreArchivo = "pronostico_" + idUsuario + "_" + fase + ".dat";
@@ -255,6 +321,12 @@ public class ManipularArchivos {
         }
     }
 
+    /**
+     * Carga todos los resultados registrados desde el archivo `resultados.txt`.
+     *
+     * @param context Contexto de la aplicación
+     * @return Lista de objetos Resultado
+     */
     public static ArrayList<Resultado> cargarResultados(Context context) {
         ArrayList<Resultado> resultados = new ArrayList<>();
         File archivo = new File(context.getFilesDir(), "resultados.txt");
@@ -288,7 +360,16 @@ public class ManipularArchivos {
         return resultados;
     }
 
-
+    /**
+     * Asigna dinámicamente las imágenes de las banderas a los `ImageView` de las selecciones
+     * según los nombres de los países en el partido. Si no se encuentra el recurso, coloca
+     * el logo por defecto del torneo.
+     *
+     * @param context            Contexto de la aplicación
+     * @param p                  Objeto Partido del cual se extraen las selecciones
+     * @param imageViewLocal     Componente visual donde se carga la bandera local
+     * @param imageViewVisitante Componente visual donde se carga la bandera visitante
+     */
     public static void asignarBandera(Context context, Partido p, ImageView imageViewLocal, ImageView imageViewVisitante) {
         String nombrePaisLocal = p.getSeleccion1().toLowerCase().replace("ñ", "n")
                 .replace(" ", "").replace("á", "a")
@@ -315,6 +396,12 @@ public class ManipularArchivos {
 
     }
 
+    /**
+     * Reescribe el archivo `partidos.txt` con la lista completa de partidos especificada.
+     *
+     * @param context       Contexto de la aplicación
+     * @param listaPartidos Lista de partidos a guardar
+     */
     public static void guardarPartidos(Context context, ArrayList<Partido> listaPartidos) {
         File archivo = new File(context.getFilesDir(), "partidos.txt");
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(archivo, false))) {
@@ -331,6 +418,12 @@ public class ManipularArchivos {
         }
     }
 
+    /**
+     * Agrega un nuevo registro al final del archivo `resultados.txt`.
+     *
+     * @param context   Contexto de la aplicación
+     * @param resultado Objeto Resultado a guardar
+     */
     public static void guardarResultado(Context context, Resultado resultado) {
         File archivo = new File(context.getFilesDir(), "resultados.txt");
         boolean escribirEncabezado = !archivo.exists();
