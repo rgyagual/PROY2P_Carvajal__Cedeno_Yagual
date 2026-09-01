@@ -25,7 +25,8 @@ import java.util.Map;
 
 public class ManipularArchivos {
     public static final String[] ARCHIVOS = {"usuarios.txt", "participantes.txt", "administradores.txt", "partidos.txt", "resultados.txt"};
-    public static void iniciarArchivo(Context context){
+
+    public static void iniciarArchivo(Context context) {
         for (String nombreArchivo : ARCHIVOS) {
             File archivoDestino = new File(context.getFilesDir(), nombreArchivo);
             if (!archivoDestino.exists()) {
@@ -43,24 +44,24 @@ public class ManipularArchivos {
         }
     }
 
-    public static ArrayList<Usuario> cargarUsuario(Context context){
+    public static ArrayList<Usuario> cargarUsuario(Context context) {
         ArrayList<Usuario> listaUsuarios = new ArrayList<>();
 
         File archivo = new File(context.getFilesDir(), "usuarios.txt");
-        if (!archivo.exists()){
+        if (!archivo.exists()) {
             return listaUsuarios;
         }
 
         try (BufferedReader br = new BufferedReader(new FileReader(archivo))) {
             String linea;
-            boolean primeralinea=true;
+            boolean primeralinea = true;
             while ((linea = br.readLine()) != null) {
                 //saltar el encabezado
-                if (primeralinea){
-                    primeralinea=false;
+                if (primeralinea) {
+                    primeralinea = false;
                     continue;
                 }
-                if(linea.isEmpty()){
+                if (linea.isEmpty()) {
                     continue;
                 }
                 String[] datos = linea.split(";");
@@ -137,24 +138,30 @@ public class ManipularArchivos {
     public static void guardarParticipantes(Context context, List<Participante> participantes) {
         File file = new File(context.getFilesDir(), "participantes.txt");
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(file))) {
+            // Escribir la cabecera
+            bw.write("idUsuario;puntajeAcumulado");
+            bw.newLine(); // Salto de línea
+            // Escribir los datos de los participantes
             for (Participante p : participantes) {
-                bw.write(p.getIdUsuario()+";"+p.getPuntajeAcumulado());
+                bw.write(p.getIdUsuario() + ";" + p.getPuntajeAcumulado());
+                bw.newLine();
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
-    public static ArrayList<Partido> cargarPartidos(Context context){
+
+    public static ArrayList<Partido> cargarPartidos(Context context) {
         ArrayList<Partido> listaPartidos = new ArrayList<>();
 
-        File archivo=new File(context.getFilesDir(), "partidos.txt");
-        if(!archivo.exists()){
+        File archivo = new File(context.getFilesDir(), "partidos.txt");
+        if (!archivo.exists()) {
             return listaPartidos;
         }
-        try(BufferedReader br=new BufferedReader(new FileReader(archivo))){
+        try (BufferedReader br = new BufferedReader(new FileReader(archivo))) {
             String linea;
-            boolean primeraLinea= true;
-            while((linea=br.readLine())!=null){
+            boolean primeraLinea = true;
+            while ((linea = br.readLine()) != null) {
                 if (primeraLinea) {
                     primeraLinea = false;
                     continue;
@@ -177,22 +184,22 @@ public class ManipularArchivos {
                             estadio, seleccion1, seleccion2, estado));
                 }
             }
-        }catch(IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
         }
         return listaPartidos;
     }
 
-    public static ArrayList<Pronostico> cargarPronosticos(Context context, String idUsuario, Fase fase){
-        ArrayList<Pronostico> lista=new ArrayList<>();
-        String nombreArchivo="pronostico_"+idUsuario+"_"+fase+".dat";
-        File archivo=new File(context.getFilesDir(),nombreArchivo);
-        if(!archivo.exists()){
+    public static ArrayList<Pronostico> cargarPronosticos(Context context, String idUsuario, Fase fase) {
+        ArrayList<Pronostico> lista = new ArrayList<>();
+        String nombreArchivo = "pronostico_" + idUsuario + "_" + fase + ".dat";
+        File archivo = new File(context.getFilesDir(), nombreArchivo);
+        if (!archivo.exists()) {
             return lista;
         }
-        try(ObjectInputStream entrada=new ObjectInputStream(
-                new FileInputStream(archivo))){
-            lista=(ArrayList<Pronostico>) entrada.readObject();
+        try (ObjectInputStream entrada = new ObjectInputStream(
+                new FileInputStream(archivo))) {
+            lista = (ArrayList<Pronostico>) entrada.readObject();
         } catch (IOException e) {
             e.printStackTrace();
         } catch (ClassNotFoundException e) {
@@ -200,6 +207,7 @@ public class ManipularArchivos {
         }
         return lista;
     }
+
     public static ArrayList<Pronostico> cargarPronosticosGeneral(Context context) {
         ArrayList<Pronostico> pronosticosGeneral = new ArrayList<>();
         String[] fases = {
@@ -222,56 +230,41 @@ public class ManipularArchivos {
         return pronosticosGeneral;
     }
 
-    public static void guardarPronostico(Context context, Pronostico pronostico, Fase fase){
-        String idUsuario= pronostico.getParticipante().getIdUsuario();
-        String nombreArchivo="pronostico_"+idUsuario+"_"+fase+".dat";
-        File archivo=new File(context.getFilesDir(),nombreArchivo);
+    public static void guardarPronostico(Context context, Pronostico pronostico, Fase fase) {
+        String idUsuario = pronostico.getParticipante().getIdUsuario();
+        String nombreArchivo = "pronostico_" + idUsuario + "_" + fase + ".dat";
+        File archivo = new File(context.getFilesDir(), nombreArchivo);
 
-        ArrayList<Pronostico> lista=cargarPronosticos(context, idUsuario,fase);
-        boolean reemplazo=false;
-        for(int i=0;i< lista.size();i++){
-            if(lista.get(i).getIdPartido().equals(pronostico.getIdPartido())){
-                lista.set(i,pronostico);
-                reemplazo=true;
+        ArrayList<Pronostico> lista = cargarPronosticos(context, idUsuario, fase);
+        boolean reemplazo = false;
+        for (int i = 0; i < lista.size(); i++) {
+            if (lista.get(i).getIdPartido().equals(pronostico.getIdPartido())) {
+                lista.set(i, pronostico);
+                reemplazo = true;
                 break;
             }
         }
-        if(!reemplazo){
+        if (!reemplazo) {
             lista.add(pronostico);
         }
-        try(ObjectOutputStream salida=new ObjectOutputStream(
-                new FileOutputStream(archivo))){
+        try (ObjectOutputStream salida = new ObjectOutputStream(
+                new FileOutputStream(archivo))) {
             salida.writeObject(lista);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
-    public static ArrayList<String> cargarPaisesParticipantes(Context context){
-        ArrayList<String> paises = new ArrayList<>();
-        File archivo=new File(context.getFilesDir(), "paises.txt");
-        if(!archivo.exists()){
-            return paises;
-        }
-        try(BufferedReader br=new BufferedReader(new FileReader(archivo))){
 
-        }catch (FileNotFoundException f){
-            f.printStackTrace();
-        }catch(IOException e){
-            e.printStackTrace();
-        }
-        return paises;
-    }
-
-    public static ArrayList<Resultado> cargarResultados(Context context){
+    public static ArrayList<Resultado> cargarResultados(Context context) {
         ArrayList<Resultado> resultados = new ArrayList<>();
-        File archivo=new File(context.getFilesDir(), "resultados.txt");
-        if(!archivo.exists()){
+        File archivo = new File(context.getFilesDir(), "resultados.txt");
+        if (!archivo.exists()) {
             return resultados;
         }
-        try(BufferedReader br=new BufferedReader(new FileReader(archivo))){
+        try (BufferedReader br = new BufferedReader(new FileReader(archivo))) {
             String linea;
-            boolean primeraLinea=true;
-            while((linea = br.readLine()) != null) {
+            boolean primeraLinea = true;
+            while ((linea = br.readLine()) != null) {
                 if (primeraLinea) {
                     primeraLinea = false;
                     continue;
@@ -280,7 +273,7 @@ public class ManipularArchivos {
                     continue;
                 }
                 String[] datosResultado = linea.split(";");
-                if (datosResultado.length >= 4){
+                if (datosResultado.length >= 4) {
                     String idResultado = datosResultado[0];
                     String idPartido = datosResultado[1];
                     int golesSeleccion1 = Integer.parseInt(datosResultado[2]);
@@ -289,45 +282,47 @@ public class ManipularArchivos {
                 }
 
             }
-        }catch (IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
         }
         return resultados;
     }
-    public static void asignarBandera(Context context, Partido p, ImageView imageViewLocal, ImageView imageViewVisitante){
-        String nombrePaisLocal = p.getSeleccion1().toLowerCase().replace("ñ","n")
-                .replace(" ","").replace("á","a")
-                .replace("é","e").replace("í","i")
-                .replace("ó","o").replace("ú","u");
-        int idImagenLocal = context.getResources().getIdentifier(nombrePaisLocal,"drawable",context.getPackageName());
 
-        String nombrePaisVisitante = p.getSeleccion2().toLowerCase().replace("ñ","n").
-                replace(" ","").replace("á","a")
-                .replace("é","e").replace("í","i")
-                .replace("ó","o").replace("ú","u");
-        int idImagenVisitante = context.getResources().getIdentifier(nombrePaisVisitante,"drawable",context.getPackageName());
 
-        if(idImagenLocal != 0){
+    public static void asignarBandera(Context context, Partido p, ImageView imageViewLocal, ImageView imageViewVisitante) {
+        String nombrePaisLocal = p.getSeleccion1().toLowerCase().replace("ñ", "n")
+                .replace(" ", "").replace("á", "a")
+                .replace("é", "e").replace("í", "i")
+                .replace("ó", "o").replace("ú", "u");
+        int idImagenLocal = context.getResources().getIdentifier(nombrePaisLocal, "drawable", context.getPackageName());
+
+        String nombrePaisVisitante = p.getSeleccion2().toLowerCase().replace("ñ", "n").
+                replace(" ", "").replace("á", "a")
+                .replace("é", "e").replace("í", "i")
+                .replace("ó", "o").replace("ú", "u");
+        int idImagenVisitante = context.getResources().getIdentifier(nombrePaisVisitante, "drawable", context.getPackageName());
+
+        if (idImagenLocal != 0) {
             imageViewLocal.setImageResource(idImagenLocal);
-        }else{
+        } else {
             imageViewLocal.setImageResource(R.drawable.logwc26);
         }
-        if(idImagenVisitante !=0){
+        if (idImagenVisitante != 0) {
             imageViewVisitante.setImageResource(idImagenVisitante);
-        }else{
+        } else {
             imageViewVisitante.setImageResource(R.drawable.logwc26);
         }
 
     }
 
-    public static void guardarPartidos(Context context, ArrayList<Partido> listaPartidos){
+    public static void guardarPartidos(Context context, ArrayList<Partido> listaPartidos) {
         File archivo = new File(context.getFilesDir(), "partidos.txt");
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(archivo, false))) {
             bw.write("idPartido;fase;fecha;horaUTC;estadio;seleccion1;seleccion2;estado");
             bw.newLine();
             for (Partido p : listaPartidos) {
-                String linea = p.getIdPartido()+";"+p.getFase()+";"+p.getFecha()+";"+p.getHora()+";"
-                        +p.getEstadio()+";"+p.getSeleccion1()+";"+p.getSeleccion2()+";"+p.getEstado();
+                String linea = p.getIdPartido() + ";" + p.getFase() + ";" + p.getFecha() + ";" + p.getHora() + ";"
+                        + p.getEstadio() + ";" + p.getSeleccion1() + ";" + p.getSeleccion2() + ";" + p.getEstado();
                 bw.write(linea);
                 bw.newLine();
             }
@@ -336,7 +331,7 @@ public class ManipularArchivos {
         }
     }
 
-    public static void guardarResultado(Context context, Resultado resultado){
+    public static void guardarResultado(Context context, Resultado resultado) {
         File archivo = new File(context.getFilesDir(), "resultados.txt");
         boolean escribirEncabezado = !archivo.exists();
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(archivo, true))) {
@@ -344,8 +339,8 @@ public class ManipularArchivos {
                 bw.write("idResultado;idPartido;golesSeleccion1;golesSeleccion2");
                 bw.newLine();
             }
-            String linea = resultado.getIdResultado()+";"+resultado.getIdPartido()+";"
-                    +resultado.getGolesSeleccion1()+";"+resultado.getGolesSeleccion2();
+            String linea = resultado.getIdResultado() + ";" + resultado.getIdPartido() + ";"
+                    + resultado.getGolesSeleccion1() + ";" + resultado.getGolesSeleccion2();
             bw.write(linea);
             bw.newLine();
         } catch (IOException e) {
@@ -353,7 +348,4 @@ public class ManipularArchivos {
         }
     }
 
-    public static void guardarParticipante(Context context){
-
-    }
 }

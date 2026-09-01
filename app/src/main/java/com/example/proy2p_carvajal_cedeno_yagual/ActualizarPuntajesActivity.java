@@ -166,45 +166,45 @@ public class ActualizarPuntajesActivity extends AppCompatActivity {
      * Suma y acumula los puntos obtenidos por cada participante en todas las fases
      * y guarda el registro
      */
-    public void acumularPuntajeParticipante() {
-        String[] fases = {
-                "FASE_DE_GRUPOS",
-                "DIECISEISAVOS_DE_FINAL",
-                "OCTAVOS_DE_FINAL",
-                "CUARTOS_DE_FINAL",
-                "SEMIFINALES",
-                "TERCER_LUGAR",
-                "FINAL"
-        };
+        public void acumularPuntajeParticipante() {
+            String[] fases = {
+                    "FASE_DE_GRUPOS",
+                    "DIECISEISAVOS_DE_FINAL",
+                    "OCTAVOS_DE_FINAL",
+                    "CUARTOS_DE_FINAL",
+                    "SEMIFINALES",
+                    "TERCER_LUGAR",
+                    "FINAL"
+            };
 
-        ArrayList<Participante> participantes = new ArrayList<>();
-        // Cálculo del puntaje acumulado por participante
-        for (Usuario u : usuarios) {
-            if (u instanceof Participante) {
-                Participante participante = (Participante) u;
-                participante.setPuntajeAcumulado(0);
-                for (String fase : fases) {
-                    ArrayList<Pronostico> misPronosticos = new ArrayList<>();
-                    ArrayList<Pronostico> pronosticos = ManipularArchivos.cargarPronosticos(this, participante.getIdUsuario(), Fase.valueOf(fase));
-                    if (pronosticos != null && !pronosticos.isEmpty()) {
-                        misPronosticos.addAll(pronosticos);
-                    }
-                    int puntajeObtenido = 0;
+            ArrayList<Participante> participantesActualizados = new ArrayList<>();
 
-                    for (Pronostico p : misPronosticos) {
-                        if (p.getPuntosObtenidos() > 0) {
-                            puntajeObtenido += p.getPuntosObtenidos();
+            // Recorremos la lista global de usuarios
+            for (Usuario u : usuarios) {
+                if (u instanceof Participante) {
+                    Participante participante = (Participante) u;
+
+                    // Variable temporal para acumular TODAS las fases
+                    int totalAcumulado = 0;
+
+                    for (String fase : fases) {
+                        ArrayList<Pronostico> pronosticos = ManipularArchivos.cargarPronosticos(this, participante.getIdUsuario(), Fase.valueOf(fase));
+
+                        if (pronosticos != null && !pronosticos.isEmpty()) {
+                            for (Pronostico p : pronosticos) {
+                                if (p.getPuntosObtenidos() > 0) {
+                                    // Sumamos al total acumulado de todas las fases
+                                    totalAcumulado += p.getPuntosObtenidos();
+                                }
+                            }
                         }
                     }
-                    participante.setPuntajeAcumulado(puntajeObtenido);
 
-
+                    // Asignamos la suma TOTAL fuera del bucle de fases
+                    participante.setPuntajeAcumulado(totalAcumulado);
+                    participantesActualizados.add(participante);
                 }
-                participantes.add(participante);
             }
-
+            ManipularArchivos.guardarParticipantes(this, participantesActualizados);
         }
-        // Guardado de participantes actualizados en archivo
-        ManipularArchivos.guardarParticipantes(this, participantes);
     }
-}

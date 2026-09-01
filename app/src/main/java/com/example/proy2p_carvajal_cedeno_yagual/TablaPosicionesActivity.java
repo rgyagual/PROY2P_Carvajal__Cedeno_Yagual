@@ -83,9 +83,13 @@ public class TablaPosicionesActivity extends AppCompatActivity {
         // Muestra el nombre del participante activo
         txt_nombreParticipante.setText(getNombreParticipante());
 
-        // Genera la tabla con las posiciones ordenadas
-        mostrarPosiciones(obtenerPosiciones(), posicionesLayout);
+    }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        // Genera la tabla con las posiciones
+        mostrarPosiciones(obtenerPosiciones(), posicionesLayout);
     }
 
     /**
