@@ -78,7 +78,7 @@ public class MisPronosticosActivity extends AppCompatActivity {
         partidos = ManipularArchivos.cargarPartidos(this);
         String[] fases = {
                 "FASE_DE_GRUPOS",
-                "DIECISEISAVOS",
+                "DIECISEISAVOS_DE_FINAL",
                 "OCTAVOS_DE_FINAL",
                 "CUARTOS_DE_FINAL",
                 "SEMIFINALES",

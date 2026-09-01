@@ -135,7 +135,7 @@ public class MenuParticipanteActivity extends AppCompatActivity {
     public void mostrarMisPronosticos(View view) {
         Intent intent = new Intent(
                 MenuParticipanteActivity.this,
-                PronosticosActivity.class
+                MisPronosticosActivity.class
         );
         startActivity(intent);
     }

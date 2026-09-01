@@ -171,7 +171,7 @@ public class ManipularArchivos {
                     String estadio = datos[4];
                     String seleccion1 = datos[5];
                     String seleccion2 = datos[6];
-                    Estado estado = Estado.valueOf(datos[7]);
+                    Estado estado = Estado.valueOf(datos[7].toUpperCase());
 
                     listaPartidos.add(new Partido(idPartido, fase, fecha, hora,
                             estadio, seleccion1, seleccion2, estado));
@@ -303,10 +303,6 @@ public class ManipularArchivos {
         }else{
             imageViewLocal.setImageResource(R.drawable.logwc26);
         }
-
-    }
-
-    public static void guardarParticipante(Context context){
 
     }
 }

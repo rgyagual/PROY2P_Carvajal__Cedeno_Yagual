@@ -2,8 +2,6 @@ package com.example.proy2p_carvajal_cedeno_yagual;
 
 import static android.widget.Toast.LENGTH_SHORT;
 import static models.ManipularArchivos.cargarUsuario;
-import static models.ManipularArchivos.guardarParticipante;
-
 import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
@@ -162,7 +160,7 @@ public class ActualizarPuntajesActivity extends AppCompatActivity {
     public void acumularPuntajeParticipante() {
         String[] fases = {
                 "FASE_DE_GRUPOS",
-                "DIECISEISAVOS",
+                "DIECISEISAVOS_DE_FINAL",
                 "OCTAVOS_DE_FINAL",
                 "CUARTOS_DE_FINAL",
                 "SEMIFINALES",
