@@ -90,6 +90,7 @@ public class MenuAdministradorActivity extends AppCompatActivity {
                 MenuAdministradorActivity.this,
                 AdministrarPartidosActivity.class
         );
+        intent.putExtra("nombreCompleto", getNombreAdministrador());
         startActivity(intent);
 
     }
@@ -104,6 +105,7 @@ public class MenuAdministradorActivity extends AppCompatActivity {
                 MenuAdministradorActivity.this,
                 ActualizarPuntajesActivity.class
         );
+        intent.putExtra("nombreCompleto", getNombreAdministrador());
         startActivity(intent);
 
     }
