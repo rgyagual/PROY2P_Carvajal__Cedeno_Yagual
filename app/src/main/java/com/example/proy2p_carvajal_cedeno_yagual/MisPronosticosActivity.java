@@ -135,7 +135,6 @@ public class MisPronosticosActivity extends AppCompatActivity {
             TextView txtPronosticoLocal = tarjetaPronosticos.findViewById(R.id.txt_pronosticoLocal);
             TextView txtPronosticoVisitante = tarjetaPronosticos.findViewById(R.id.txt_pronosticoVisitante);
             TextView txtResultadoOficial = tarjetaPronosticos.findViewById(R.id.txt_resultadoOficial);
-            TextView txtPuntosObtenidos = tarjetaPronosticos.findViewById(R.id.txt_puntosObtenidos);
             LinearLayout lyResultadoFinal = tarjetaPronosticos.findViewById(R.id.ly_resultadoFinal);
             TextView txtMensaje = tarjetaPronosticos.findViewById(R.id.txt_mensajeResultado);
             ImageView imgBanderaLocal = tarjetaPronosticos.findViewById(R.id.img_banderaLocal);
@@ -156,7 +155,6 @@ public class MisPronosticosActivity extends AppCompatActivity {
             ManipularArchivos.asignarBandera(this, partido, imgBanderaLocal, imgBanderaVisitante);
             txtPronosticoLocal.setText(String.valueOf(pronostico.getGolesSel1()));
             txtPronosticoVisitante.setText(String.valueOf(pronostico.getGolesSel2()));
-            txtPuntosObtenidos.setText(String.valueOf(pronostico.getPuntosObtenidos()));
 
             // Validación del estado del partido para mostrar resultados y mensajes
             if (partido.getEstado() == Estado.FINALIZADO) {

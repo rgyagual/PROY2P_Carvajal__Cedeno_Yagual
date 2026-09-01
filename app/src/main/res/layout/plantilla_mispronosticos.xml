@@ -235,25 +235,6 @@
                     android:textStyle="bold" />
 
 
-                <TextView
-                    android:id="@+id/txt_tituloPuntos"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:text="Puntos obtenidos"
-                    android:textSize="12sp"
-                    android:textStyle="bold" />
-
-
-                <TextView
-                    android:id="@+id/txt_puntosObtenidos"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:text="1 pt"
-                    android:textSize="20sp"
-                    android:textStyle="bold" />
-
             </LinearLayout>
 
         </LinearLayout>
