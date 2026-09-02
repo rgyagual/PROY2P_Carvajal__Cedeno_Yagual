@@ -51,7 +51,7 @@ public class ManipularArchivos {
      */
     public static void iniciarArchivo(Context context) {
         for (String nombreArchivo : ARCHIVOS) {
-            File archivoDestino = new File(context.getFilesDir(), nombreArchivo);
+            File archivoDestino = new File(context.getExternalFilesDir(null), nombreArchivo);
             if (!archivoDestino.exists()) {
                 try (InputStream entrada = context.getAssets().open(nombreArchivo);
                      FileOutputStream salida = new FileOutputStream(archivoDestino)) {
@@ -78,7 +78,7 @@ public class ManipularArchivos {
     public static ArrayList<Usuario> cargarUsuario(Context context) {
         ArrayList<Usuario> listaUsuarios = new ArrayList<>();
 
-        File archivo = new File(context.getFilesDir(), "usuarios.txt");
+        File archivo = new File(context.getExternalFilesDir(null), "usuarios.txt");
         if (!archivo.exists()) {
             return listaUsuarios;
         }
@@ -106,7 +106,7 @@ public class ManipularArchivos {
                     if (tipoUsuario.equalsIgnoreCase("PARTICIPANTE")) {
                         // Buscar el puntaje de participante en participantes.txt
                         int puntaje = 0;
-                        File archivoParticipantes = new File(context.getFilesDir(), "participantes.txt");
+                        File archivoParticipantes = new File(context.getExternalFilesDir(null), "participantes.txt");
                         if (archivoParticipantes.exists()) {
                             try (BufferedReader brP = new BufferedReader(new FileReader(archivoParticipantes))) {
                                 String lineaP;
@@ -132,7 +132,7 @@ public class ManipularArchivos {
                     } else if (tipoUsuario.equalsIgnoreCase("ADMINISTRADOR")) {
                         // BUSCAR CARGO PARTICIPANTE
                         String cargo = "";
-                        File archivoadmi = new File(context.getFilesDir(), "administradores.txt");
+                        File archivoadmi = new File(context.getExternalFilesDir(null), "administradores.txt");
 
                         if (archivoadmi.exists()) {
                             try (BufferedReader brA = new BufferedReader(new FileReader(archivoadmi))) {
@@ -174,7 +174,7 @@ public class ManipularArchivos {
      * @param participantes Lista de participantes a guardar
      */
     public static void guardarParticipantes(Context context, List<Participante> participantes) {
-        File file = new File(context.getFilesDir(), "participantes.txt");
+        File file = new File(context.getExternalFilesDir(null), "participantes.txt");
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(file))) {
             // Escribir la cabecera
             bw.write("idUsuario;puntajeAcumulado");
@@ -198,7 +198,7 @@ public class ManipularArchivos {
     public static ArrayList<Partido> cargarPartidos(Context context) {
         ArrayList<Partido> listaPartidos = new ArrayList<>();
 
-        File archivo = new File(context.getFilesDir(), "partidos.txt");
+        File archivo = new File(context.getExternalFilesDir(null), "partidos.txt");
         if (!archivo.exists()) {
             return listaPartidos;
         }
@@ -246,7 +246,7 @@ public class ManipularArchivos {
     public static ArrayList<Pronostico> cargarPronosticos(Context context, String idUsuario, Fase fase) {
         ArrayList<Pronostico> lista = new ArrayList<>();
         String nombreArchivo = "pronostico_" + idUsuario + "_" + fase + ".dat";
-        File archivo = new File(context.getFilesDir(), nombreArchivo);
+        File archivo = new File(context.getExternalFilesDir(null), nombreArchivo);
         if (!archivo.exists()) {
             return lista;
         }
@@ -299,7 +299,7 @@ public class ManipularArchivos {
     public static void guardarPronostico(Context context, Pronostico pronostico, Fase fase) {
         String idUsuario = pronostico.getParticipante().getIdUsuario();
         String nombreArchivo = "pronostico_" + idUsuario + "_" + fase + ".dat";
-        File archivo = new File(context.getFilesDir(), nombreArchivo);
+        File archivo = new File(context.getExternalFilesDir(null), nombreArchivo);
 
         ArrayList<Pronostico> lista = cargarPronosticos(context, idUsuario, fase);
         boolean reemplazo = false;
@@ -329,7 +329,7 @@ public class ManipularArchivos {
      */
     public static ArrayList<Resultado> cargarResultados(Context context) {
         ArrayList<Resultado> resultados = new ArrayList<>();
-        File archivo = new File(context.getFilesDir(), "resultados.txt");
+        File archivo = new File(context.getExternalFilesDir(null), "resultados.txt");
         if (!archivo.exists()) {
             return resultados;
         }
@@ -403,7 +403,7 @@ public class ManipularArchivos {
      * @param listaPartidos Lista de partidos a guardar
      */
     public static void guardarPartidos(Context context, ArrayList<Partido> listaPartidos) {
-        File archivo = new File(context.getFilesDir(), "partidos.txt");
+        File archivo = new File(context.getExternalFilesDir(null), "partidos.txt");
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(archivo, false))) {
             bw.write("idPartido;fase;fecha;horaUTC;estadio;seleccion1;seleccion2;estado");
             bw.newLine();
@@ -425,7 +425,7 @@ public class ManipularArchivos {
      * @param resultado Objeto Resultado a guardar
      */
     public static void guardarResultado(Context context, Resultado resultado) {
-        File archivo = new File(context.getFilesDir(), "resultados.txt");
+        File archivo = new File(context.getExternalFilesDir(null), "resultados.txt");
         boolean escribirEncabezado = !archivo.exists();
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(archivo, true))) {
             if (escribirEncabezado) {
