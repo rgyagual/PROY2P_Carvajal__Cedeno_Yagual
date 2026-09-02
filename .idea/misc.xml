@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ExternalStorageConfigurationManager" enabled="true" />
+  <component name="JavadocGenerationManager">
+    <option name="OUTPUT_DIRECTORY" value="$USER_HOME$/Documents/projects POO/AndroidStudio/PROYECTOP2/javaDoc_Proyecto2" />
+    <option name="OTHER_OPTIONS" value="&quot;C:\Program Files\Eclipse Adoptium\jdk-21.0.11.10-hotspot\bin\javadoc.exe&quot; -protected -splitindex -bootclasspath &quot;C:/Users/User/AppData/Local/Android/Sdk/platforms/android-37/android.jar&quot; -encoding utf8 -docencoding utf8 -charset utf8 -d &quot;C:\Users\User\Documents\projects POO\AndroidStudio\PROYECTOP2\javaDoc_Proyecto2&quot; @C:\Users\User\AppData\Local\Temp\javadoc_args" />
+  </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_21" default="true" project-jdk-name="temurin-21" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>

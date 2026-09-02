@@ -27,22 +27,34 @@ import models.ManipularArchivos;
 import models.Partido;
 import models.Resultado;
 import models.exceptions.DatosIncompletosException;
+
 /**
  * Actividad encargada de la gestión y administración de los partidos por parte del rol administrador.
  * Permite filtrar encuentros por fase, cerrar pronósticos y registrar los resultados oficiales.
  */
 
 public class AdministrarPartidosActivity extends AppCompatActivity {
-    /** Selector desplegable para filtrar los partidos por fase. */
+    /**
+     * Selector desplegable para filtrar los partidos por fase.
+     */
     private Spinner spFases;
-    /** Contenedor dinámico donde se agregan las vistas individuales de cada partido. */
+    /**
+     * Contenedor dinámico donde se agregan las vistas individuales de cada partido.
+     */
     private LinearLayout layoutPartidos;
-    /** Botón para regresar a la pantalla del menú principal de administrador. */
+    /**
+     * Botón para regresar a la pantalla del menú principal de administrador.
+     */
     private MaterialButton btnVolver;
-    /** Nombre completo del administrador que inició sesión. */
+    /**
+     * Nombre completo del administrador que inició sesión.
+     */
     private String nombreCompletoAdmin;
-    /** Lista en memoria que contiene todos los partidos del sistema. */
+    /**
+     * Lista en memoria que contiene todos los partidos del sistema.
+     */
     private ArrayList<Partido> listaPartidos;
+
     /**
      * Inicializa la actividad, enlaza los componentes de la interfaz de usuario,
      * carga los partidos desde el almacenamiento y configura los listeners de interacción.
@@ -84,6 +96,7 @@ public class AdministrarPartidosActivity extends AppCompatActivity {
             finish();
         });
     }
+
     /**
      * Filtra e infla dinámicamente en el contenedor las tarjetas de los partidos
      * correspondientes a la fase seleccionada, configurando los controles según su estado.
@@ -169,30 +182,32 @@ public class AdministrarPartidosActivity extends AppCompatActivity {
             layoutPartidos.addView(card);
         }
     }
+
     /**
-     * Cambia el estado de un partido a {@link Estado#CERRADO}, actualiza la persistencia
+     * Cambia el estado de un partido a CERRADO, actualiza la persistencia
      * en el almacenamiento local y refresca la vista.
      *
-     * @param partido Objeto {@link Partido} que se desea cerrar.
+     * @param partido Objeto Partido que se desea cerrar.
      * @param fase    Fase actual activa para volver a renderizar la lista.
      */
-    private void cerrarPronosticos (Partido partido, Fase fase){
+    private void cerrarPronosticos(Partido partido, Fase fase) {
         partido.setEstado(Estado.CERRADO);
         ManipularArchivos.guardarPartidos(this, listaPartidos);
         Toast.makeText(this, "Pronósticos cerrados para el partido " + partido.getIdPartido(), Toast.LENGTH_SHORT).show();
         mostrarPartidosPorFase(fase);
     }
+
     /**
      * Valida y guarda el resultado oficial ingresado para un partido, actualizando su estado
      * a {@link Estado#FINALIZADO} y persistiendo tanto el resultado como el nuevo estado.
      *
-     * @param partido  Objeto {@link Partido} al que se le asignará el resultado.
+     * @param partido  Objeto Partido al que se le asignará el resultado.
      * @param fase     Fase actual activa para refrescar la interfaz de usuario.
      * @param etGoles1 Campo de texto que contiene los goles de la primera selección.
      * @param etGoles2 Campo de texto que contiene los goles de la segunda selección.
      */
 
-    private void guardarResultadoPartido (Partido partido, Fase fase, EditText etGoles1, EditText etGoles2){
+    private void guardarResultadoPartido(Partido partido, Fase fase, EditText etGoles1, EditText etGoles2) {
         try {
             String txtGoles1 = etGoles1.getText().toString().trim();
             String txtGoles2 = etGoles2.getText().toString().trim();
@@ -222,14 +237,15 @@ public class AdministrarPartidosActivity extends AppCompatActivity {
             Toast.makeText(this, "Ingresa números válidos para los goles.", Toast.LENGTH_SHORT).show();
         }
     }
+
     /**
      * Busca y obtiene el resultado registrado correspondiente al identificador de un partido.
      *
      * @param idPartido Identificador único del partido a consultar.
-     * @return El objeto {@link Resultado} correspondiente si existe, o {@code null} en caso contrario.
+     * @return El objeto Resultado correspondiente si existe, o null en caso contrario.
      */
 
-    private Resultado obtenerResultadoPorPartido (String idPartido){
+    private Resultado obtenerResultadoPorPartido(String idPartido) {
         ArrayList<Resultado> resultados = ManipularArchivos.cargarResultados(this);
         for (Resultado r : resultados) {
             if (r.getIdPartido().equals(idPartido)) {

@@ -1,3 +1,5 @@
+import org.gradle.api.tasks.javadoc.Javadoc
+
 plugins {
     alias(libs.plugins.android.application)
 }
@@ -50,4 +52,31 @@ dependencies {
     androidTestImplementation(libs.espresso.core)
     androidTestImplementation(libs.ext.junit)
     coreLibraryDesugaring ("com.android.tools:desugar_jdk_libs:2.0.4")
+}
+
+androidComponents {
+    onVariants(selector().withName("debug")) { variant ->
+
+        tasks.register<Javadoc>("generateAppJavadoc") {
+            description = "Genera la documentación Javadoc del código Java de la aplicación."
+            group = "documentation"
+
+            source = fileTree("src/main/java") {
+                include("**/*.java")
+            }
+
+            destinationDir = layout.buildDirectory
+                .dir("docs/javadoc")
+                .get()
+                .asFile
+
+            classpath = files(
+                variant.compileClasspath,
+                file("${System.getenv("LOCALAPPDATA")}/Android/Sdk/platforms/android-36.1/android.jar")
+            )
+            options {
+                encoding = "UTF-8"
+            }
+        }
+    }
 }
