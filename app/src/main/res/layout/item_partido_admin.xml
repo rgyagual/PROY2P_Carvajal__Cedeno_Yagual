@@ -15,7 +15,6 @@
         android:orientation="vertical"
         android:padding="14dp">
 
-        <!-- 1. Encabezado: Badge de Estado e ID -->
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -44,7 +43,6 @@
                 android:textSize="11sp" />
         </RelativeLayout>
 
-        <!-- 2. Metadatos: Fecha | Hora | Estadio -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -93,7 +91,6 @@
                 android:textSize="11sp" />
         </LinearLayout>
 
-        <!-- 3. Sección Central: Enfrentamiento y Panel de Control -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -101,7 +98,6 @@
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
-            <!-- Lado Izquierdo: Selecciones y Banderas -->
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -109,7 +105,6 @@
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
-                <!-- Selección 1 -->
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -136,7 +131,6 @@
                         android:textStyle="bold" />
                 </LinearLayout>
 
-                <!-- VS o Marcador Resumen -->
                 <TextView
                     android:id="@+id/tvVsOMarcador"
                     android:layout_width="wrap_content"
@@ -147,7 +141,6 @@
                     android:textSize="13sp"
                     android:textStyle="bold" />
 
-                <!-- Selección 2 -->
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -175,14 +168,12 @@
                 </LinearLayout>
             </LinearLayout>
 
-            <!-- Lado Derecho: Controles según Estado -->
             <FrameLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1.1"
                 android:paddingStart="8dp">
 
-                <!-- Estado ABIERTO: Botón verde con candado -->
                 <Button
                     android:id="@+id/btnCerrarPronosticos"
                     android:layout_width="match_parent"
@@ -197,7 +188,20 @@
                     android:visibility="visible"
                     app:cornerRadius="6dp" />
 
-                <!-- Estado CERRADO: Formulario de ingreso de goles -->
+                <Button
+                    android:id="@+id/btnRegistrarResultado"
+                    android:layout_width="match_parent"
+                    android:layout_height="38dp"
+                    android:backgroundTint="@color/btn_green"
+                    android:insetTop="0dp"
+                    android:insetBottom="0dp"
+                    android:text="⚽ Registrar resultado"
+                    android:textColor="#FFFFFF"
+                    android:textSize="9.5sp"
+                    android:textStyle="bold"
+                    android:visibility="gone"
+                    app:cornerRadius="6dp" />
+
                 <LinearLayout
                     android:id="@+id/layoutAdminCerrado"
                     android:layout_width="match_parent"
@@ -221,7 +225,6 @@
                         android:gravity="center"
                         android:orientation="horizontal">
 
-                        <!-- Input País 1 -->
                         <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -259,7 +262,6 @@
                             android:textSize="14sp"
                             android:textStyle="bold" />
 
-                        <!-- Input País 2 -->
                         <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -303,7 +305,6 @@
                         app:cornerRadius="6dp" />
                 </LinearLayout>
 
-                <!-- Estado FINALIZADO: Marcador oficial fijado -->
                 <LinearLayout
                     android:id="@+id/layoutAdminFinalizado"
                     android:layout_width="match_parent"
@@ -327,7 +328,6 @@
                         android:gravity="center"
                         android:orientation="horizontal">
 
-                        <!-- País 1 -->
                         <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -365,7 +365,6 @@
                             android:textSize="14sp"
                             android:textStyle="bold" />
 
-                        <!-- País 2 -->
                         <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -397,7 +396,6 @@
             </FrameLayout>
         </LinearLayout>
 
-        <!-- 4. Banner Informativo Inferior -->
         <TextView
             android:id="@+id/tvMsgInformativo"
             android:layout_width="match_parent"

@@ -11,16 +11,23 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.PROY2P_Carvajal_Cedeno_Yagual">
+
+        <!-- Pantalla inicial normal de la app -->
         <activity
             android:name=".MainActivity"
             android:exported="true"
             android:windowSoftInputMode="adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <!-- Pantallas del flujo de la app -->
+        <activity
+            android:name=".AdministrarPartidosActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".MenuAdministradorActivity"
             android:exported="false"
@@ -41,6 +48,13 @@
             android:name=".PronosticosActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".MisPronosticosActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".ActualizarPuntajesActivity"
+            android:exported="false" />
     </application>
 
 </manifest>

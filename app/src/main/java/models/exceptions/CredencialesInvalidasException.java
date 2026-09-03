@@ -1,12 +1,23 @@
 package models.exceptions;
 
-public class CredencialesInvalidasException extends Exception{
+/**
+ * Excepción personalizada que se dispara durante el proceso de autenticación o inicio de sesión
+ * cuando las credenciales ingresadas (usuario o contraseña) son incorrectas o inválidas.
+ *
+ * @author Yagual-Cedeño-Carvajal
+ */
+public class CredencialesInvalidasException extends Exception {
 
-    public CredencialesInvalidasException(){
-        super("El usuario o la contraseña estan mal");
-    }
-    public CredencialesInvalidasException(String mensaje){
+    // =======================================
+    // CONSTRUCTOR
+    // =======================================
 
+    /**
+     * Construye la excepción con un mensaje descriptivo personalizado.
+     *
+     * @param mensaje Descripción detallada del error de credenciales
+     */
+    public CredencialesInvalidasException(String mensaje) {
         super(mensaje);
     }
 

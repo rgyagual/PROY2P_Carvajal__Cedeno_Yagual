@@ -10,19 +10,37 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+/**
+ * Actividad principal y punto de entrada inicial de la aplicación.
+ * a la pantalla de inicio de sesión (LoginActivity).
+ *
+ * @author Yagual-Cedeño-Carvajal
+ */
 public class MainActivity extends AppCompatActivity {
 
+    // =======================================
+    // MÉTODOS
+    // =======================================
+
+    /**
+     * Inicializa la actividad principal y redirige al inicio de sesión.
+     *
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
 
-        Toast.makeText(this, "Bienvenidooo!!!", Toast.LENGTH_LONG).show();
+        // Ejecución de la redirección inicial
         pantallaPrincipal();
     }
 
-    public void pantallaPrincipal(){
+    /**
+     * Realiza la transición de pantalla hacia la actividad de inicio de sesión (LoginActivity).
+     */
+    public void pantallaPrincipal() {
         Intent intent = new Intent(
                 this,
                 LoginActivity.class
